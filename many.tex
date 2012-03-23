@@ -1,0 +1,195 @@
+\documentclass[aps,prd,reprint]{revtex4-1}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\order}[1]{\mathcal{O}\left( #1 \right)}
+\newcommand{\fixme}[1]{\textbf{FIXME: #1}}
+
+\begin{document}
+
+\title{Bayesian Rate Estimation}
+
+\author{Will M. Farr}
+\email{w-farr@northwestern.edu}
+%\homepage{http://faculty.wcas.northwestern.edu/will-farr/}
+% \affiliation{Center for Interdisciplinary Exploration and Research in Astrophysics (CIERA)\\
+% Department of Physics and Astronomy\\
+% Northwestern University, 2145 Sheridan Road, Evanston, IL 60208}
+\affiliation{Northwestern University and CIERA}
+
+\author{Ilya Mandel}
+\email{ilya@chgk.info}
+%\homepage{http://www.chgk.info/~ilyamandel/}
+% \affiliation{School of Physics and Astronomy\\University of Birmingham\\Edgbaston B15 2TT Birmingham\\United Kingdom}
+\affiliation{University of Birmingham}
+
+\author{Jon Gair}
+
+\begin{abstract}
+  We show how to obtain a Bayesian estimate of the rate of signal
+  events from a set of signal and background events indexed by a
+  ranking statistic when the shapes of the signal and background
+  distributions are known, can be estimated, or approximated.  We
+  focus on the specific application of estimating astrophysical rates
+  of the coalescence of compact binary black holes or neutron stars
+  from a set of triggers in the LIGO/Virgo gravitational wave
+  detectors, but our framework is fully general.  We discuss the
+  systematic effects on the rate estimate due to differences between
+  the assumed and true shapes of the foreground or background
+  distributions, identifying ways these effects can be minimized.
+  Similarly, we discuss the effects of various priors on the rate,
+  including uninformative priors, weakly-informative priors, and the
+  use of priors from previous rate experiments.  In the limit where
+  the expected signal rate gives high probability of zero or one
+  signal in the data, our technique reduces to the ``loudest event
+  statistic,'' but it is generally applicable to arbitrarily large
+  signal rates.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\fixme{Introduce the necessity of estimating rates, prior work (like
+  \cite{Biswas2009}), Bayesian inference.}
+
+\section{Model}
+
+We assume that we are presented with a data set of $N$ events.  Each
+event may be due to either a signal of interest or an uninteresting
+background.  Each event is associated with a ranking statistic, $x$.
+Our data set therefore consists of the ranking statistics for the set
+of events:
+\begin{equation}
+  d = \{ x_i | i = 1, \ldots, N \}.
+\end{equation}
+We assume that the events are sorted by ranking statistic, so that $i
+< j$ implies that $x_i < x_j$.  
+
+We assume that both the foreground and background events are samples
+from an inhomogeneous Poisson process with rates (per unit ranking
+statistic, $x$)
+\begin{equation}
+  \frac{dN_f}{dx} = f(x)
+\end{equation}
+and 
+\begin{equation}
+  \frac{dN_b}{dx} = b(x).
+\end{equation}
+The cumulative rates of the two processes are therefore
+\begin{equation}
+  F(x) \equiv \int_{-\infty}^x ds\, f(s)
+\end{equation}
+and
+\begin{equation}
+  B(x) \equiv \int_{-\infty}^x ds\, b(s).
+\end{equation}
+The assumption that the foreground and background events form an
+inhomogeneous Poisson process implies
+\begin{enumerate}
+\item The number of events in any range of ranking statistics, $x \in
+  [x_1, x_2]$ is Poisson distributed with rate $F(x_2) - F(x_1)$ or
+  $B(x_2) - B(x_1)$.
+\item The numbers of events in non-overlapping ranges of ranking
+  statistics are independent. 
+\item The probability of exactly one foreground event between $x$ and
+  $x+h$ is given by
+  \begin{equation}
+    P(N = 1 \in [x, x+h]) = f(x) h + \order{h^2}.
+  \end{equation}
+  and similarly for background events.
+\item The probability of two or more events in a small range of
+  ranking statistic is negligable
+  \begin{equation}
+    P(N = 2 \in [x, x+h]) = \order{h^2}.
+  \end{equation}
+\end{enumerate}
+The foreground and background rates can in general depend on several
+parameters; the goal of our analysis is to determine the posterior
+probability distributions for these parameters that are implied by the
+data.  At the least, we will want to know the overall amplitude of the
+foreground and background rates.  Let
+\begin{equation}
+  f(x) = R_f \hat{f}(x),
+\end{equation}
+and 
+\begin{equation}
+  b(x) = R_b \hat{b}(x),
+\end{equation}
+where $\hat{F}(\infty) = \hat{B}(\infty) = 1$.  Then $R_f$ and $R_b$
+are the total number of foreground and background events expected,
+respectively.  Other parameters may describe the shape of the rate
+functions, but these will depend on the details of the system being
+analyzed.  In \S \ref{sec:GW-example} we give an example of fitting
+such shape paremeters.
+
+We do not know a priori which of the events are foreground and which
+are background.  For each event, we introduce a flag, $s_i$, which is
+either 0 or 1, indicating a background or foreground event,
+respectively.  These ``state'' flags are additional parameters in our
+model.  We can marginalize over our uncertainty in the state of any
+given event by summing all posteriors over $s_i = \{0,1\}$.  Given an
+identification of each event as foreground or background, and the
+rates of each, the likelihood of our data is
+\begin{multline}
+  p\left( d | \left\{ f(x), b(x), \left\{ s_i \right\} \right\}
+  \right) = \\ \left[ \prod_{\left\{ i | s_i = 1 \right\}} f\left( x_i
+    \right) \right]  \left[ \prod_{\left\{ j | s_j = 0 \right\}}
+    b\left( x_j \right) \right] \\
+  \times \exp\left[ - F\left( \infty \right) \right] 
+  \exp\left[ -B\left( \infty \right) \right].
+\end{multline}
+Written in terms of the rate parameters, this becomes
+\begin{multline}
+  p\left( d | \left\{ f(x), b(x), \left\{ s_i \right\} \right\}
+  \right) = \\ R_f^{N_f} \left[ \prod_{\left\{ i | s_i = 1 \right\}}
+    \hat{f}\left( x_i \right) \right] \exp\left[ - R_f \right] \\
+  \times R_b^{N_b} \left[ \prod_{\left\{ j | s_j = 0 \right\}}
+    \hat{b}\left( x_j \right) \right] \exp\left[ - R_b \right],
+\end{multline}
+where $N_f$ is the number of the $s_i$ that are 1 (i.e.\ the number of
+assumed foreground events), and $N_b$ is the number of the $s_i$ that
+are 0 (i.e.\ the assumed number of background events).  Note that $N_f
++ N_b = N$, as each event is considered either foreground or
+background in our model.
+
+\subsection{Priors}
+
+\fixme{Discussion of the various priors one might want to impose on
+  the rates, $R_f$ and $R_b$, such as a flat prior on rate, the
+  Poisson Jeffrey's prior (which is $\propto 1/\sqrt{R}$?), .}
+
+A choice of the foreground and background rates implies a prior on the
+state flags.  For fixed foreground and background rates, the
+probability that any particular event is foreground is given by 
+\begin{equation}
+  p\left(s_i = 1 | R_f, R_b \right) = \frac{R_f}{R_f + R_b}.
+\end{equation}
+
+The complete prior is then
+\begin{multline}
+  p\left( R_f, R_b, \left\{ s_i \right\} \right) = \\ p\left( \left\{ s_i
+  \right\} | R_f, R_b \right) p\left( R_f, R_b \right) = \\ \frac{R_f^{N_f} R_b^{N_b}}{\left( R_f
+    + R_b\right)^N} p\left( R_f, R_b \right).
+\end{multline}
+
+\section{Gravitational Waves from Compact Binary Inspirals}
+\label{sec:GW-example}
+
+\begin{acknowledgments}
+  Richard O'Shaughnessy for discussions.
+\end{acknowledgments}
+
+\appendix
+
+\section{Likelihood for Inhomogeneous Poisson Processes}
+
+Consider a set of samples, $\{ x_i \}$, from an 
+
+%%%%%%%%%%%%%%%%%%%% Bibliography 
+\bibliographystyle{apsrev4-1}
+\bibliography{many}
+
+\end{document}
