@@ -126,31 +126,35 @@ analyzed.  In \S \ref{sec:GW-example} we give an example of fitting
 such shape paremeters.
 
 We do not know a priori which of the events are foreground and which
-are background.  For each event, we introduce a flag, $s_i$, which is
+are background.  For each event, we introduce a flag, $f_i$, which is
 either 0 or 1, indicating a background or foreground event,
 respectively.  These ``state'' flags are additional parameters in our
 model.  We can marginalize over our uncertainty in the state of any
-given event by summing all posteriors over $s_i = \{0,1\}$.  Given an
+given event by summing all posteriors over $f_i = \{0,1\}$.  Given an
 identification of each event as foreground or background, and the
-rates of each, the likelihood of our data is
+rates of each, the likelihood%
+\footnote{See \S \ref{sec:likelihood-derivation} for a derivation of
+  Eq.~\eqref{eq:likelihood}.} %
+of our data is
 \begin{multline}
-  p\left( d | \left\{ f(x), b(x), \left\{ s_i \right\} \right\}
-  \right) = \\ \left[ \prod_{\left\{ i | s_i = 1 \right\}} f\left( x_i
-    \right) \right]  \left[ \prod_{\left\{ j | s_j = 0 \right\}}
+  \label{eq:likelihood}
+  p\left( d, \left\{ f_i \right\} | f(x), b(x)
+  \right) = \\ \left[ \prod_{\left\{ i | f_i = 1 \right\}} f\left( x_i
+    \right) \right]  \left[ \prod_{\left\{ j | f_j = 0 \right\}}
     b\left( x_j \right) \right] \\
   \times \exp\left[ - F\left( \infty \right) \right] 
   \exp\left[ -B\left( \infty \right) \right].
 \end{multline}
 Written in terms of the rate parameters, this becomes
 \begin{multline}
-  p\left( d | \left\{ f(x), b(x), \left\{ s_i \right\} \right\}
-  \right) = \\ R_f^{N_f} \left[ \prod_{\left\{ i | s_i = 1 \right\}}
+  p\left( d, \left\{ f_i \right\} | f(x), b(x)\right) = \\ R_f^{N_f}
+  \left[ \prod_{\left\{ i | f_i = 1 \right\}}
     \hat{f}\left( x_i \right) \right] \exp\left[ - R_f \right] \\
-  \times R_b^{N_b} \left[ \prod_{\left\{ j | s_j = 0 \right\}}
+  \times R_b^{N_b} \left[ \prod_{\left\{ j | f_j = 0 \right\}}
     \hat{b}\left( x_j \right) \right] \exp\left[ - R_b \right],
 \end{multline}
-where $N_f$ is the number of the $s_i$ that are 1 (i.e.\ the number of
-assumed foreground events), and $N_b$ is the number of the $s_i$ that
+where $N_f$ is the number of the $f_i$ that are 1 (i.e.\ the number of
+assumed foreground events), and $N_b$ is the number of the $f_i$ that
 are 0 (i.e.\ the assumed number of background events).  Note that $N_f
 + N_b = N$, as each event is considered either foreground or
 background in our model.
@@ -161,19 +165,32 @@ background in our model.
   the rates, $R_f$ and $R_b$, such as a flat prior on rate, the
   Poisson Jeffrey's prior (which is $\propto 1/\sqrt{R}$?), .}
 
-A choice of the foreground and background rates implies a prior on the
-state flags.  For fixed foreground and background rates, the
-probability that any particular event is foreground is given by 
+\subsection{Posteriors}
+
+Putting everything together, the posterior probability of each event's
+state and the overall rate is given by
+\begin{multline}
+  p(R_f, R_b, \left\{ f_i \right\} | d) \propto R_f^{N_f}
+  \left[ \prod_{\left\{ i | f_i = 1 \right\}}
+    \hat{f}\left( x_i \right) \right] \exp\left[ - R_f \right] \\
+  \times R_b^{N_b} \left[ \prod_{\left\{ j | f_j = 0 \right\}}
+    \hat{b}\left( x_j \right) \right] \exp\left[ - R_b \right] p(R_f, R_b).
+\end{multline}
+If we marginalize over all the flags, $f_i$, then we obtain
+\begin{multline}
+  p(R_f, R_b | d) \propto \prod_{i} \left[ R_f \hat{f}\left( x_i
+    \right) + R_b \hat{b}\left( x_i \right) \right] \\ \times
+  \exp\left[ - \left( R_f + R_b \right) \right] p\left( R_f, R_b
+  \right).
+\end{multline}
+If, instead, we marginalize over all but one flag, $f_k$, we obtain
+that the posterior ratio of signal to noise probability for event $k$
+given the rates $R_f$ and $R_b$ is 
 \begin{equation}
-  p\left(s_i = 1 | R_f, R_b \right) = \frac{R_f}{R_f + R_b}.
+  \frac{p(R_f, R_b, f_k = 1 | d)}{p(R_f, R_b, f_k = 0 | d)} =
+  \frac{R_f \hat{f}\left( x_k \right)}{R_b \hat{b}\left( x_k \right)}. 
 \end{equation}
 
-The complete prior is then
-\begin{multline}
-  p\left( R_f, R_b, \left\{ s_i \right\} \right) = \\ p\left( \left\{ s_i
-  \right\} | R_f, R_b \right) p\left( R_f, R_b \right) = \\ \frac{R_f^{N_f} R_b^{N_b}}{\left( R_f
-    + R_b\right)^N} p\left( R_f, R_b \right).
-\end{multline}
 
 \section{Gravitational Waves from Compact Binary Inspirals}
 \label{sec:GW-example}
@@ -185,6 +202,7 @@ The complete prior is then
 \appendix
 
 \section{Likelihood for Inhomogeneous Poisson Processes}
+\label{sec:likelihood-derivation}
 
 Consider a set of samples, $\{ x_i \}$, from an 
 
