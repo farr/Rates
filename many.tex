@@ -24,6 +24,11 @@
 % Northwestern University, 2145 Sheridan Road, Evanston, IL 60208}
 \affiliation{Northwestern University and CIERA}
 
+%\author{Jonathan R Gair}
+%\email{jgair@ast.cam.ac.uk}
+%\affiliation{University of Cambridge}
+%\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge, CB3 0HA, UK}
+
 \author{Ilya Mandel}
 \email{ilya@chgk.info}
 %\homepage{http://www.chgk.info/~ilyamandel/}
@@ -178,7 +183,7 @@ practical method for estimating the distribution of loudnesses for
 known-background events and known-foreground events in a mock data
 stream from the Advanced LIGO and Advanced Virgo gravitational wave
 detectors).  Dividing Eq.~\eqref{eq:likelihood-rates} by
-$\prod_{\left\{ i | f_i = 0 \right\}} \hat{b}(x_i)$, we obtain
+$\prod_{i=1}^N \hat{b}(x_i)$, we obtain
 \begin{multline}
   \label{eq:likelihood-ratio}
   p\left(d, \left\{ f_i \right\} | f(x), b(x) \right) \propto  \\ \left[
@@ -362,6 +367,29 @@ Eq.~\eqref{eq:foreground-marginalized}.)
     many background events as foreground events (see
     Eq.~\eqref{eq:foreground-marginalized}). }
 \end{figure}
+
+\section{Estimating the form of the foreground and background distributions}
+We can extend this framework to estimate the form of the rate functions as well, i.e., the $\hat{f}(x)$ and $\hat{b}(x)$, assuming a model. If we parameterize $\hat{f}(x)$ by parameters $\{\mu^i_f\}$ and parameterize $\hat{b}(x)$ by parameters $\{\mu^i_b\}$ then the combined posterior becomes
+\begin{eqnarray}
+&&p(R_f, R_b, \{\mu_f^i\}, \{\mu_b^i\}, \{f_i\} | d)  \propto \nonumber \\   && \hspace{2cm} \prod_{\{j :   f_j=1\}} \hat{f}(x_j ; \mu_f^i)\prod_{\{k : f_k=0\}} \hat{b}(x_k ; \mu_b^i) \nonumber \\ &&\hspace{2.25cm}\times \exp\left[-(R_f+R_b)\right]    R_f^{N_f} R_b^{N_b} \nonumber \\ && \hspace{2.5cm}\times p(R_f, R_b, \{\mu_f^i\}, \{\mu_b^i\}) \label{fullpost}
+\end{eqnarray}
+in which $p(R_f, R_b, \{\mu_f^i\}, \{\mu_b^i\})$ is the combined prior on the rate distribution and rate function parameters. The model for the rate functions could take a simple analytic form, for instance a power law
+\begin{eqnarray}
+\hat{f}(x; \alpha_f, x_{\rm min}) = \alpha_f \frac{x_{\rm min}^{\alpha_f}}{x^{\alpha_f+1}} \nonumber \\
+\hat{b}(x; \alpha_b, x_{\rm min}) = \alpha_b \frac{x_{\rm min}^{\alpha_b}}{x^{\alpha_b+1}}
+\end{eqnarray}
+or an exponential distribution. If the same model is used for both the foreground and background distributions then care must be taken with the priors otherwise it might not be possible to distinguish the foreground and background events. 
+
+An alternative, almost model-free approach, would be to divide the statistic space up into bins and use a model that $\hat{f}(x)$ and $\hat{b}(x)$ are constant in each bin. The number of free parameters, $\{\mu_f^i\}$, is then the number of bins used.
+
+\subsection{Incorporating timeslide and injection data}
+Detection rates for LIGO are commonly estimated by injecting signals with known parameters into the detector stream. False alarm rates are also commonly estimated by using timeslides, in which data from different detectors is offset in time so that all events passing the specified threshold are known to be noise artefacts. Injection and timeslide data can also be readily incorporated into this framework. We assume that we have another set of $N_I$ events, labelled as $i=N+1, \cdots N+N_I$, that are known to be drawn from the foreground distribution and a set of $N_T$ events, labelled as $i=N+N_I+1, \cdots N+N_I+N_T$, that are known to be drawn from the background distribution. These events will not be drawn with the correct rate parameters and so they do not contribute to the determination of $R_f$ and $R_b$ terms, but they do contribute an extra factor
+\begin{equation}
+\prod_{i=N+1}^{N+N_I} \hat{f}(x_i; \mu_f^i) \prod_{m=N+N_I+1}^{N+N_I+N_T} \hat{b}(x_i; \mu_b^i) 
+\end{equation}
+on the right hand side of Eq.~(\ref{fullpost}). Given the timeslides and injections we can therefore simultaneously fit for the shape of the background as well as for the rates. If we use the binned model for the probability distributions then if there were many more events in the timeslide and injection data set than in the data set being analysed, the analysis would be equivalent to assuming that the shape of the foreground and background distributions was given by the distribution of the statistics for the timeslide and injection events. However, this framework is more flexible when the amount of timeslide or injection data is limited.
+
+In practice, the foreground events will not all be identical and so the distribution of statistics for the foreground population will depend on the astrophysical distribution of parameters of the sources. If this is not correctly reproduced by the injections, the assumption that the injections represent the same distribution as the foreground in the data is not valid. In that case, it might be safer not to use injection information in the analysis. 
 
 \begin{acknowledgments}
   Kipp Cannon, Chad Hanna, and Drew Keppel for providing the data set
