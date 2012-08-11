@@ -228,21 +228,29 @@ Putting everything together, the posterior is
   \right] \exp\left[ - \left(R_f + R_b\right) \right]
   \frac{p(\theta)}{\sqrt{R_f R_b}}
 \end{equation}
-Not surprisingly, this posterior is equivalent to one derived by assuming
-that the flags, $\mathset{f_i}$, are un-observed data and treating the
-sets $\mathset{x_i | f_i = 1}$ and $\mathset{x_i | f_i = 0}$ as
-samples from an inhomogeneous Poisson process:
+Not surprisingly, this posterior is equivalent to one derived by
+assuming that the flags, $\mathset{f_i}$, are un-observed data and
+treating the sets $\mathset{x_i | f_i = 1}$ and $\mathset{x_i | f_i =
+  0}$ as samples from an inhomogeneous Poisson process.  For an
+inhomogeneous Poisson process with rate function $r(y)$ (cumulative
+rate $R(y)$), the likelihood of a set of samples $\mathset{y_i}$ is
+given by 
 \begin{multline}
-  p\left( \mathset{f_i}, R_f, R_b, \theta | d \right) \propto p\left(
-    d, \mathset{f_i} | R_f, R_b, \theta \right) p\left( R_f, R_b,
-    \theta \right) \\ = \left[ \prod_{\mathset{i|f_i=1}} f\left( x_i,
-      \theta \right) \right] \left[ \prod_{\mathset{i|f_i=0}} b\left(
-      x_i, \theta\right) \right] \exp\left[ -\left( R_f + R_b\right)
-  \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
+  p\left( \mathset{y_i} | r \right) = \lim_{\epsilon \to 0} P\left(
+  \textnormal{zero events below } y_0 - \epsilon \right) \times
+  P\left( \textnormal{one event between } y_0 - \epsilon \textnormal{
+    and } y_0 + \epsilon \right) \\ \times P\left( \textnormal{zero
+    events between } y_0+\epsilon \textnormal{ and } y_1 - \epsilon
+  \right) \ldots \\ = \lim_{\epsilon \to 0} \exp\left[ - R\left(y_0 -
+    \epsilon \right) \right] \left[ r\left( y_0 \right) +
+    \order{\epsilon^2} \right] \times \exp\left[ - \left[ R\left( y_1
+      - \epsilon\right) - R\left( y_0 + \epsilon\right) \right]
+    \right] \times \ldots = \left[\prod_i r\left( y_i
+    \right)\right] \exp\left[ - R\left( \infty \right) \right].
 \end{multline}
+Applying this likelihood once to the foreground samples and once to
+the background samples reproduces Eq.~\eqref{eq:posterior}.
 
-\ilya{[I can't derive the preceding equation in 1 line. ;)  So I'd suggest either making the alternative derivation more explicit, or, if you don't think it's worth the space, just saying that one could derive the same thing in this alternative way -- otherwise, just repeating Eq.~(15) doesn't seem very useful.]}
- 
 We can marginalize the posterior over the flags, $f_i$, obtaining
 \begin{equation}
   \label{eq:rate-shape-posterior}
