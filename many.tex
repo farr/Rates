@@ -63,11 +63,13 @@ Northwestern University, 2145 Sheridan Road, Evanston, IL 60208}
   
 Difficulty of measuring rate in presence of background
 
-Want to add more than just the loudest event (cf. loudest event statistic)
+Want to add more than just the loudest event (cf. loudest event
+statistic)
 
 Unknown background distribution, $\Lambda$
 
-Cf. number of gold-plated detections in sensitive volume -- frequentist approach OK if tons of events, otherwise need this.
+Cf. number of gold-plated detections in sensitive volume --
+frequentist approach OK if tons of events, otherwise need this.
 
 
 \section{Model}
@@ -82,7 +84,10 @@ of events:
 \end{equation}
 
 We assume that both the foreground and background events are samples
-from an inhomogeneous Poisson process \ilya{[pardon my ignorance, but I thought an "inhomogeneous" Poisson process meant that the rate changed as a function of time -- and I don't think that's what we are assuming...]} with \ilya{respective} differential rates
+from an inhomogeneous Poisson process \ilya{[pardon my ignorance, but
+    I thought an "inhomogeneous" Poisson process meant that the rate
+    changed as a function of time -- and I don't think that's what we
+    are assuming...]} with \ilya{respective} differential rates
 \begin{equation}
   \frac{dN_f}{dx} = f(x, \theta)
 \end{equation}
@@ -134,8 +139,9 @@ and
   b(x, \theta) = R_b \hat{b}(x, \theta'),
 \end{equation}
 where $\hat{F}(\infty, \theta') = \hat{B}(\infty, \theta') = 1$, and
-$\theta' = \theta \setminus \{R_{f}, R_{b} \}$.  Then $R_f\ilya{\equiv F(\infty,\theta)}$ and $R_b\ilya{\equiv B(\infty,\theta)}$
-are the total number of foreground and background events expected and
+$\theta' = \theta \setminus \{R_{f}, R_{b} \}$.  Then $R_f\ilya{\equiv
+  F(\infty,\theta)}$ and $R_b\ilya{\equiv B(\infty,\theta)}$ are the
+total number of foreground and background events expected and
 $\hat{f}(x, \theta')$ and $\hat{b}(x, \theta')$ are the likelihood of
 obtaining an event with ranking statistic $x$ under the foreground and
 background distributions.  In what follows, we will drop the prime,
@@ -144,7 +150,9 @@ except $R_f$ and $R_b$.
 
 We do not know a priori which of the events are foreground and which
 are background.  For each event, we introduce a flag, $f_i$, which is
-either 0 \ilya{(background)} or 1 \ilya{(foreground)}.  These ``state'' flags are parameters in our model, along with $R_f$, $R_b$, and $\theta$.  We can marginalize over our uncertainty in the state of
+either 0 \ilya{(background)} or 1 \ilya{(foreground)}.  These
+``state'' flags are parameters in our model, along with $R_f$, $R_b$,
+and $\theta$.  We can marginalize over our uncertainty in the state of
 any given event by summing posteriors over $f_i = \mathset{0,1}$.
 
 Bayes' theorem relates the posterior probability of the state flags,
@@ -159,7 +167,8 @@ rates and shape parameters before any data are obtained, $p\left(
   \frac{p\left( d | \mathset{f_i}, R_f, R_b, \theta\right)
   p\left(\mathset{f_i}, R_f, R_b, \theta\right)}{\ilya{p(d)}}. 
 \end{equation}
-The \ilya{normalization constant}, called the evidence, $p(d)$, is independent of the state flags, rates, and shape parameters.
+The \ilya{normalization constant}, called the evidence, $p(d)$, is
+independent of the state flags, rates, and shape parameters.
 
 Each foreground event is drawn from the probability distribution
 $\hat{f}$ and each background event is drawn from the probability
@@ -192,7 +201,17 @@ inhomogeneous Poisson processes and the $N_f! N_b!$ different ways of
 assigning foreground and background flags to events for fixed $N_f$,
 $N_b$.  
 
-\ilya{[I agree with the final result, but I find this way of deriving it to be confusing.  First of all, the number of ways to assign flags to events for fixed $N_f$ and $N_b$ is $N!/(N_f! N_b!)$, not $N_f! N_b!$ as written.  Secondly, you are computing the probability of having a particular ordered list of flags, so there's no reason to consider different permutations.  Thirdly, you are not properly including the fact that the length of the flags vector must be exactly $N$, the total number of data points.  (Well, you have the right result, so you are obviously doing these things properly, but the explanation just doesn't seem clear to me. :) )  I would make that $N$ explicit, by writing Eq.~(12) as 
+\ilya{[I agree with the final result, but I find this way of deriving
+    it to be confusing.  First of all, the number of ways to assign
+    flags to events for fixed $N_f$ and $N_b$ is $N!/(N_f! N_b!)$, not
+    $N_f! N_b!$ as written.  Secondly, you are computing the
+    probability of having a particular ordered list of flags, so
+    there's no reason to consider different permutations.  Thirdly,
+    you are not properly including the fact that the length of the
+    flags vector must be exactly $N$, the total number of data points.
+    (Well, you have the right result, so you are obviously doing these
+    things properly, but the explanation just doesn't seem clear to
+    me. :) ) I would make that $N$ explicit, by writing Eq.~(12) as
 
 $$
   p\left(\mathset{f_i}, N, R_f, R_b, \theta\right)  = 
@@ -205,15 +224,15 @@ $$ p\left( \mathset{f_i} | N, R_f, R_b\right) =
 \prod_{\mathset{i|f_i=1}} \left(\frac{R_f}{R_f+R_b}\right) 
 \prod_{\mathset{i|f_i=0}} \left(\frac{R_b}{R_f+R_b}\right) =
 \left(\frac{R_f}{R_f+R_b}\right)^{N_f} \left(\frac{R_b}{R_f+R_b}\right)^{N_b}. 
-$$
-Note that there are no permutations involved here -- once we assume that there are precisely $N=N_f+N_b$ events, the probability for the i'th event to have flag $f_i$ is either $R_f/(R_f+R_b)$ or $R_b/(R_f+R_b)$ depending on whether $f_i$ is 1 or 0.
-Meanwhile,
+$$ Note that there are no permutations involved here -- once we assume
+that there are precisely $N=N_f+N_b$ events, the probability for the
+i'th event to have flag $f_i$ is either $R_f/(R_f+R_b)$ or
+$R_b/(R_f+R_b)$ depending on whether $f_i$ is 1 or 0.  Meanwhile,
 $$
 p\left(N |R_f, R_b\right) = \frac{\left(R_f+R_b\right)^N}{N!} e^{-(R_f+R_b)},
-$$
-since the distribution of total event number is a Poisson process with rate $R_f+R_b$.
-Multiplying these, we get the same result as in (13), but in a way that even I can understand. :)
-]}
+$$ since the distribution of total event number is a Poisson process
+with rate $R_f+R_b$.  Multiplying these, we get the same result as in
+(13), but in a way that even I can understand. :) ]}
 
 The second term in Eq.~\eqref{eq:combined-flag-rate-prior} is a
 traditional prior.  Because the rate parameters enter the posterior in
@@ -284,8 +303,8 @@ and
 \begin{equation}
   R_b = \int d^\ilya{k} \ilya{\vec{x}} \, b(x, \theta),  
 \end{equation}
-where $f$ and $b$ are rate densities on the \ilya{$k$}-dimensional space of
-ranking statistics.  We give an example of fitting for
+where $f$ and $b$ are rate densities on the \ilya{$k$}-dimensional
+space of ranking statistics.  We give an example of fitting for
 multi-dimensional rate densities in \S~\ref{sec:star-cluster}.
 
 \section{Examples}
@@ -367,12 +386,13 @@ To demonstrate the effectiveness of our formalism, we applied it to a
 synthetic data set with foreground and background distributions drawn
 from Eqs.~\eqref{eq:analytic-background-rate} and
 \eqref{eq:analytic-foreground-rate} with $R_f^\mathrm{true} = 10.4$
-and $R_b^\mathrm{true} = 95.1$, using 1000 templates.  \ilya{[Specify $\xmin$?]} The synthetic
-data consisted of 13 foreground events and 85 background events; the
-cumulative distribution for the ranking statistic of the synthetic
-data appears in Figure \ref{fig:analytic-data-cumulative}.  We used a
-Markov Chain Monte Carlo simulation to draw samples of state flags and
-rates from the joint posterior (Eq.~\eqref{eq:posterior}).
+and $R_b^\mathrm{true} = 95.1$, using 1000 templates.  \ilya{[Specify
+    $\xmin$?]} The synthetic data consisted of 13 foreground events
+and 85 background events; the cumulative distribution for the ranking
+statistic of the synthetic data appears in Figure
+\ref{fig:analytic-data-cumulative}.  We used a Markov Chain Monte
+Carlo simulation to draw samples of state flags and rates from the
+joint posterior (Eq.~\eqref{eq:posterior}).
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{data}
@@ -384,7 +404,9 @@ rates from the joint posterior (Eq.~\eqref{eq:posterior}).
     gives the theoretical cumulative distribution for the models in
     Eqs.~\eqref{eq:analytic-background-rate} and
     \eqref{eq:analytic-foreground-rate} combined with $R_f = 10.4$ and
-    $R_b = 95.1$. \ilya{[I think both axis labels should say $x$ rather than $\rho$, since that's the ranking statistic ($\max \rho$).]}}
+    $R_b = 95.1$. \ilya{[I think both axis labels should say $x$
+        rather than $\rho$, since that's the ranking statistic ($\max
+        \rho$).]}}
 \end{figure}
 
 In Figure \ref{fig:analytic-rate-recovery}, we show the marginalized
@@ -394,7 +416,19 @@ to Eq.~\eqref{eq:rate-shape-posterior}.)  Figure
 foreground probability for each event marginalized over all other
 events' types and the foreground and background rates.
 
-\ilya{[General comment on the text: I think we need to say a bit more about the figures and the interpretation of the results, instead of just relying on the reader to make the best of it.  For example, even though it may seem obvious to us, we should explicitly say that Fig.~2 shows that we succeed in recovering rates within the expected uncertainty envelope.  On Fig.~3, could say something obvious like point out that we cannot separate background from foreground for individual events, but that doesn't necessarily matter for rate measurements.  Now, one interesting question that Fig.~3 brings to mind is the following: if we only used "gold-plated" events (say, those with $p(x|fore)/p(x|back)>0.99$, how much worse / more uncertain would the rate estimation be?]}
+\ilya{[General comment on the text: I think we need to say a bit more
+    about the figures and the interpretation of the results, instead
+    of just relying on the reader to make the best of it.  For
+    example, even though it may seem obvious to us, we should
+    explicitly say that Fig.~2 shows that we succeed in recovering
+    rates within the expected uncertainty envelope.  On Fig.~3, could
+    say something obvious like point out that we cannot separate
+    background from foreground for individual events, but that doesn't
+    necessarily matter for rate measurements.  Now, one interesting
+    question that Fig.~3 brings to mind is the following: if we only
+    used "gold-plated" events (say, those with
+    $p(x|fore)/p(x|back)>0.99$, how much worse / more uncertain would
+    the rate estimation be?]}
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates}
@@ -410,29 +444,36 @@ events' types and the foreground and background rates.
   \caption{\label{fig:analytic-rate-foreground-probs} Foreground
     probability for each event in the synthetic data set of \S
     \ref{sec:analytic-GW-example} marginalized over all other
-    parameters.  True foreground events are in blue \ilya{(dark grey)}, background events
-    in red \ilya{(light grey)}.  The solid line is the likelihood ratio
+    parameters.  True foreground events are in blue \ilya{(dark
+      grey)}, background events in red \ilya{(light grey)}.  The solid
+    line is the likelihood ratio
     $p(x|\mathrm{foreground})/p(x|\mathrm{background}) =
-    \hat{f}(x)/\hat{b}(x)$ for this model \ilya{evaluated at the simulated parameters (?)}; this exceeds the
-    marginalized foreground probability for many of the events because
-    in this data set there are approximately nine times as many
-    background events as foreground events. \ilya{[I'm not sure what the reader is meant to take away from the solid lines  If there's something worth taking away, we should describe the message in the text.  Otherwise, if it only confuses things, we should drop it.]}}
+    \hat{f}(x)/\hat{b}(x)$ for this model \ilya{evaluated at the
+      simulated parameters (?)}; this exceeds the marginalized
+    foreground probability for many of the events because in this data
+    set there are approximately nine times as many background events
+    as foreground events. \ilya{[I'm not sure what the reader is meant
+        to take away from the solid lines If there's something worth
+        taking away, we should describe the message in the text.
+        Otherwise, if it only confuses things, we should drop it.]}}
 \end{figure}
 
 \subsection{Gravitational Waves With Overlapping Templates}
 \label{sec:gw-overlapping-template}
 
 In \S \ref{sec:analytic-GW-example} we assumed that the overlap
-between \ilya{different} templates in the template bank \ilya{was negligible}, so the SNRs \ilya{recovered by}
-different templates are independent random variables.  In fact,
-template banks are not constructed in this way \citep[e.g.,][]{Owen:1998dk,Ajith:2008},
+between \ilya{different} templates in the template bank \ilya{was
+  negligible}, so the SNRs \ilya{recovered by} different templates are
+independent random variables.  In fact, template banks are not
+constructed in this way \citep[e.g.,][]{Owen:1998dk,Ajith:2008},
 %\citep{Caudill2011,Cannon2011}, 
-because signals could fall in the gaps
-between the non-overlapping templates.  We can model this effect by
-assuming that a template bank of $N$ actual templates will behave as
-if it had $N_\mathrm{eff}$ \emph{independent} templates.  \ilya{Rather than pre-computing $N_\mathrm{eff}$,} we can fit for \ilya{it as a} shape parameter.  That is, we assume that
-\ilya{$\theta = \{N_\mathrm{eff}\}$} is a shape parameter for the background cumulative
-distribution:
+because signals could fall in the gaps between the non-overlapping
+templates.  We can model this effect by assuming that a template bank
+of $N$ actual templates will behave as if it had $N_\mathrm{eff}$
+\emph{independent} templates.  \ilya{Rather than pre-computing
+  $N_\mathrm{eff}$,} we can fit for \ilya{it as a} shape parameter.
+That is, we assume that \ilya{$\theta = \{N_\mathrm{eff}\}$} is a
+shape parameter for the background cumulative distribution:
 \begin{equation}
   \hat{B}\left(x, N_\mathrm{eff}\right) = \frac{\left( 1 + \erf\left( \frac{x}{2} \right)
     \right)^{N_\mathrm{eff}} - \left( 1 + \erf\left( \frac{\xmin}{2} \right)
@@ -449,7 +490,16 @@ rates and the number of effective templates are recovered without
 significant loss of accuracy relative to the fixed $N_\mathrm{eff}$
 situation in \S \ref{sec:analytic-GW-example}.
 
-\ilya{[Again, I think we need to explicitly compare this method with two alternatives.  Alternative one is the loudest event statistic.  Alternative two is just counting gold-plated events, and dividing the volume in which we are sensitive to them by their number.  In principle, alternative one should be suboptimal when the number of events is more than 0 or 1, while alternative two should be OK when the number of events is large, but error-prone otherwise.  But if we want people to use this technique, we have to defend the point that there is a regime where it is clearly superior (and say what that regime is).]}
+\ilya{[Again, I think we need to explicitly compare this method with
+    two alternatives.  Alternative one is the loudest event statistic.
+    Alternative two is just counting gold-plated events, and dividing
+    the volume in which we are sensitive to them by their number.  In
+    principle, alternative one should be suboptimal when the number of
+    events is more than 0 or 1, while alternative two should be OK
+    when the number of events is large, but error-prone otherwise.
+    But if we want people to use this technique, we have to defend the
+    point that there is a regime where it is clearly superior (and say
+    what that regime is).]}
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates-nt}
@@ -461,7 +511,9 @@ situation in \S \ref{sec:analytic-GW-example}.
     values of the rates, $R_f = 10.4$ and $R_b=95.1$, are indicated
     with vertical lines.  The distributions are not significantly
     wider than those of Figure \ref{fig:analytic-rate-recovery}, in
-    spite of the extra parameter.  \ilya{[$R_f$ seems to be more of an outlier than before; why was there a significant shift, given that $N_\mathrm{eff}$ seems fairly spot on?]}}
+    spite of the extra parameter.  \ilya{[$R_f$ seems to be more of an
+        outlier than before; why was there a significant shift, given
+        that $N_\mathrm{eff}$ seems fairly spot on?]}}
 \end{figure}
 
 \begin{figure}
@@ -499,17 +551,24 @@ observational axes:
     - \vec{x}_{1/2} \right),
 \end{equation}
 where $\vec{\gamma}$ is the gradient, and $\vec{x}_{1/2} = [1/2, 1/2]$
-is the centroid of the observational domain.  \ilya{[I think that if the domain is finite, the previous equation is only normalized for all $\vec{\gamma}$ if $\vec{x}_{1/2}$ is in the center of a symmetric domain (as it happens to be in this case).]}
-We use assume a gradient
-for the background of $\vec{\gamma} = [-0.5, 0.5]$. 
-\ilya{[I find it a bit confusing to use the word "assume" for both the model and for the specific parameters injected into the simulation (but then being fit for, so their values are not "assumed" in the recovery).  Maybe "assume" for the model, and "simulate" for the parameter values to be fit?]}
-We assume that
-the total number of background stars, $R_b = 10000$, exceeds by a
-factor of ten the total number of cluster stars, $R_f = 1000$.  
-\ilya{[But the cluster has only $\sim 0.01$ of the total area, so it's over-dense by a factor of $10$ or more.  Fig.~6 shows a very bright spot where the cluster is, which sort of makes the problem look too simple for the chosen parameters...]} 
-We choose a true cluster center $\vec{x}_0 = \vec{x}_{1/2}$, and a radial
-scale parameter of $r_0 = 0.1$.  In all, the shape parameters for the
-true distributions are
+is the centroid of the observational domain.  \ilya{[I think that if
+    the domain is finite, the previous equation is only normalized for
+    all $\vec{\gamma}$ if $\vec{x}_{1/2}$ is in the center of a
+    symmetric domain (as it happens to be in this case).]}  We use
+assume a gradient for the background of $\vec{\gamma} = [-0.5, 0.5]$.
+\ilya{[I find it a bit confusing to use the word "assume" for both the
+    model and for the specific parameters injected into the simulation
+    (but then being fit for, so their values are not "assumed" in the
+    recovery).  Maybe "assume" for the model, and "simulate" for the
+    parameter values to be fit?]}  We assume that the total number of
+background stars, $R_b = 10000$, exceeds by a factor of ten the total
+number of cluster stars, $R_f = 1000$.  \ilya{[But the cluster has
+    only $\sim 0.01$ of the total area, so it's over-dense by a factor
+    of $10$ or more.  Fig.~6 shows a very bright spot where the
+    cluster is, which sort of makes the problem look too simple for
+    the chosen parameters...]}  We choose a true cluster center
+$\vec{x}_0 = \vec{x}_{1/2}$, and a radial scale parameter of $r_0 =
+0.1$.  In all, the shape parameters for the true distributions are
 \begin{equation}
 \label{eq:true-cluster-parameters}
 \theta_0 \equiv \left\{ x_0, y_0, r_0, \gamma_x, \gamma_y \right\} =
@@ -528,26 +587,35 @@ inhomogeneous Poisson process.
     \ref{sec:star-cluster}, with true parameters given in
     Eq.~\eqref{eq:true-cluster-parameters}.  There are a factor of 10
     more stars (10000) in the background than in the cluster (1000),
-    but the peak density for the cluster is much higher.   \ilya{[It seems too obvious that where the cluster is by eye, and probably fairly straightforward to compute the number of "excess" stars there...  Reader might ask why we need something so complicated when the answer is seems so obvious and a "frequentist" approach would seem to do here.]}}
+    but the peak density for the cluster is much higher.  \ilya{[It
+        seems too obvious that where the cluster is by eye, and
+        probably fairly straightforward to compute the number of
+        "excess" stars there...  Reader might ask why we need
+        something so complicated when the answer is seems so obvious
+        and a "frequentist" approach would seem to do here.]}}
 \end{figure}
 
 To analyize our synthetic data set, we analytically marginalized over
-the state \ilya{[this is the only time we call them "state" flags...]} flags, using the likelihood in
-Eq.~\eqref{eq:rate-shape-posterior}. 
-\ilya{[I think it would be kind to the reader to be more explicit about the connection with the formalism in Section II.  What are the "events"?  What is the ranking statistic $x$?  What are the flags (which aren't in $\mathbb{R}$?)?]}
- We did this to take advantage of
-the \textit{emcee} sampler of \citet{ForemanMackey2012}, which
-requires all parameters to be in $\mathbb{R}$.  We applied a prior on
-the shape parameters that is flat in $\vec{x}_0$ and $\vec{\gamma}$,
-and the Jeffreys prior on $r_0$,
+the state \ilya{[this is the only time we call them "state" flags...]}
+flags, using the likelihood in Eq.~\eqref{eq:rate-shape-posterior}.
+\ilya{[I think it would be kind to the reader to be more explicit
+    about the connection with the formalism in Section II.  What are
+    the "events"?  What is the ranking statistic $x$?  What are the
+    flags (which aren't in $\mathbb{R}$?)?]}  We did this to take
+advantage of the \textit{emcee} sampler of \citet{ForemanMackey2012},
+which requires all parameters to be in $\mathbb{R}$.  We applied a
+prior on the shape parameters that is flat in $\vec{x}_0$ and
+$\vec{\gamma}$, and the Jeffreys prior on $r_0$,
 \begin{equation}
   p\left( r_0 \right) = \frac{\sqrt{R_f}}{r_0}.
 \end{equation}
-\ilya{[Why is this the Jeffreys prior (BTW, it's Jeffreys, or perhaps Jeffreys', but definitely not Jeffrey's ;) )?  It's not obvious why the prior on $r_0$ should depend on $R_f$?]}
-(Note that this factor of $\sqrt{R_f}$ cancels with the Jeffreys
-prior on the rate, $1/\sqrt{R_f}$; we have verified that the priors on
-these parameters are irrelevant to our results, as would be expected
-from the measurement of $\sim 1000$ foreground stars.)  
+\ilya{[Why is this the Jeffreys prior (BTW, it's Jeffreys, or perhaps
+    Jeffreys', but definitely not Jeffrey's ;) )?  It's not obvious
+    why the prior on $r_0$ should depend on $R_f$?]}  (Note that this
+factor of $\sqrt{R_f}$ cancels with the Jeffreys prior on the rate,
+$1/\sqrt{R_f}$; we have verified that the priors on these parameters
+are irrelevant to our results, as would be expected from the
+measurement of $\sim 1000$ foreground stars.)
 
 Figure \ref{fig:sky-loc} shows the posterior for the location
 parameters, $\vec{x}_0$; the center of the cluster is localized to
@@ -565,7 +633,9 @@ accurately recovered by our analysis.
     example from \S~\ref{sec:star-cluster}.  The center $(x,y) =
     \left(x_0, y_0\right)$ is determined to within a few percent of
     the structural radius of the cluster, $r_0$ (see
-    Eq.~\eqref{eq:true-cluster-parameters}). \ilya{[Given the cluster size of 0.1, it seems a bit surprising that the center is off by $\sim 0.05$...]}}
+    Eq.~\eqref{eq:true-cluster-parameters}). \ilya{[Given the cluster
+        size of 0.1, it seems a bit surprising that the center is off
+        by $\sim 0.05$...]}}
 \end{figure}
 
 \begin{figure}
@@ -582,7 +652,9 @@ accurately recovered by our analysis.
   \caption{\label{fig:cluster-scale} Posterior density for the scale
     parameter for the cluster, $r_0$, from the example in
     \S~\ref{sec:star-cluster}.  The true value is indicated by the
-    vertical line (see Eq.~\ref{eq:true-cluster-parameters}).  \ilya{[Perhaps combine Figs.~8 and 9 (put an extra scale for $r_0$ at the top of 8?]} }
+    vertical line (see Eq.~\ref{eq:true-cluster-parameters}).
+    \ilya{[Perhaps combine Figs.~8 and 9 (put an extra scale for $r_0$
+        at the top of 8?]} }
 \end{figure}
 
 \section{Conclusion}
@@ -591,7 +663,8 @@ Separating classes of events
 
 Comments on background probability estimation --  Cannon et al. in prep.
 
-Relevance (vs. loudest statistic, or frequentist approach using only gold-plated events)
+Relevance (vs. loudest statistic, or frequentist approach using only
+gold-plated events)
 
 \begin{acknowledgments}
   We thank Kipp Cannon, Chad Hanna, Drew Keppel, and Richard
