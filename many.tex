@@ -283,6 +283,8 @@ given by
     \right] \times \ldots = \left[\prod_i r\left( y_i
     \right)\right] \exp\left[ - R\left( \infty \right) \right].
 \end{multline}
+\ilya{[Note: I don't think this is right -- the expression you've written down should be zero in the limit $\epsilon \to 0$, and it would be if the $\epsilon$s were kept correctly (e.g., $ P\left( \textnormal{one event between } y_0 - \epsilon \textnormal{ and } y_0 + \epsilon \right) \sim  r\left( y_0 \right) \epsilon +
+    \order{\epsilon^2}$).]}
 Applying this likelihood once to the foreground samples and once to
 the background samples reproduces Eq.~\eqref{eq:posterior}.
 
@@ -362,16 +364,16 @@ template follows a $N(0,1)$ distribution.  The background ranking
 statistic (i.e.\ the maximum SNR over the template bank) then has a
 cumulative distribution without thresholding of
 \begin{equation}
-  \hat{B}(x) = \left( \frac{1 + \erf\left( \frac{x}{2}
+  \hat{B}(x) = \left( \frac{1 + \erf\left( \frac{x}{\ilya{\sqrt{2}}}
       \right)}{2} \right)^N
 \end{equation}
 Imposing the threshold, $x > \xmin$, the
 cumulative distribution of the background becomes
 \begin{equation}
   \label{eq:analytic-background-rate}
-  \hat{B}(x) = \frac{\left( 1 + \erf\left( \frac{x}{2} \right)
-    \right)^N - \left( 1 + \erf\left( \frac{\xmin}{2} \right)
-    \right)^N}{2^N - \left( 1 + \erf\left( \frac{\xmin}{2} \right)
+  \hat{B}(x) = \frac{\left( 1 + \erf\left( \frac{x}{\ilya{\sqrt{2}}} \right)
+    \right)^N - \left( 1 + \erf\left( \frac{\xmin}{\ilya{\sqrt{2}}} \right)
+    \right)^N}{2^N - \left( 1 + \erf\left( \frac{\xmin}{\ilya{\sqrt{2}}} \right)
     \right)^N }
 \end{equation}
 \ilya{for $x>\xmin$, $0$ otherwise.}
@@ -602,7 +604,7 @@ inhomogeneous Poisson process.
         and a "frequentist" approach would seem to do here.]}}
 \end{figure}
 
-To analyize our synthetic data set, we analytically marginalized over
+To analyze our synthetic data set, we analytically marginalized over
 the state flags, using the likelihood in Eq.~\eqref{eq:rate-shape-posterior}.
 \ilya{[I think it would be kind to the reader to be more explicit
     about the connection with the formalism in Section II.  What are
