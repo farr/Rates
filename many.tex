@@ -36,7 +36,7 @@ Northwestern University, 2145 Sheridan Road, Evanston, IL 60208}
 \affiliation{School of Physics and Astronomy\\University of Birmingham\\Edgbaston B15 2TT Birmingham\\United Kingdom}
 %\affiliation{University of Birmingham}
 
-\author{Jon Gair}
+\author{Jonathan R. Gair}
 \email{jrg23@cam.ac.uk}
 
 \begin{abstract}
@@ -84,10 +84,7 @@ of events:
 \end{equation}
 
 We assume that both the foreground and background events are samples
-from an inhomogeneous Poisson process \ilya{[pardon my ignorance, but
-    I thought an "inhomogeneous" Poisson process meant that the rate
-    changed as a function of time -- and I don't think that's what we
-    are assuming...]} with \ilya{respective} differential rates
+from an inhomogeneous Poisson process with respective differential rates
 \begin{equation}
   \frac{dN_f}{dx} = f(x, \theta)
 \end{equation}
@@ -117,13 +114,13 @@ inhomogeneous Poisson process implies
 \item The probability of exactly one foreground event between $x$ and
   $x+h$ is given by
   \begin{equation}
-    P(\ilya{n} = 1 \in [x, x+h]) = f(x,\theta) h + \order{h^2}.
+    P(n = 1 \in [x, x+h]) = f(x,\theta) h + \order{h^2}.
   \end{equation}
   and similarly for background events.
 \item The probability of two or more events in a small range of
   ranking statistic is negligible
   \begin{equation}
-    P(\ilya{n} = 2 \in [x, x+h]) = \order{h^2}.
+    P(n = 2 \in [x, x+h]) = \order{h^2}.
   \end{equation}
 \end{enumerate}
 The foreground and background rates can in general depend on several
@@ -139,8 +136,8 @@ and
   b(x, \theta) = R_b \hat{b}(x, \theta'),
 \end{equation}
 where $\hat{F}(\infty, \theta') = \hat{B}(\infty, \theta') = 1$, and
-$\theta' = \theta \setminus \{R_{f}, R_{b} \}$.  Then $R_f\ilya{\equiv
-  F(\infty,\theta)}$ and $R_b\ilya{\equiv B(\infty,\theta)}$ are the
+$\theta' = \theta \setminus \{R_{f}, R_{b} \}$.  Then $R_f \equiv
+  F(\infty,\theta)$ and $R_b \equiv B(\infty,\theta)$ are the
 total number of foreground and background events expected and
 $\hat{f}(x, \theta')$ and $\hat{b}(x, \theta')$ are the likelihood of
 obtaining an event with ranking statistic $x$ under the foreground and
@@ -150,7 +147,7 @@ except $R_f$ and $R_b$.
 
 We do not know a priori which of the events are foreground and which
 are background.  For each event, we introduce a flag, $f_i$, which is
-either 0 \ilya{(background)} or 1 \ilya{(foreground)}.  These
+either 0 (background) or 1 (foreground).  These
 ``state'' flags are parameters in our model, along with $R_f$, $R_b$,
 and $\theta$.  We can marginalize over our uncertainty in the state of
 any given event by summing posteriors over $f_i = \mathset{0,1}$.
@@ -163,11 +160,11 @@ rates and shape parameters before any data are obtained, $p\left(
   \mathset{f_i}, R_f, R_b, \theta\right)$:
 \begin{equation}
   \label{eq:Bayes}
-  p\left(\mathset{f_i}, R_f, R_b, \theta | d \right)  \ilya{=}
+  p\left(\mathset{f_i}, R_f, R_b, \theta | d \right)  =
   \frac{p\left( d | \mathset{f_i}, R_f, R_b, \theta\right)
-  p\left(\mathset{f_i}, R_f, R_b, \theta\right)}{\ilya{p(d)}}. 
+  p\left(\mathset{f_i}, R_f, R_b, \theta\right)}{p(d)}. 
 \end{equation}
-The \ilya{normalization constant}, called the evidence, $p(d)$, is
+The normalization constant, called the evidence, $p(d)$, is
 independent of the state flags, rates, and shape parameters.
 
 Each foreground event is drawn from the probability distribution
@@ -180,59 +177,69 @@ Therefore, the likelihood of the data is
   \left[ \prod_{\mathset{i | f_i = 0}} \hat{b}\left( x_i, \theta\right)
   \right].  
 \end{equation}
+
+%The prior distribution can be factorized as
+%\begin{equation}
+%  \label{eq:combined-flag-rate-prior}
+%  p\left(\mathset{f_i}, R_f, R_b, \theta\right)  = p\left(
+%   \mathset{f_i} | R_f, R_b, \theta\right)p(R_f, R_b, \theta).
+%\end{equation}
+%The first term is not actually a ``prior'' in the usual sense; the
+%conditional probability of the flags $\mathset{f_i}$ on the rates is given
+%by
+%\begin{equation}
+%  \label{eq:flag-conditional-prior}
+%  p\left(\mathset{f_i} | R_f, R_b, \theta\right) = \frac{R_f^{N_f}
+%    R_b^{N_b}}{N_f! N_b!} \exp\left[ - \left(R_f + R_b\right) \right]
+%  N_f! N_b! = R_f^{N_f}R_b^{N_b} \exp\left[ - \left(R_f + R_b\right) \right],
+%\end{equation}
+%where $N_f$ and $N_b$ are the number of foreground and background
+%events.  This expression follows from Property \ref{prop:Poisson} of
+%inhomogeneous Poisson processes and the $N_f! N_b!$ different ways of
+%assigning foreground and background flags to events for fixed $N_f$,
+%$N_b$.  
+%
+%\ilya{[I agree with the final result, but I find this way of deriving
+%    it to be confusing.  First of all, the number of ways to assign
+%    flags to events for fixed $N_f$ and $N_b$ is $N!/(N_f! N_b!)$, not
+%    $N_f! N_b!$ as written.  Secondly, you are computing the
+%    probability of having a particular ordered list of flags, so
+%    there's no reason to consider different permutations.  Thirdly,
+%    you are not properly including the fact that the length of the
+%    flags vector must be exactly $N$, the total number of data points.
+%    (Well, you have the right result, so you are obviously doing these
+%    things properly, but the explanation just doesn't seem clear to
+%    me. :) ) I would make that $N$ explicit, by writing Eq.~(12) as
+
 The prior distribution can be factorized as
 \begin{equation}
   \label{eq:combined-flag-rate-prior}
-  p\left(\mathset{f_i}, R_f, R_b, \theta\right)  = p\left(
-    \mathset{f_i} | R_f, R_b, \theta\right)p(R_f, R_b, \theta).
-\end{equation}
-The first term is not actually a ``prior'' in the usual sense; the
-conditional probability of the flags $\mathset{f_i}$ on the rates is given
-by
-\begin{equation}
-  \label{eq:flag-conditional-prior}
-  p\left(\mathset{f_i} | R_f, R_b, \theta\right) = \frac{R_f^{N_f}
-    R_b^{N_b}}{N_f! N_b!} \exp\left[ - \left(R_f + R_b\right) \right]
-  N_f! N_b! = R_f^{N_f}R_b^{N_b} \exp\left[ - \left(R_f + R_b\right) \right],
-\end{equation}
-where $N_f$ and $N_b$ are the number of foreground and background
-events.  This expression follows from Property \ref{prop:Poisson} of
-inhomogeneous Poisson processes and the $N_f! N_b!$ different ways of
-assigning foreground and background flags to events for fixed $N_f$,
-$N_b$.  
-
-\ilya{[I agree with the final result, but I find this way of deriving
-    it to be confusing.  First of all, the number of ways to assign
-    flags to events for fixed $N_f$ and $N_b$ is $N!/(N_f! N_b!)$, not
-    $N_f! N_b!$ as written.  Secondly, you are computing the
-    probability of having a particular ordered list of flags, so
-    there's no reason to consider different permutations.  Thirdly,
-    you are not properly including the fact that the length of the
-    flags vector must be exactly $N$, the total number of data points.
-    (Well, you have the right result, so you are obviously doing these
-    things properly, but the explanation just doesn't seem clear to
-    me. :) ) I would make that $N$ explicit, by writing Eq.~(12) as
-
-$$
   p\left(\mathset{f_i}, N, R_f, R_b, \theta\right)  = 
   p\left( \mathset{f_i} | N, R_f, R_b\right) p\left(N |R_f, R_b\right)  
  p\left(R_f, R_b, \theta\right).
-$$
-
-Then 
-$$ p\left( \mathset{f_i} | N, R_f, R_b\right) = 
+ \end{equation}
+ 
+The {\it a priori} probability that the $i$'th state flag is $f_i=1$ is given by $R_f/(R_f+R_b)$, while the probability that it is zero is $R_b/(R_f+R_b)$.  Then
+\begin{equation}
+p\left( \mathset{f_i} | N, R_f, R_b\right) = 
 \prod_{\mathset{i|f_i=1}} \left(\frac{R_f}{R_f+R_b}\right) 
 \prod_{\mathset{i|f_i=0}} \left(\frac{R_b}{R_f+R_b}\right) =
-\left(\frac{R_f}{R_f+R_b}\right)^{N_f} \left(\frac{R_b}{R_f+R_b}\right)^{N_b}. 
-$$ Note that there are no permutations involved here -- once we assume
-that there are precisely $N=N_f+N_b$ events, the probability for the
-i'th event to have flag $f_i$ is either $R_f/(R_f+R_b)$ or
-$R_b/(R_f+R_b)$ depending on whether $f_i$ is 1 or 0.  Meanwhile,
-$$
+\left(\frac{R_f}{R_f+R_b}\right)^{N_f} \left(\frac{R_b}{R_f+R_b}\right)^{N_b},
+\end{equation}
+where $N_f$ and $N_b$ are the numbers of foreground and background flags, $N_f+N_b=N$.
+Meanwhile,
+\begin{equation}
 p\left(N |R_f, R_b\right) = \frac{\left(R_f+R_b\right)^N}{N!} e^{-(R_f+R_b)},
-$$ since the distribution of total event number is a Poisson process
-with rate $R_f+R_b$.  Multiplying these, we get the same result as in
-(13), but in a way that even I can understand. :) ]}
+\end{equation}
+since the distribution of total event number is a Poisson process
+with rate $R_f+R_b$.  Combining these yields the conditional probability of the flags on the rates:
+\begin{equation}
+  \label{eq:flag-conditional-prior}
+  p\left(\mathset{f_i} | R_f, R_b\right) = \frac{R_f^{N_f}
+    R_b^{N_b}}{N_f! N_b!} \exp\left[ - \left(R_f + R_b\right) \right]
+  N_f! N_b! = R_f^{N_f}R_b^{N_b} \exp\left[ - \left(R_f + R_b\right) \right].
+\end{equation} 
+
 
 The second term in Eq.~\eqref{eq:combined-flag-rate-prior} is a
 traditional prior.  Because the rate parameters enter the posterior in
@@ -240,7 +247,7 @@ the same form as Poisson rates, we choose here the Poisson Jeffreys
 prior on rates \citep{Jeffreys1946}, independent of the shape
 parameters
 \begin{equation}
-  p\left( R_f, R_b, \theta\right) \ilya{\propto} \frac{1}{\sqrt{R_f R_b}} p(\theta),
+  p\left( R_f, R_b, \theta\right) \propto \frac{1}{\sqrt{R_f R_b}} p(\theta),
 \end{equation}
 but of course other choices are possible.  This choice has the
 advantage that the prior is normalizable as $R_f, R_b \to 0$, and the
@@ -297,13 +304,13 @@ parameters.
 Eq.~\eqref{eq:posterior} is unchanged if the ranking statistic is
 multi-dimensional; in this case, the rates are 
 \begin{equation}
-  R_f = \int d^\ilya{k} \ilya{\vec{x}} \, f(x, \theta)
+  R_f = \int d^k \vec{x} \, f(x, \theta)
 \end{equation}
 and
 \begin{equation}
-  R_b = \int d^\ilya{k} \ilya{\vec{x}} \, b(x, \theta),  
+  R_b = \int d^k \vec{x} \, b(x, \theta),  
 \end{equation}
-where $f$ and $b$ are rate densities on the \ilya{$k$}-dimensional
+where $f$ and $b$ are rate densities on the $k$-dimensional
 space of ranking statistics.  We give an example of fitting for
 multi-dimensional rate densities in \S~\ref{sec:star-cluster}.
 
@@ -596,8 +603,7 @@ inhomogeneous Poisson process.
 \end{figure}
 
 To analyize our synthetic data set, we analytically marginalized over
-the state \ilya{[this is the only time we call them "state" flags...]}
-flags, using the likelihood in Eq.~\eqref{eq:rate-shape-posterior}.
+the state flags, using the likelihood in Eq.~\eqref{eq:rate-shape-posterior}.
 \ilya{[I think it would be kind to the reader to be more explicit
     about the connection with the formalism in Section II.  What are
     the "events"?  What is the ranking statistic $x$?  What are the
