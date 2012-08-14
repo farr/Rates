@@ -30,14 +30,16 @@ Department of Physics and Astronomy\\
 Northwestern University, 2145 Sheridan Road, Evanston, IL 60208}
 %\affiliation{Northwestern University and CIERA}
 
+\author{Jonathan R. Gair}
+\email{jrg23@cam.ac.uk}
+\affiliation{Institute of Astronomy\\University of Cambridge\\Madingley Road, Cambridge CB3 0HA\\United Kingdom}
+
 \author{Ilya Mandel}
 \email{imandel@star.sr.bham.ac.uk}
 \homepage{http://www.sr.bham.ac.uk/~imandel}
 \affiliation{School of Physics and Astronomy\\University of Birmingham\\Edgbaston B15 2TT Birmingham\\United Kingdom}
 %\affiliation{University of Birmingham}
 
-\author{Jonathan R. Gair}
-\email{jrg23@cam.ac.uk}
 
 \begin{abstract}
   We show how to obtain a Bayesian estimate of the rate of signal
@@ -271,20 +273,17 @@ inhomogeneous Poisson process with rate function $r(y)$ (cumulative
 rate $R(y)$), the likelihood of a set of samples $\mathset{y_i}$ is
 given by 
 \begin{multline}
-  p\left( \mathset{y_i} | r \right) = \lim_{\epsilon \to 0} P\left(
-  \textnormal{zero events below } y_0 - \epsilon \right) \times
-  P\left( \textnormal{one event between } y_0 - \epsilon \textnormal{
-    and } y_0 + \epsilon \right) \\ \times P\left( \textnormal{zero
-    events between } y_0+\epsilon \textnormal{ and } y_1 - \epsilon
-  \right) \ldots \\ = \lim_{\epsilon \to 0} \exp\left[ - R\left(y_0 -
-    \epsilon \right) \right] \left[ r\left( y_0 \right) +
-    \order{\epsilon^2} \right] \times \exp\left[ - \left[ R\left( y_1
-      - \epsilon\right) - R\left( y_0 + \epsilon\right) \right]
-    \right] \times \ldots = \left[\prod_i r\left( y_i
+  p\left( \mathset{y_i} | r \right) \,{\rm d}^Ny_i= P\left(
+  \textnormal{zero events below } y_0  \right) \times
+  P\left( \textnormal{one event between } y_0  \textnormal{
+    and } y_0 + {\rm d}y_0 \right) \\ \times P\left( \textnormal{zero
+    events between } y_0+{\rm d}y_0 \textnormal{ and } y_1
+  \right) \ldots \\ p\left( \mathset{y_i} | r \right) = \lim_{\delta y_i \to 0} \exp\left[ - R\left(y_0\right) \right] \left[ r\left( y_0 \right) +
+    \order{\delta y_0} \right] \times \exp\left[ - \left[ R\left( y_1
+      \right) - R\left( y_0 + \delta y_0\right) \right]
+    \right] \times \ldots \\ = \left[\prod_i r\left( y_i
     \right)\right] \exp\left[ - R\left( \infty \right) \right].
 \end{multline}
-\ilya{[Note: I don't think this is right -- the expression you've written down should be zero in the limit $\epsilon \to 0$, and it would be if the $\epsilon$s were kept correctly (e.g., $ P\left( \textnormal{one event between } y_0 - \epsilon \textnormal{ and } y_0 + \epsilon \right) \sim  r\left( y_0 \right) \epsilon +
-    \order{\epsilon^2}$).]}
 Applying this likelihood once to the foreground samples and once to
 the background samples reproduces Eq.~\eqref{eq:posterior}.
 
@@ -302,7 +301,11 @@ This expression is useful if we are only interested in rates and not
 the probability that any particular event is foreground or background.
 Unlike the full posterior (Eq.~\eqref{eq:posterior}),
 Eq.~\eqref{eq:rate-shape-posterior} contains only continuous
-parameters.
+parameters. We note that the terms that depend on the overall rate parameters, $R_b$ or $R_f$, are of the form $R_b^{n-1/2} \exp(-R_b)$ and so marginalisation over either $R_b$ or $R_f$ can be achieved analytically using
+\begin{equation}
+I_n = \int_0^{\infty} x^{n-\frac{1}{2}} \, {\rm e}^{-x} {\rm d} x = \frac{(2n-1)!!}{2^n} \sqrt{\pi}
+\end{equation}
+using the usual notation $(2n-1)!! \equiv (2n-1)(2n-3)\cdots1$.
 
 Eq.~\eqref{eq:posterior} is unchanged if the ranking statistic is
 multi-dimensional; in this case, the rates are 
@@ -316,6 +319,27 @@ and
 where $f$ and $b$ are rate densities on the $k$-dimensional
 space of ranking statistics.  We give an example of fitting for
 multi-dimensional rate densities in \S~\ref{sec:star-cluster}.
+
+It is informative to relate these results to two other ways to estimate the foreground rate parameter --- the loudest event statistic and the foreground-dominated statistic.
+
+\subsubsection{Loudest event statistic}
+If we were to include only the $k$-loudest events in the posterior distribution, rather than all observed events, the posterior (Eq.~\eqref{eq:posterior}) would be modified by an additional factor of $\exp[-(R_f \hat{F}(x_{N-k+1}) + R_b \hat{B}(x_{N-k+1}))]$, where we have assumed events are ordered by loudness, so that $x_{N-k+1}$ is the $k$-th loudest event. This term accounts for the data-dependent threshold that a loudest event statistic employs.
+
+For the usual $k=1$ case, the marginalised posterior (Eq.~\eqref{eq:rate-shape-posterior}) becomes
+\begin{equation}
+p_{\rm LE}\left( R_f, R_b, \theta | d \right) \propto \left(R_f \hat{f}(x_N,\theta) + R_b \hat{b}(x_N,\theta)\right)\exp\left[-\left( R_f (1-\hat{F}(x_N,\theta)) +
+      R_b (1-\hat{B}(x_N,\theta)) \right) \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
+\end{equation}
+where $x_N$ denotes the loudness of the loudest event. Marginalising over $R_b$ we obtain
+\begin{equation}
+p_{\rm LE}\left( R_f, \theta | d \right) \propto \left( \frac{\hat{b}(x_N,\theta)}{2(1-\hat{B}(x_N,\theta))} + R_f \hat{f}(x_N,\theta)\right)\frac{\sqrt{\pi}}{\sqrt{1-\hat{B}(x_N,\theta)}\,\sqrt{R_f}} \exp(-R_f) .
+\end{equation}
+This posterior has a maximum in $R_f$ at
+\begin{equation}
+R_f = \frac{\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta)\tilde{b}(x_N,\theta) \pm \sqrt{(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta)\tilde{b}(x_N,\theta))^2 - 4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)}}{4 \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta)}.
+\end{equation}
+where $\tilde{b}(x_N,\theta) =\hat{b}(x_N,\theta)/(1-\hat{B}(x_N,\theta))$. If we assume that $\tilde{b}(x_N,\theta) \ll 1$, i.e., that the loudest event is very likely to be foreground we obtain the expected result $(1- \hat{F}(x_N,\theta))\,R_f \approx 1/2$.
+
 
 \section{Examples}
 \label{sec:GW-example}
