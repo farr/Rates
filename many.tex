@@ -76,14 +76,15 @@ frequentist approach OK if tons of events, otherwise need this.
 
 \section{Model}
 
-We assume that we are presented with a data set of $N$ events.  Each
+We assume that we are presented with a data set of $N$ events that exceed a pre-specified threshold in ranking statistic, $x_{min}$.  Each
 event may be due to either a signal of interest or an uninteresting
 background.  Each event is associated with a ranking statistic, $x$.
 Our data set therefore consists of the ranking statistics for the set
 of events:
 \begin{equation}
-  d = \mathset{ x_i | i = 1, \ldots, N }
+  d = \mathset{ x_i | i = 1, \ldots, N } .
 \end{equation}
+The number of events $N$ is also part of the observed data, but we separate out $N$ and the observed ranking statistics, $d$, for convenience. We can choose how to label our events. Ultimately we will label the events in order of ranking statistic, i.e., $x_1 < x_2 < \cdots < x_N$, but some of the derivations that follow are simpler if the events are ordered by time of arrival. We will use $d$ to denote ranking statistic-ordered events, and $d_{\rm to}$ to denote time-ordered events.
 
 We assume that both the foreground and background events are samples
 from an inhomogeneous Poisson process with respective differential rates
@@ -154,19 +155,19 @@ either 0 (background) or 1 (foreground).  These
 and $\theta$.  We can marginalize over our uncertainty in the state of
 any given event by summing posteriors over $f_i = \mathset{0,1}$.
 
-Bayes' theorem relates the posterior probability of the state flags,
+Assuming time-ordered data, $d_{\rm to}$, in the following, Bayes' theorem relates the posterior probability of the state flags,
 rates, and shape parameters, $p\left(\mathset{f_i}, R_f, R_b, \theta |
-  d \right)$, the likelihood of the data, $p\left( d | \mathset{f_i},
+  d_{\rm to}, N \right)$, the likelihood of the data, $p\left( d_{\rm to} | \mathset{f_i}, N, 
   R_f, R_b, \theta\right)$, and the prior probability of state flags,
 rates and shape parameters before any data are obtained, $p\left(
-  \mathset{f_i}, R_f, R_b, \theta\right)$:
+  \mathset{f_i}, N, R_f, R_b, \theta\right)$:
 \begin{equation}
   \label{eq:Bayes}
-  p\left(\mathset{f_i}, R_f, R_b, \theta | d \right)  =
-  \frac{p\left( d | \mathset{f_i}, R_f, R_b, \theta\right)
-  p\left(\mathset{f_i}, R_f, R_b, \theta\right)}{p(d)}. 
+  p\left(\mathset{f_i}, R_f, R_b, \theta | d_{\rm to}, N \right)  =
+  \frac{p\left( d_{\rm to} | \mathset{f_i}, N, R_f, R_b, \theta\right)
+  p\left(\mathset{f_i}, N, R_f, R_b, \theta\right)}{p(d_{\rm to}, N)}. 
 \end{equation}
-The normalization constant, called the evidence, $p(d)$, is
+The normalization constant, called the evidence, $p(d_{\rm to}, N)$, is
 independent of the state flags, rates, and shape parameters.
 
 Each foreground event is drawn from the probability distribution
@@ -174,11 +175,12 @@ $\hat{f}$ and each background event is drawn from the probability
 distribution $\hat{b}$.  The events are independent of each other.
 Therefore, the likelihood of the data is 
 \begin{equation}
-  p\left( d | \mathset{f_i}, R_f, R_b, \theta\right)  = \left[
+  p\left( d_{\rm to} | \mathset{f_i}, N, R_f, R_b, \theta\right)  = \left[
     \prod_{\mathset{i | f_i = 1}} \hat{f}\left(x_i, \theta\right) \right]
   \left[ \prod_{\mathset{i | f_i = 0}} \hat{b}\left( x_i, \theta\right)
   \right].  
 \end{equation}
+This is the probability that the first observed event is a fore/background event (if $f_i=1,0$) with ranking statistic $x_1$ and the second observed event is a fore/background event (if $f_i=1,0$) with ranking statistic $x_2$ etc. If the events are ordered by ranking statistic the corresponding expression is more complicated, since $x_1$ is now the event  from foreground or background, with the smallest ranking statistic etc. We will return to the statistic-ordered case later. 
 
 %The prior distribution can be factorized as
 %\begin{equation}
@@ -216,12 +218,10 @@ Therefore, the likelihood of the data is
 The prior distribution can be factorized as
 \begin{equation}
   \label{eq:combined-flag-rate-prior}
-  p\left(\mathset{f_i}, N, R_f, R_b, \theta\right)  = 
-  p\left( \mathset{f_i} | N, R_f, R_b\right) p\left(N |R_f, R_b\right)  
- p\left(R_f, R_b, \theta\right).
+  p\left(\mathset{f_i}, N, R_f, R_b, \theta\right)  = p\left( \mathset{f_i} | N, R_f, R_b\right) p\left(N |R_f, R_b\right)   p\left(R_f, R_b, \theta\right) =  p\left( \mathset{f_i},N | R_f, R_b\right)  p\left(R_f, R_b, \theta\right).
  \end{equation}
  
-The {\it a priori} probability that the $i$'th state flag is $f_i=1$ is given by $R_f/(R_f+R_b)$, while the probability that it is zero is $R_b/(R_f+R_b)$.  Then
+The probability that the $i$'th state flag is $f_i=1$ is given by $R_f/(R_f+R_b)$, while the probability that it is zero is $R_b/(R_f+R_b)$, provided the data are time-ordered as we have assumed.  Then
 \begin{equation}
 p\left( \mathset{f_i} | N, R_f, R_b\right) = 
 \prod_{\mathset{i|f_i=1}} \left(\frac{R_f}{R_f+R_b}\right) 
@@ -237,9 +237,8 @@ since the distribution of total event number is a Poisson process
 with rate $R_f+R_b$.  Combining these yields the conditional probability of the flags on the rates:
 \begin{equation}
   \label{eq:flag-conditional-prior}
-  p\left(\mathset{f_i} | R_f, R_b\right) = \frac{R_f^{N_f}
-    R_b^{N_b}}{N_f! N_b!} \exp\left[ - \left(R_f + R_b\right) \right]
-  N_f! N_b! = R_f^{N_f}R_b^{N_b} \exp\left[ - \left(R_f + R_b\right) \right].
+  p\left(\mathset{f_i},N | R_f, R_b\right) = \frac{R_f^{N_f}
+    R_b^{N_b}}{N!} \exp\left[ - \left(R_f + R_b\right) \right].
 \end{equation} 
 
 
@@ -249,23 +248,24 @@ the same form as Poisson rates, we choose here the Poisson Jeffreys
 prior on rates \citep{Jeffreys1946}, independent of the shape
 parameters
 \begin{equation}
-  p\left( R_f, R_b, \theta\right) \propto \frac{1}{\sqrt{R_f R_b}} p(\theta),
+  p\left( R_f, R_b, \theta\right) = \alpha \frac{1}{\sqrt{R_f R_b}} p(\theta),
 \end{equation}
-but of course other choices are possible.  This choice has the
-advantage that the prior is normalizable as $R_f, R_b \to 0$, and the
+where $\alpha$ is a normalisation constant, but of course other choices are possible.  This choice has the advantage that the prior is normalizable as $R_f, R_b \to 0$, and the
 exponentials in Eq.~\eqref{eq:flag-conditional-prior} regularize the
 posterior as $R_f, R_b \to \infty$.
 
 Putting everything together, the posterior is
 \begin{equation}
   \label{eq:posterior}
-  p\left( \mathset{f_i}, R_f, R_b, \theta | d \right) \propto \left[
+  p\left( \mathset{f_i}, R_f, R_b, \theta | d_{\rm to},N \right) = \frac{\alpha}{p(d_{\rm to},N)\,N!} \left[
     \prod_{\mathset{i | f_i = 1}} R_f \hat{f}\left(x_i, \theta\right) \right]
   \left[ \prod_{\mathset{i | f_i = 0}} R_b \hat{b}\left( x_i, \theta\right)
   \right] \exp\left[ - \left(R_f + R_b\right) \right]
   \frac{p(\theta)}{\sqrt{R_f R_b}}
 \end{equation}
-Not surprisingly, this posterior is equivalent to one derived by
+When sampling the posterior, the first term can be omitted and the equals sign replaced by proportionality, since it is independent of the parameters of interest, but we have kept this term explicitly so that we can see the equivalence to ranking-statistic ordered data. Once data have been observed, there is a unique loudness ordering and time ordering of those events, and so there is a one to one correspondence between a time-ordered posterior $p\left( \mathset{f_i}, R_f, R_b, \theta | d_{\rm to},N \right)$ and the corresponding statistic-ordered posterior $ p\left( \mathset{f_i}, R_f, R_b, \theta | d,N \right)$, which means $p\left( \mathset{f_i}, R_f, R_b, \theta | d,N \right) = p\left( \mathset{f_i}, R_f, R_b, \theta | d_{\rm to},N \right)$. However, the evidence $p(d,N) = N!\,p(d_{\rm to},N)$, since there are $N!$ ways in which $N$ events can be ordered in time and would have the same set of ranking statistics.
+
+Not surprisingly, this ranking-statistic ordered posterior can be computed directly by
 assuming that the flags, $\mathset{f_i}$, are un-observed data and
 treating the sets $\mathset{x_i | f_i = 1}$ and $\mathset{x_i | f_i =
   0}$ as samples from an inhomogeneous Poisson process.  For an
@@ -284,19 +284,18 @@ given by
     \right] \times \ldots \\ = \left[\prod_i r\left( y_i
     \right)\right] \exp\left[ - R\left( \infty \right) \right].
 \end{multline}
-Applying this likelihood once to the foreground samples and once to
-the background samples reproduces Eq.~\eqref{eq:posterior}.
+Applying this once to the foreground samples, once to
+the background samples and taking the product, we obtain $p(d,\mathset{f_i}, N | R_f, R_b, \theta)$ and thence $p(\mathset{f_i}, R_f, R_b, \theta | d,N) = p(d,\mathset{f_i}, N | R_f, R_b, \theta) p*R_f, R_b, \theta)/p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm to},N)$, as justified above, we reproduce Eq.~\eqref{eq:posterior}.
 
 We can marginalize the posterior over the flags, $f_i$, obtaining
 \begin{equation}
   \label{eq:rate-shape-posterior}
-  p\left( R_f, R_b, \theta | d \right) = \sum_{\mathset{f_i} \in
-    \mathset{0,1}^N} p\left( \mathset{f_i}, R_f, R_b, \theta | d \right)
+  p\left( R_f, R_b, \theta | d, N \right) = \sum_{\mathset{f_i} \in
+    \mathset{0,1}^N} p\left( \mathset{f_i}, R_f, R_b, \theta | d, N \right)
   \propto \prod_{i} \left[ R_f \hat{f}\left(x_i, \theta\right) + R_b
     \hat{b}\left( x_i, \theta\right) \right] \exp\left[-\left( R_f +
       R_b \right) \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
 \end{equation}
-\ilya{[Note: some of the expressions here aren't really properly normalized -- should check carefully which ones are, and replace $=$ by $\propto$ for the others.]}
 This expression is useful if we are only interested in rates and not
 the probability that any particular event is foreground or background.
 Unlike the full posterior (Eq.~\eqref{eq:posterior}),
@@ -323,7 +322,7 @@ multi-dimensional rate densities in \S~\ref{sec:star-cluster}.
 It is informative to relate these results to two other ways to estimate the foreground rate parameter --- the loudest event statistic and the foreground-dominated statistic.
 
 \subsubsection{Loudest event statistic}
-If we were to include only the $k$-loudest events in the posterior distribution, rather than all observed events, the posterior (Eq.~\eqref{eq:posterior}) would be modified by an additional factor of $\exp[-(R_f \hat{F}(x_{N-k+1}) + R_b \hat{B}(x_{N-k+1}))]$, where we have assumed events are ordered by loudness, so that $x_{N-k+1}$ is the $k$-th loudest event. This term accounts for the data-dependent threshold that a loudest event statistic employs.
+If we were to include only the $k$-loudest events in the posterior distribution, rather than all observed events, the posterior (Eq.~\eqref{eq:posterior}) would be modified by an additional factor of $\exp[R_f \hat{F}(x_{N-k+1}) + R_b \hat{B}(x_{N-k+1})]$, where we have assumed events are ordered by loudness, so that $x_{N-k+1}$ is the $k$-th loudest event. This term accounts for the data-dependent threshold that a loudest event statistic employs.
 
 For the usual $k=1$ case, the marginalised posterior (Eq.~\eqref{eq:rate-shape-posterior}) becomes
 \begin{equation}
@@ -332,14 +331,24 @@ p_{\rm LE}\left( R_f, R_b, \theta | d \right) \propto \left(R_f \hat{f}(x_N,\the
 \end{equation}
 where $x_N$ denotes the loudness of the loudest event. Marginalising over $R_b$ we obtain
 \begin{equation}
-p_{\rm LE}\left( R_f, \theta | d \right) \propto \left( \frac{\hat{b}(x_N,\theta)}{2(1-\hat{B}(x_N,\theta))} + R_f \hat{f}(x_N,\theta)\right)\frac{\sqrt{\pi}}{\sqrt{1-\hat{B}(x_N,\theta)}\,\sqrt{R_f}} \exp(-R_f) .
+p_{\rm LE}\left( R_f, \theta | d \right) \propto \left( \frac{\hat{b}(x_N,\theta)}{2(1-\hat{B}(x_N,\theta))} + R_f \hat{f}(x_N,\theta)\right)\frac{\sqrt{\pi}}{\sqrt{1-\hat{B}(x_N,\theta)}\,\sqrt{R_f}} \exp(-R_f(1-\hat{F}(x_N,\theta))) .
 \end{equation}
 This posterior has a maximum in $R_f$ at
 \begin{equation}
 R_f = \frac{\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta)\tilde{b}(x_N,\theta) \pm \sqrt{(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta)\tilde{b}(x_N,\theta))^2 - 4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)}}{4 \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta)}.
 \end{equation}
-where $\tilde{b}(x_N,\theta) =\hat{b}(x_N,\theta)/(1-\hat{B}(x_N,\theta))$. If we assume that $\tilde{b}(x_N,\theta) \ll 1$, i.e., that the loudest event is very likely to be foreground we obtain the expected result $(1- \hat{F}(x_N,\theta))\,R_f \approx 1/2$.
+where $\tilde{b}(x_N,\theta) =\hat{b}(x_N,\theta)/(1-\hat{B}(x_N,\theta))$. If $\tilde{b}(x_N,\theta) \ll 1$, i.e., the loudest event is very likely to be foreground, we obtain the result $(1- \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This is can be understood as the statement that the rate of foreground events with ranking statistic greater than $x_N$,  $(1- \hat{F}(x_N,\theta))\,R_f$, is of order $1$, as expected. If $\tilde{b}(x_N,\theta) >> 1$, however, the posterior on $R_f$ is peaked at $0$.
 
+\subsubsection{Foreground dominated statistic}
+If we set the threshold for including an event, $x_{\rm min}$, sufficiently high, we can ensure that $\hat{f}(x_i,\theta) \gg \hat{b}(x_i,\theta)$ for all ranking statistics $x_i$ in the data set. The posterior can then be approximated by
+\begin{equation}
+p_{\rm FD}\left( R_f, R_b, \theta | d \right) \propto  \prod_{i} \left[ \hat{f}\left(x_i, \theta\right)\right] R_f^N \exp\left[-\left( R_f + R_b \right) \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
+\end{equation}
+Normalisation over $R_b$ gives a constant factor and the posterior on the foreground rate becomes
+\begin{equation}
+p_{\rm FD}\left( R_f, \theta | d \right) \propto  \prod_{i} \left[ \hat{f}\left(x_i, \theta\right)\right] R_f^{N-\frac{1}{2}} \exp\left[-R_f  \right] p(\theta).
+\end{equation}
+Ignoring the dependence on $\theta$, this is peaked at a rate $R_f = N-1/2$, so we have the expected result that, in the foreground dominated regime, the rate is approximately equal to the number of events observed. We note that this is the rate of events occurring above threshold and so if we were to use this statistic with different choices of threshold we would have to renormalise the rates to a fixed threshold in order to compare the results. 
 
 \section{Examples}
 \label{sec:GW-example}
