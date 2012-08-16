@@ -750,18 +750,20 @@ and an (approximately) Jeffreys prior on $r_0$,
     \frac{2}{r_0} - \frac{4 r_0}{r^2 + r_0^2} \right)^2 \right\rangle}
   = \sqrt{\frac{ 4 R_f}{3 r_0^2}} \propto \frac{\sqrt{R_f}}{r_0}.
 \end{equation}
-Of course, we are ignoring the fact that $R_f$ and $r_0$ are
-correlated.  In truth, the Jeffreys prior would be the determinant of
-the matrix built out of terms like $\partial \log\mathcal{L} /
-\partial \theta_i \times \partial \log\mathcal{L} /\partial \theta_j$,
-but let's not get carried away\ldots.  As another aside, note that we
-could have predicted the $1/r_0$ dependence because $r_0$ has units,
-so the only unit-invariant prior is to be flat in $\log r_0$; I'm
-don't have a similar argument for the appearance of the $\sqrt{R_f}$
-factor.}  (Note that this factor of $\sqrt{R_f}$ cancels with the
-Jeffreys prior on the rate, $1/\sqrt{R_f}$; we have verified that the
-priors on these parameters are irrelevant to our results, as would be
-expected from the measurement of $\sim 1000$ foreground stars.)
+Note that the calculation of the prior uses the likelihood before
+analytical marginalization over the flags, $f_i$.  We are ignoring the
+fact that $R_f$ and $r_0$ are correlated.  In truth, the Jeffreys
+prior would be the determinant of the matrix built out of terms like
+$\partial \log\mathcal{L} / \partial \theta_i \times \partial
+\log\mathcal{L} /\partial \theta_j$, but let's not get carried
+away\ldots.  As another aside, note that we could have predicted the
+$1/r_0$ dependence because $r_0$ has units, so the only unit-invariant
+prior is to be flat in $\log r_0$; I'm don't have a similar argument
+for the appearance of the $\sqrt{R_f}$ factor.}  (Note that this
+factor of $\sqrt{R_f}$ cancels with the Jeffreys prior on the rate,
+$1/\sqrt{R_f}$; we have verified that the priors on these parameters
+are irrelevant to our results, as would be expected from the
+measurement of $\sim 1000$ foreground stars.)
 
 Figure \ref{fig:sky-loc} shows the posterior for the location
 parameters, $\vec{x}_0$; the center of the cluster is localized to
