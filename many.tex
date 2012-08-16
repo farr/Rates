@@ -382,8 +382,8 @@ have assumed events are ordered by loudness, so that $x_{N-k+1}$ is
 the $k$-th loudest event. This term accounts for the data-dependent
 threshold that a loudest event statistic employs.
 
-For the usual $k=1$ case, the marginalised posterior
-(Eq.~\eqref{eq:rate-shape-posterior}) becomes
+For the usual $k=1$ case \citep{Biswas2009}, the marginalised
+posterior (Eq.~\eqref{eq:rate-shape-posterior}) becomes
 \begin{equation}
 p_{\rm LE}\left( R_f, R_b, \theta | d \right) \propto \left(R_f
 \hat{f}(x_N,\theta) + R_b \hat{b}(x_N,\theta)\right)\exp\left[-\left(
@@ -550,19 +550,10 @@ to Eq.~\eqref{eq:rate-shape-posterior}.)  Figure
 foreground probability for each event marginalized over all other
 events' types and the foreground and background rates.
 
-\ilya{[General comment on the text: I think we need to say a bit more
-    about the figures and the interpretation of the results, instead
-    of just relying on the reader to make the best of it.  For
-    example, even though it may seem obvious to us, we should
-    explicitly say that Fig.~2 shows that we succeed in recovering
-    rates within the expected uncertainty envelope.  On Fig.~3, could
-    say something obvious like point out that we cannot separate
-    background from foreground for individual events, but that doesn't
-    necessarily matter for rate measurements.  Now, one interesting
-    question that Fig.~3 brings to mind is the following: if we only
-    used "gold-plated" events (say, those with
-    $p(x|fore)/p(x|back)>0.99$, how much worse / more uncertain would
-    the rate estimation be?]}
+\ilya{Now, one interesting question that Fig.~3 brings to mind is the
+  following: if we only used "gold-plated" events (say, those with
+  $p(x|fore)/p(x|back)>0.99$, how much worse / more uncertain would
+  the rate estimation be?]}
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates}
@@ -570,7 +561,9 @@ events' types and the foreground and background rates.
     posterior densities for $R_f$ (solid line) and $R_b$ (dashed line)
     for the analytic model discussed in \S
     \ref{sec:analytic-GW-example}.  The vertical lines indicate the
-    ``true'' values used to generate the synthetic data set.}
+    ``true'' values used to generate the synthetic data set.  Both the
+    true foreground and background rates lie well within the
+    probability envelope for $R_f$ and $R_b$.}
 \end{figure}
 
 \begin{figure}
@@ -578,36 +571,28 @@ events' types and the foreground and background rates.
   \caption{\label{fig:analytic-rate-foreground-probs} Foreground
     probability for each event in the synthetic data set of \S
     \ref{sec:analytic-GW-example} marginalized over all other
-    parameters.  True foreground events are in blue \ilya{(dark
-      grey)}, background events in red \ilya{(light grey)}.  The solid
-    line is the likelihood ratio
-    $p(x|\mathrm{foreground})/p(x|\mathrm{background}) =
-    \hat{f}(x)/\hat{b}(x)$ for this model \ilya{evaluated at the
-      simulated parameters (?)}; this exceeds the marginalized
-    foreground probability for many of the events because in this data
-    set there are approximately nine times as many background events
-    as foreground events. \ilya{[I'm not sure what the reader is meant
-        to take away from the solid lines If there's something worth
-        taking away, we should describe the message in the text.
-        Otherwise, if it only confuses things, we should drop it.]}}
+    parameters (errorbars are one standard deviation).  True
+    foreground events are in dark grey, background events in light
+    grey.  Even though our method cannot identify the status of most
+    events with confidence, it can still correctly estimate the rates
+    (Figure \ref{fig:analytic-rate-recovery}).}
 \end{figure}
 
 \subsection{Gravitational Waves With Overlapping Templates}
 \label{sec:gw-overlapping-template}
 
-In \S \ref{sec:analytic-GW-example} we assumed that the overlap
-between \ilya{different} templates in the template bank \ilya{was
-  negligible}, so the SNRs \ilya{recovered by} different templates are
-independent random variables.  In fact, template banks are not
-constructed in this way \citep[e.g.,][]{Owen:1998dk,Ajith:2008},
-%\citep{Caudill2011,Cannon2011}, 
-because signals could fall in the gaps between the non-overlapping
-templates.  We can model this effect by assuming that a template bank
-of $N$ actual templates will behave as if it had $N_\mathrm{eff}$
-\emph{independent} templates.  \ilya{Rather than pre-computing
-  $N_\mathrm{eff}$,} we can fit for \ilya{it as a} shape parameter.
-That is, we assume that \ilya{$\theta = \{N_\mathrm{eff}\}$} is a
-shape parameter for the background cumulative distribution:
+In \S~\ref{sec:analytic-GW-example} we assumed that the overlap
+between different templates in the template bank was negligible, so
+the SNRs recovered by different templates are independent random
+variables.  In fact, template banks are not constructed in this way
+\citep[e.g.,][]{Owen:1998dk,Ajith:2008}, because signals could fall in
+the gaps between the non-overlapping templates.  We can model this
+effect by assuming that a template bank of $N$ actual templates will
+behave as if it had $N_\mathrm{eff}$ \emph{independent} templates.
+Rather than pre-computing $N_\mathrm{eff}$, we can fit for it as a
+shape parameter.  That is, we assume that $\theta =
+\{N_\mathrm{eff}\}$ is a shape parameter for the background cumulative
+distribution:
 \begin{equation}
   \hat{B}\left(x, N_\mathrm{eff}\right) = \frac{\left( 1 + \erf\left(
     \frac{x}{\sqrt{2}} \right) \right)^{N_\mathrm{eff}} - \left( 1 +
@@ -616,14 +601,14 @@ shape parameter for the background cumulative distribution:
     \erf\left( \frac{\xmin}{\sqrt{2}} \right) \right)^{N_\mathrm{eff}} }.
 \end{equation}
 
-Results from such an analysis appear in Figures \ref{fig:rates-nt} and
-\ref{fig:ntemplates}.  We use the same parameters and data set as in
-\S \ref{sec:analytic-GW-example}, with $R_f = 10.4$, $R_b = 95.1$, and
-$N_\mathrm{eff} = 1000$, but now allow $N_\mathrm{eff}$ to be a
-parameter of the background distribution, with a flat prior.  Both the
-rates and the number of effective templates are recovered without
-significant loss of accuracy relative to the fixed $N_\mathrm{eff}$
-situation in \S \ref{sec:analytic-GW-example}.
+Results from such an analysis on the data in
+\S~\ref{sec:analytic-GW-example} appear in Figures \ref{fig:rates-nt}
+and \ref{fig:ntemplates}.  Recall that the parameters used to generate
+this data set are $R_f = 10.4$, $R_b = 95.1$, and $N_\mathrm{eff} =
+1000$.  We use a flat prior on $N_\mathrm{eff}$.  Both the rates and
+the number of effective templates are recovered without significant
+loss of accuracy relative to the fixed $N_\mathrm{eff}$ situation in
+\S~\ref{sec:analytic-GW-example}.
 
 \ilya{[Again, I think we need to explicitly compare this method with
     two alternatives.  Alternative one is the loudest event statistic.
