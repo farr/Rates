@@ -377,10 +377,11 @@ and the foreground-dominated statistic.
 If we were to include only the $k$-loudest events in the posterior
 distribution, rather than all observed events, the posterior
 (Eq.~\eqref{eq:posterior}) would be modified by an additional factor
-of $\exp[R_f \hat{F}(x_{N-k+1}) + R_b \hat{B}(x_{N-k+1})]$, where we
-have assumed events are ordered by loudness, so that $x_{N-k+1}$ is
-the $k$-th loudest event. This term accounts for the data-dependent
-threshold that a loudest event statistic employs.
+of $\exp[R_f \hat{F}(x_{N-k+1}, \theta) + R_b
+  \hat{B}(x_{N-k+1},\theta)]$, where we have assumed events are
+ordered by loudness, so that $x_{N-k+1}$ is the $k$-th loudest
+event. This term accounts for the data-dependent threshold that a
+loudest event statistic employs.
 
 For the usual $k=1$ case \citep{Biswas2009}, the marginalised
 posterior (Eq.~\eqref{eq:rate-shape-posterior}) becomes
