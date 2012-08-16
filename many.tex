@@ -665,19 +665,27 @@ situation in \S \ref{sec:analytic-GW-example}.
 \subsection{Star Cluster Parameters With Background Contamination}
 \label{sec:star-cluster}
 
+\will{Look up von Hippel paper about Bayes 9, the cluster isochrone
+  fitting software---we should cite, since our approach to cluster
+  membership.}
+
 Our final example concerns fitting for the location and shape
 parameters of a cluster of stars observed on top of a stellar
-background with a density gradient.  We assume that a star cluster has
-a Plummer surface-density profile \citep{Plummer1911,Aarseth1974},
+background with a density gradient.  In this example, stars are either
+members of the cluster (i.e.~foreground) or background contamination,
+with a spatially varying density (i.e.~our rate functions are
+two-dimensional).  We assume that a star cluster has a Plummer
+surface-density profile \citep{Plummer1911,Aarseth1974},
 \begin{equation}
   \label{eq:plummer-surface-density}
   \hat{f}(\vec{x}, \theta) = \frac{1}{\pi r_0^2 \left( 1 +
     \frac{\left| \vec{x} - \vec{x}_0 \right|^2}{r_0^2} \right)^2},
 \end{equation}
 where $\vec{x}_0$ is the location on the sky of the center of the
-cluster, and $r_0$ is a radial scale parameter.  We assume a square
-observational domain\footnote{The observational domain is not
-  infinite, so the normalization of the cluster density in
+cluster, $r_0$ is a radial scale parameter, and $\vec{x} = \left( x, y
+\right)$ is the position on the sky.  We assume a square observational
+domain\footnote{The observational domain is not infinite, so the
+  normalization of the cluster density in
   Eq.~\eqref{eq:plummer-surface-density} is not quite correct.  In our
   modeling we properly take this into account, but for simplicity here
   we ignore it.}, $\vec{x} \in [0,1]^2$, and a background that has a
@@ -691,77 +699,78 @@ where $\vec{\gamma}$ is the gradient, and $\vec{x}_{1/2} = [1/2, 1/2]$
 is the centroid of the observational domain.  \ilya{[I think that if
     the domain is finite, the previous equation is only normalized for
     all $\vec{\gamma}$ if $\vec{x}_{1/2}$ is in the center of a
-    symmetric domain (as it happens to be in this case).]}  We use
-assume a gradient for the background of $\vec{\gamma} = [-0.5, 0.5]$.
-\ilya{[I find it a bit confusing to use the word "assume" for both the
-    model and for the specific parameters injected into the simulation
-    (but then being fit for, so their values are not "assumed" in the
-    recovery).  Maybe "assume" for the model, and "simulate" for the
-    parameter values to be fit?]}  We assume that the total number of
-background stars, $R_b = 10000$, exceeds by a factor of ten the total
-number of cluster stars, $R_f = 1000$.  \ilya{[But the cluster has
-    only $\sim 0.01$ of the total area, so it's over-dense by a factor
-    of $10$ or more.  Fig.~6 shows a very bright spot where the
-    cluster is, which sort of makes the problem look too simple for
-    the chosen parameters...]}  We choose a true cluster center
-$\vec{x}_0 = \vec{x}_{1/2}$, and a radial scale parameter of $r_0 =
-0.1$.  In all, the shape parameters for the true distributions are
+    symmetric domain (as it happens to be in this case).]}  \will{Yes,
+  as you say, this function is only normalized for $\vec{x}_{1/2}$ is
+  the center, and also for small enough $\vec{\gamma}$; both of these
+  conditions obtain here.}  
+
+We use simulated data drawn from our model with parameters
 \begin{equation}
 \label{eq:true-cluster-parameters}
 \theta_0 \equiv \left\{ x_0, y_0, r_0, \gamma_x, \gamma_y \right\} =
-\left\{ \frac{1}{2}, \frac{1}{2}, \frac{1}{10}, -\frac{1}{2},
-\frac{1}{2} \right\}.
+\left\{ \frac{1}{2}, \frac{1}{2}, 0.18, -\frac{1}{2},
+\frac{1}{2} \right\},
 \end{equation}
-Figure \ref{fig:sky-density} shows the density on the sky due to the
-cluster foreground and the background with these parameters.  We drew
-a synthetic data set from this density according to the corresponding
-inhomogeneous Poisson process.
+with $R_f = 1000$ and $R_b = 10000$.  For this set of parameters, the
+average density of the background and the peak density of the cluster
+are comparable; there are an order of magnitude more background stars
+than cluster stars in the field.  Figure \ref{fig:sky-density} shows
+the density of stars (cluster and background) on the sky for our
+particular data set.
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{sky-density}
   \caption{\label{fig:sky-density} The density contours on the sky of
-    the forergound cluster and background discussed in \S
-    \ref{sec:star-cluster}, with true parameters given in
-    Eq.~\eqref{eq:true-cluster-parameters}.  There are a factor of 10
-    more stars (10000) in the background than in the cluster (1000),
-    but the peak density for the cluster is much higher.  \ilya{[It
-        seems too obvious that where the cluster is by eye, and
-        probably fairly straightforward to compute the number of
-        "excess" stars there...  Reader might ask why we need
-        something so complicated when the answer is seems so obvious
-        and a "frequentist" approach would seem to do here.]}}
+    our synthetic data set of cluster and background stars for the
+    parametrs in Eq.~\eqref{eq:true-cluster-parameters}.  There are a
+    factor of 10 more stars (10000) in the background than in the
+    cluster (1000), but the average density of cluster and background
+    stars is similar.}
 \end{figure}
 
 To analyze our synthetic data set, we analytically marginalized over
-the state flags, using the likelihood in
-Eq.~\eqref{eq:rate-shape-posterior}.  \ilya{[I think it would be kind
-    to the reader to be more explicit about the connection with the
-    formalism in Section II.  What are the "events"?  What is the
-    ranking statistic $x$?  What are the flags (which aren't in
-    $\mathbb{R}$?)?]}  We did this to take advantage of the
-\textit{emcee} sampler of \citet{ForemanMackey2012}, which requires
-all parameters to be in $\mathbb{R}$.  We applied a prior on the shape
-parameters that is flat in $\vec{x}_0$ and $\vec{\gamma}$, and the
-Jeffreys prior on $r_0$,
+the state flags (i.e.~cluster membership), using the likelihood in
+Eq.~\eqref{eq:rate-shape-posterior}.  We did this to take advantage of
+the \textit{emcee} sampler of \citet{ForemanMackey2012}, which
+requires all parameters to be in $\mathbb{R}$.  We applied a prior on
+the shape parameters that is flat in $\vec{x}_0$ and $\vec{\gamma}$,
+and an (approximately) Jeffreys prior on $r_0$,
 \begin{equation}
   p\left( r_0 \right) = \frac{\sqrt{R_f}}{r_0}.
 \end{equation}
 \ilya{[Why is this the Jeffreys prior (BTW, it's Jeffreys, or perhaps
     Jeffreys', but definitely not Jeffrey's ;) )?  It's not obvious
-    why the prior on $r_0$ should depend on $R_f$?]}  (Note that this
-factor of $\sqrt{R_f}$ cancels with the Jeffreys prior on the rate,
-$1/\sqrt{R_f}$; we have verified that the priors on these parameters
-are irrelevant to our results, as would be expected from the
-measurement of $\sim 1000$ foreground stars.)
+    why the prior on $r_0$ should depend on $R_f$?]}  \will{Here is
+  the calculation:
+\begin{equation}
+  p\left( r_0 \right) = \sqrt{\left\langle \left(\frac{\partial \log
+      \mathcal{L}}{\partial r_0 } \right)^2 \right\rangle} = \sqrt{
+    R_f \left\langle \left(\frac{\partial \log\hat{f}}{\partial r_0
+    }\right)^2 \right\rangle } = \sqrt{R_f \left\langle \left(
+    \frac{2}{r_0} - \frac{4 r_0}{r^2 + r_0^2} \right)^2 \right\rangle}
+  = \sqrt{\frac{ 4 R_f}{3 r_0^2}} \propto \frac{\sqrt{R_f}}{r_0}.
+\end{equation}
+Of course, we are ignoring the fact that $R_f$ and $r_0$ are
+correlated.  In truth, the Jeffreys prior would be the determinant of
+the matrix built out of terms like $\partial \log\mathcal{L} /
+\partial \theta_i \times \partial \log\mathcal{L} /\partial \theta_j$,
+but let's not get carried away\ldots.  As another aside, note that we
+could have predicted the $1/r_0$ dependence because $r_0$ has units,
+so the only unit-invariant prior is to be flat in $\log r_0$; I'm
+don't have a similar argument for the appearance of the $\sqrt{R_f}$
+factor.}  (Note that this factor of $\sqrt{R_f}$ cancels with the
+Jeffreys prior on the rate, $1/\sqrt{R_f}$; we have verified that the
+priors on these parameters are irrelevant to our results, as would be
+expected from the measurement of $\sim 1000$ foreground stars.)
 
 Figure \ref{fig:sky-loc} shows the posterior for the location
 parameters, $\vec{x}_0$; the center of the cluster is localized to
-within a few percent of its scale.  Figure \ref{fig:cluster-number}
-shows the posteriors inferred on the cluster and background numbers,
-$R_f$ and $R_b$, and Figure \ref{fig:cluster-scale} shows the
-posterior for the cluster's scale parameter.  In spite of the
-significant background, the cluster scale and total number are
-accurately recovered by our analysis.
+within about 10\% of the cluster scale.  Figure
+\ref{fig:cluster-number} shows the posteriors inferred on the cluster
+and background numbers, $R_f$ and $R_b$, and Figure
+\ref{fig:cluster-scale} shows the posterior for the cluster's scale
+parameter.  In spite of the significant background, the cluster scale
+and total number are accurately recovered by our analysis.
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{sky_location}
