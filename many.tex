@@ -24,7 +24,6 @@
 \affiliation{Center for Interdisciplinary Exploration and Research in
   Astrophysics\\ Department of Physics and Astronomy\\ Northwestern
   University, 2145 Sheridan Road, Evanston, IL 60208}
-%\affiliation{Northwestern University and CIERA}
 
 \author{Jonathan R. Gair} \email{jrg23@cam.ac.uk}
 \affiliation{Institute of Astronomy\\University of
@@ -34,7 +33,11 @@
 \homepage{http://www.sr.bham.ac.uk/~imandel} \affiliation{School of
   Physics and Astronomy\\University of Birmingham\\Edgbaston B15 2TT
   Birmingham\\United Kingdom}
-%\affiliation{University of Birmingham}
+  
+\author{Curt Cutler} \email{Curt.J.Cutler@jpl.nasa.gov}
+\affiliation{Jet Propulsion Lab, 4800 Oak Grove Dr., Pasadena, CA 91109}
+\affiliation{Theoretical Astrophysics, California Institute of Technology, Pasadena, California 91125}
+
 
 
 \begin{abstract}
@@ -187,12 +190,12 @@ Therefore, the likelihood of the data is
     \theta\right) \right].
 \end{equation}
 This is the probability that the first observed event is a
-fore/background event (if $f_i=1,0$) with ranking statistic $x_1$ and
-the second observed event is a fore/background event (if $f_i=1,0$)
+fore/background event (if $f_1=1,0$) with ranking statistic $x_1$ and
+the second observed event is a fore/background event (if $f_2=1,0$)
 with ranking statistic $x_2$ etc. If the events are ordered by ranking
 statistic the corresponding expression is more complicated, since
-$x_1$ is now the event from foreground or background, with the
-smallest ranking statistic etc. We will return to the
+$x_1$ is now the event from foreground or background with the
+smallest ranking statistic, etc. We will return to the
 statistic-ordered case later.
 
 %The prior distribution can be factorized as
@@ -289,9 +292,9 @@ Putting everything together, the posterior is
     \right] \exp\left[ - \left(R_f + R_b\right) \right]
   \frac{p(\theta)}{\sqrt{R_f R_b}}
 \end{equation}
-When sampling the posterior, the first term can be omitted and the
-equals sign replaced by proportionality, since it is independent of
-the parameters of interest, but we have kept this term explicitly so
+When sampling the posterior, the first term, which is independent of
+the parameters of interest, can be omitted and the
+equals sign replaced by proportionality; however, we have kept this term explicitly so
 that we can see the equivalence to ranking-statistic ordered
 data. Once data have been observed, there is a unique loudness
 ordering and time ordering of those events, and so there is a one to
@@ -314,22 +317,22 @@ $r(y)$ (cumulative rate $R(y)$), the likelihood of a set of samples
 $\mathset{y_i}$ is given by
 \begin{multline}
   p\left( \mathset{y_i} | r \right) \,{\rm d}^Ny_i= P\left(
-  \textnormal{zero events below } y_0 \right) \times P\left(
-  \textnormal{one event between } y_0 \textnormal{ and } y_0 + {\rm
-    d}y_0 \right) \\ \times P\left( \textnormal{zero events between }
-  y_0+{\rm d}y_0 \textnormal{ and } y_1 \right) \ldots \\ p\left(
+  \textnormal{zero events below } y_1 \right) \times P\left(
+  \textnormal{one event between } y_1 \textnormal{ and } y_1 + {\rm
+    d}y_1 \right) \\ \times P\left( \textnormal{zero events between }
+  y_1+{\rm d}y_1 \textnormal{ and } y_2 \right) \ldots \\ p\left(
   \mathset{y_i} | r \right) = \lim_{\delta y_i \to 0} \exp\left[ -
-    R\left(y_0\right) \right] \left[ r\left( y_0 \right) +
-    \order{\delta y_0} \right] \times \exp\left[ - \left[ R\left( y_1
-      \right) - R\left( y_0 + \delta y_0\right) \right] \right] \times
+    R\left(y_1\right) \right] \left[ r\left( y_1 \right) +
+    \order{\delta y_1} \right] \times \exp\left[ - \left[ R\left( y_2
+      \right) - R\left( y_1 + \delta y_1\right) \right] \right] \times
   \ldots \\ = \left[\prod_i r\left( y_i \right)\right] \exp\left[ -
     R\left( \infty \right) \right].
 \end{multline}
 Applying this once to the foreground samples, once to the background
 samples and taking the product, we obtain $p(d,\mathset{f_i}, N | R_f,
 R_b, \theta)$ and thence $p(\mathset{f_i}, R_f, R_b, \theta | d,N) =
-p(d,\mathset{f_i}, N | R_f, R_b, \theta) p*R_f, R_b,
-\theta)/p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm
+p(d,\mathset{f_i}, N | R_f, R_b, \theta)\ p(R_f, R_b,
+\theta)\, /\, p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm
   to},N)$, as justified above, we reproduce Eq.~\eqref{eq:posterior}.
 
 We can marginalize the posterior over the flags, $f_i$, obtaining
@@ -368,12 +371,12 @@ where $f$ and $b$ are rate densities on the $k$-dimensional space of
 ranking statistics.  We give an example of fitting for
 multi-dimensional rate densities in \S~\ref{sec:star-cluster}.
 
-It is informative to relate these results to two other ways to
-estimate the foreground rate parameter --- the loudest event statistic
+It is informative to relate these results to two other methods for
+estimating the foreground rate parameter --- the loudest event statistic
 and the foreground-dominated statistic.
 
 \subsubsection{Loudest event statistic}
-If we were to include only the $k$-loudest events in the posterior
+If we were to include only the $k$ loudest events in the posterior
 distribution, rather than all observed events, the posterior
 (Eq.~\eqref{eq:posterior}) would be modified by an additional factor
 of $\exp[R_f \hat{F}(x_{N-k+1},\theta) + R_b
@@ -486,10 +489,10 @@ N-1/2$, so we have the expected result that, in the foreground
 dominated regime, the rate is approximately equal to the number of
 events observed. We note that the rate $R_f$ is defined as the rate of
 events occurring above the specified threshold and therefore if the
-foreground dominated statistic were used to estimated rates $R_f^1$
-and $R_f^2$ for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$
-respectively, these rates should be compared by equating $R_f^1
-(1-\hat{F}(x_2,\theta))$ and $R_f^2 (1-\hat{F}(x_1,\theta))$.
+foreground dominated statistic were used to estimate rates $R_{f,1}$
+and $R_{f,2}$ for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$
+respectively, these rates should be compared by equating $R_{f,1}
+(1-\hat{F}(x_2,\theta))$ and $R_{f,2} (1-\hat{F}(x_1,\theta))$.
 
 \section{Examples}
 \label{sec:GW-example}
