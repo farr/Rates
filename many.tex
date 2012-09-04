@@ -71,29 +71,11 @@ Two alternative approaches have been suggested in the past.  One, known as the \
 
 Another possible approach is based on the use of only loud, ``gold-plated'' events, ones which are certain (or nearly certain) to come from the foreground, to derive rates.  We refer to this approach as the \emph{foreground-dominated statistic}.  The foreground-dominated statistic may yield accurate results when the foreground and background are cleanly separated, at least for the loudest events, and the number of such loud events is sufficiently large.  However, it cannot properly account for marginal events.  While either the loudest-event statistic or the foreground-dominated statistic can approach the accuracy of our proposed method in specific regimes, both are suboptimal in a general case.
 
-In order to demonstrate our method, we consider three different examples.  The first two come from the field of gravitational-wave data analysis, but could equally arise in any application that employs matched filtering \cite{FINDCHIRP} to extract weak signals with known shapes from the data.  The last example considers the case of a globular cluster on a background of field stars.  Throughout, we compare the results obtained with our technique to the loudest-event and foreground-dominated statistics, which make use of a limited subset of the available information.
+In order to demonstrate our method, we consider three different examples.  The first two come from the field of gravitational-wave data analysis, but could equally arise in any application that employs matched filtering \cite{findchirppaper} to extract weak signals with known shapes from the data.  The last example considers the case of a globular cluster on a background of field stars.  Throughout, we compare the results obtained with our technique to the loudest-event and foreground-dominated statistics, which make use of a limited subset of the available information.
 
- This paper is organized as follows...
-
-
+This paper is organized as follows.  In section \ref{sec:model} we introduce our method for Bayesian rate estimation, and describe loudest-event and foreground-dominated statistics for comparison.  Section \ref{sec:GW-example} includes three examples of the application of these techniques.  We conclude with a discussion of important remaining issues in section \ref{sec:discussion}.
 
 
-
-
-
-%\fixme{Introduce the necessity of estimating rates, prior work (like
-%  \cite{Biswas2009}), Bayesian inference.}
-  
-  
-  
-%Difficulty of measuring rate in presence of background
-
-%Want to add more than just the loudest event (cf. loudest event statistic)
-
-%Unknown background distribution, $\Lambda$
-
-%Cf. number of gold-plated detections in sensitive volume --
-%frequentist approach OK if tons of events, otherwise need this.
 
 
 \section{Model}\label{sec:model}
@@ -928,19 +910,20 @@ and total number are accurately recovered by our analysis.
         at the top of 8?]} }
 \end{figure}
 
-\section{Conclusion}
+\section{Discussion}\label{sec:discussion}
 
-Separating classes of events
+In this paper, we have developed a Bayesian framework for rate estimation when the data consists of a mixture of foreground and background events.  We demonstrated the application of this framework using several examples from gravitational-wave data analysis in the presence of signatures of binary mergers and noise triggers, and astronomical image analysis in the presence of several populations of stars.  We showed that this framework is generally superior to both the loudest-event statistic and and the foreground-dominated statistic.
 
-Comments on background probability estimation -- Cannon et al. in
-prep.
+Throughout this paper, we have assumed that the shape of the foreground and background distributions is known, or at least can be modeled with several additional parameters.  This is not necessarily easy to do.  For example, in the case of gravitational-wave data analysis, the shape of the foreground distribution of events may depend on the details of a complex data-analysis pipeline as well as the astrophysical source distribution, while the background event distribution depends on data quality and may deviate significantly from the simple Gaussian-noise behavior modeled in section \ref{sec:GW-example}.  Several approaches have been developed to accurately model both distributions, e.g., through the use of injected signals to model the background \cite{ihope,CannonHannaKeppel:2012}.  However, this is a difficult problem (e.g., because of the need to estimate the background at the very tails of the distribution), and will require significant future work.
 
-Relevance (vs. loudest statistic, or frequentist approach using only
-gold-plated events)
+A further complication is that we have considered the rate of events in the data as products of some analysis pipeline.  This rate may be different from the physical rate of interest, such as the rate of compact-binary mergers per unit time per unit volume which generate gravitational waves, or the physical numbers of stars in the cluster and field populations which produce the observed luminosities.  Again, the conversion between the two will depend on the details of the data-analysis algorithm and ranking statistic, including any selection effects, and would need to be determined on a case-by-case basis.
+
+Furthermore, in a practical application there could be multiple classes of events, not just foreground and background.  For example, we are not necessarily interested in the rate of gravitational-wave signals per se, but separately in the rate of signals from mergers of binary neutron stars and binary black holes -- populations that may sometimes be difficult to distinguish.  Our approach is readily extendable to this particular complication, however.  Note that it is symmetric with respect to foreground and background events (as expected, since one physicist's background is another physicist's foreground).  We could relabel foreground and background events into other competing event classes, and further classes could be added in a straightforward way.
+
 
 \begin{acknowledgments}
   We thank Kipp Cannon, Chad Hanna, Drew Keppel, and Richard
-  O'Shaughnessy for discussions and suggestions about this manuscript.
+  O'Shaughnessy for discussions and suggestions about this manuscript.  IM thanks KITP.
 \end{acknowledgments}
 
 %%%%%%%%%%%%%%%%%%%% Bibliography 
