@@ -11,7 +11,7 @@
 
 \newcommand{\ilya}[1]{{\color{red} \bf #1}}
 \newcommand{\will}[1]{{\color{blue} \bf #1}}
-\newcommand{\jon}[1]{{\color{green} \bf  #1}}
+\newcommand{\jon}[1]{{\color{green} \bf #1}}
 
 \DeclareMathOperator{\erf}{erf}
 
@@ -35,8 +35,9 @@
   Birmingham\\United Kingdom}
   
 \author{Curt Cutler} \email{Curt.J.Cutler@jpl.nasa.gov}
-\affiliation{Jet Propulsion Lab, 4800 Oak Grove Dr., Pasadena, CA 91109}
-\affiliation{Theoretical Astrophysics, California Institute of Technology, Pasadena, California 91125}
+\affiliation{Jet Propulsion Lab, 4800 Oak Grove Dr., Pasadena, CA
+  91109} \affiliation{Theoretical Astrophysics, California Institute
+  of Technology, Pasadena, California 91125}
 
 
 
@@ -59,32 +60,84 @@
 
 \section{Introduction}
 
-The task of estimating a rate of foreground events when a mixture of foreground and background events is present in the data is a common one in physical and astrophysical applications.  This problem comes up, among others, in gravitational-wave data analysis \cite[e.g.,][]{s5-highmass,s6-lowmass} and in astronomical observations of a field of objects of mixed provenance \cite[GC cluster paper]{}..  In this paper, we introduce a robust formalism for estimating event rates from the data when the shape of foreground and background distributions are known (but may have additional free parameters), but the provenance of individual events as either background or foreground is unknown.  
+The task of estimating a rate of foreground events when a mixture of
+foreground and background events is present in the data is a common
+one in physical and astrophysical applications.  This problem comes
+up, among others, in gravitational-wave data analysis
+\cite[e.g.,][]{s5-highmass,s6-lowmass} and in astronomical
+observations of a field of objects of mixed provenance \cite[GC
+  cluster paper]{}..  In this paper, we introduce a robust formalism
+for estimating event rates from the data when the shape of foreground
+and background distributions are known (but may have additional free
+parameters), but the provenance of individual events as either
+background or foreground is unknown.
 
-We use a Bayesian approach and consider all available data to ensure that the inferred rates are both unbiased and maximally constrained in the presence of limited observations.  Bayes' theorem yields the \emph{posterior} probability density function on a set of parameters, $\vec{\theta}$, given the observed data, $d$, under a model $M$:
+We use a Bayesian approach and consider all available data to ensure
+that the inferred rates are both unbiased and maximally constrained in
+the presence of limited observations.  Bayes' theorem yields the
+\emph{posterior} probability density function on a set of parameters,
+$\vec{\theta}$, given the observed data, $d$, under a model $M$:
 \begin{equation}
-p(\vec{\theta} | d, M) = \frac{p(\vec{\theta}|M) p(d|\vec{\theta},M)}{p(d|M)},
+p(\vec{\theta} | d, M) = \frac{p(\vec{\theta}|M)
+  p(d|\vec{\theta},M)}{p(d|M)},
 \end{equation}
-where $p(\vec{\theta}|M)$ are the \emph{prior} probabilities of the model parameters, $p(d|\vec{\theta},M)$ is the \emph{likelihood} of obtaining the data given a particular choice of parameters, and the normalizing factor $p(d|M)$ is known as the \emph{evidence}.
+where $p(\vec{\theta}|M)$ are the \emph{prior} probabilities of the
+model parameters, $p(d|\vec{\theta},M)$ is the \emph{likelihood} of
+obtaining the data given a particular choice of parameters, and the
+normalizing factor $p(d|M)$ is known as the \emph{evidence}.
 
-Two alternative approaches have been suggested in the past.  One, known as the \emph{loudest-event statistic} \cite{Biswas2009}, uses only the information from the highest-ranked event in the data to infer the rate distribution.  This approach has been used successfully \cite{s5-highmass,s6-lowmass} when the number of loud foreground events is small (typically zero or one) to obtain upper limits on foreground rates.  However, the loudest-event statistic ignores all events except the loudest one, and so suffers from an unnecessary loss of information; therefore, we expect it to yield a much larger variance than strictly necessary when multiple events are present in the data.  
+Two alternative approaches have been suggested in the past.  One,
+known as the \emph{loudest-event statistic} \cite{Biswas2009}, uses
+only the information from the highest-ranked event in the data to
+infer the rate distribution.  This approach has been used successfully
+\cite{s5-highmass,s6-lowmass} when the number of loud foreground
+events is small (typically zero or one) to obtain upper limits on
+foreground rates.  However, the loudest-event statistic ignores all
+events except the loudest one, and so suffers from an unnecessary loss
+of information; therefore, we expect it to yield a much larger
+variance than strictly necessary when multiple events are present in
+the data.
 
-Another possible approach is based on the use of only loud, ``gold-plated'' events, ones which are certain (or nearly certain) to come from the foreground, to derive rates.  We refer to this approach as the \emph{foreground-dominated statistic}.  The foreground-dominated statistic may yield accurate results when the foreground and background are cleanly separated, at least for the loudest events, and the number of such loud events is sufficiently large.  However, it cannot properly account for marginal events.  While either the loudest-event statistic or the foreground-dominated statistic can approach the accuracy of our proposed method in specific regimes, both are suboptimal in a general case.
+Another possible approach is based on the use of only loud,
+``gold-plated'' events, ones which are certain (or nearly certain) to
+come from the foreground, to derive rates.  We refer to this approach
+as the \emph{foreground-dominated statistic}.  The
+foreground-dominated statistic may yield accurate results when the
+foreground and background are cleanly separated, at least for the
+loudest events, and the number of such loud events is sufficiently
+large.  However, it cannot properly account for marginal events.
+While either the loudest-event statistic or the foreground-dominated
+statistic can approach the accuracy of our proposed method in specific
+regimes, both are suboptimal in a general case.
 
-In order to demonstrate our method, we consider three different examples.  The first two come from the field of gravitational-wave data analysis, but could equally arise in any application that employs matched filtering \cite{findchirppaper} to extract weak signals with known shapes from the data.  The last example considers the case of a globular cluster on a background of field stars.  Throughout, we compare the results obtained with our technique to the loudest-event and foreground-dominated statistics, which make use of a limited subset of the available information.
+In order to demonstrate our method, we consider three different
+examples.  The first two come from the field of gravitational-wave
+data analysis, but could equally arise in any application that employs
+matched filtering \cite{findchirppaper} to extract weak signals with
+known shapes from the data.  The last example considers the case of a
+globular cluster on a background of field stars.  Throughout, we
+compare the results obtained with our technique to the loudest-event
+and foreground-dominated statistics, which make use of a limited
+subset of the available information.
 
-This paper is organized as follows.  In section \ref{sec:model} we introduce our method for Bayesian rate estimation, and describe loudest-event and foreground-dominated statistics for comparison.  Section \ref{sec:GW-example} includes three examples of the application of these techniques.  We conclude with a discussion of important remaining issues in section \ref{sec:discussion}.
+This paper is organized as follows.  In section \ref{sec:model} we
+introduce our method for Bayesian rate estimation, and describe
+loudest-event and foreground-dominated statistics for comparison.
+Section \ref{sec:GW-example} includes three examples of the
+application of these techniques.  We conclude with a discussion of
+important remaining issues in section \ref{sec:discussion}.
 
 
 
 
 \section{Model}\label{sec:model}
 
-We assume that we are presented with a data set of $N$ events that exceed a pre-specified threshold in ranking statistic, $x_{\rm min}$.  Each
-event may be due to either a signal of interest or an uninteresting
-background.  Each event is associated with a ranking statistic, $x$.
-Our data set therefore consists of the ranking statistics for the set
-of events:
+We assume that we are presented with a data set of $N$ events that
+exceed a pre-specified threshold in ranking statistic, $x_{\rm min}$.
+Each event may be due to either a signal of interest or an
+uninteresting background.  Each event is associated with a ranking
+statistic, $x$.  Our data set therefore consists of the ranking
+statistics for the set of events:
 \begin{equation}
   d = \mathset{ x_i | i = 1, \ldots, N } .
 \end{equation}
@@ -199,9 +252,9 @@ fore/background event (if $f_1=1,0$) with ranking statistic $x_1$ and
 the second observed event is a fore/background event (if $f_2=1,0$)
 with ranking statistic $x_2$ etc. If the events are ordered by ranking
 statistic the corresponding expression is more complicated, since
-$x_1$ is now the event from foreground or background with the
-smallest ranking statistic, etc. We will return to the
-statistic-ordered case later.
+$x_1$ is now the event from foreground or background with the smallest
+ranking statistic, etc. We will return to the statistic-ordered case
+later.
 
 %The prior distribution can be factorized as
 %\begin{equation}
@@ -298,10 +351,10 @@ Putting everything together, the posterior is
   \frac{p(\theta)}{\sqrt{R_f R_b}}
 \end{equation}
 When sampling the posterior, the first term, which is independent of
-the parameters of interest, can be omitted and the
-equals sign replaced by proportionality; however, we have kept this term explicitly so
-that we can see the equivalence to ranking-statistic ordered
-data. Once data have been observed, there is a unique loudness
+the parameters of interest, can be omitted and the equals sign
+replaced by proportionality; however, we have kept this term
+explicitly so that we can see the equivalence to ranking-statistic
+ordered data. Once data have been observed, there is a unique loudness
 ordering and time ordering of those events, and so there is a one to
 one correspondence between a time-ordered posterior $p\left(
 \mathset{f_i}, R_f, R_b, \theta | d_{\rm to},N \right)$ and the
@@ -336,9 +389,9 @@ $\mathset{y_i}$ is given by
 Applying this once to the foreground samples, once to the background
 samples and taking the product, we obtain $p(d,\mathset{f_i}, N | R_f,
 R_b, \theta)$ and thence $p(\mathset{f_i}, R_f, R_b, \theta | d,N) =
-p(d,\mathset{f_i}, N | R_f, R_b, \theta)\ p(R_f, R_b,
-\theta)\, /\, p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm
-  to},N)$, as justified above, we reproduce Eq.~\eqref{eq:posterior}.
+p(d,\mathset{f_i}, N | R_f, R_b, \theta)\ p(R_f, R_b, \theta)\, /\,
+p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm to},N)$, as
+justified above, we reproduce Eq.~\eqref{eq:posterior}.
 
 We can marginalize the posterior over the flags, $f_i$, obtaining
 \begin{equation}
@@ -377,8 +430,8 @@ ranking statistics.  We give an example of fitting for
 multi-dimensional rate densities in \S~\ref{sec:star-cluster}.
 
 It is informative to relate these results to two other methods for
-estimating the foreground rate parameter --- the loudest event statistic
-and the foreground-dominated statistic.
+estimating the foreground rate parameter --- the loudest event
+statistic and the foreground-dominated statistic.
 
 \subsubsection{Loudest event statistic}
 If we were to include only the $k$ loudest events in the posterior
@@ -420,10 +473,10 @@ R_f =
 where $\tilde{b}(x_N,\theta)
 =\hat{b}(x_N,\theta)/(1-\hat{B}(x_N,\theta))$. If
 $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
-\hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as
-the statement that the rate of foreground events with ranking
-statistic greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of
-order $1$, as expected. However, $\tilde{b}(x_N,\theta) = -{\rm d}
+\hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
+statement that the rate of foreground events with ranking statistic
+greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of order $1$,
+as expected. However, $\tilde{b}(x_N,\theta) = -{\rm d}
 [\ln(1-\hat{B}(x,\theta))]/{\rm d}x$ and $(1-\hat{B}(x,\theta))
 \rightarrow 0$ as $x \rightarrow \infty$, so this term will be
 divergent and for many reasonable examples, we will find
@@ -548,17 +601,17 @@ statistic (i.e.\ the maximum SNR over the template bank) then has a
 cumulative distribution without thresholding of
 \begin{equation}
   \hat{B}(x) = \left( \frac{1 + \erf\left( \frac{x}{\sqrt{2}}
-      \right)}{2} \right)^N
+    \right)}{2} \right)^N
 \end{equation}
 where ${\rm erf}(x)$ is the error function as before. Imposing the
 threshold, $x > \xmin$, the cumulative distribution of the background
 becomes
 \begin{equation}
   \label{eq:analytic-background-rate}
-  \hat{B}(x) = \frac{\left( 1 + \erf\left( \frac{x}{{\sqrt{2}}} \right)
-    \right)^N - \left( 1 + \erf\left( \frac{\xmin}{{\sqrt{2}}} \right)
-    \right)^N}{2^N - \left( 1 + \erf\left( \frac{\xmin}{{\sqrt{2}}} \right)
-    \right)^N }
+  \hat{B}(x) = \frac{\left( 1 + \erf\left( \frac{x}{{\sqrt{2}}}
+    \right) \right)^N - \left( 1 + \erf\left( \frac{\xmin}{{\sqrt{2}}}
+    \right) \right)^N}{2^N - \left( 1 + \erf\left(
+    \frac{\xmin}{{\sqrt{2}}} \right) \right)^N }
 \end{equation}
 for $x>\xmin$, $0$ otherwise.
 
@@ -694,7 +747,8 @@ therefore lead to narrower posteriors in general.
     different choices of the maximum a priori background rate, $R_{\rm
       max}$, in the case of the loudest event (``LE'') statistic, and
     for several different choices of the threshold, $x_{\rm min}$, in
-    the case of the foreground dominated (``FD'') statistic. \ilya{I can see the figure on the screen, but can't print it...}}
+    the case of the foreground dominated (``FD'') statistic. \ilya{I
+      can see the figure on the screen, but can't print it...}}
 \end{figure}
 
 \subsection{Gravitational Waves With Overlapping Templates}
@@ -714,10 +768,12 @@ $N_\mathrm{eff}$, we can fit for it as a shape parameter.  That is, we
 assume that $\theta = \{N_\mathrm{eff}\}$ is a shape parameter for the
 background cumulative distribution:
 \begin{equation}
-  \hat{B}\left(x, N_\mathrm{eff}\right) = \frac{\left( 1 + \erf\left( \frac{x}{\sqrt{2}} \right)
-    \right)^{N_\mathrm{eff}} - \left( 1 + \erf\left( \frac{\xmin}{\sqrt{2}} \right)
-    \right)^{N_\mathrm{eff}}}{2^{N_\mathrm{eff}} - \left( 1 + \erf\left( \frac{\xmin}{\sqrt{2}} \right)
-    \right)^{N_\mathrm{eff}} }.
+  \hat{B}\left(x, N_\mathrm{eff}\right) = \frac{\left( 1 + \erf\left(
+    \frac{x}{\sqrt{2}} \right) \right)^{N_\mathrm{eff}} - \left( 1 +
+    \erf\left( \frac{\xmin}{\sqrt{2}} \right)
+    \right)^{N_\mathrm{eff}}}{2^{N_\mathrm{eff}} - \left( 1 +
+    \erf\left( \frac{\xmin}{\sqrt{2}} \right) \right)^{N_\mathrm{eff}}
+  }.
 \end{equation}
 
 Results from such an analysis appear in Figures \ref{fig:rates-nt} and
@@ -727,7 +783,7 @@ $N_\mathrm{eff} = 1000$, but now allow $N_\mathrm{eff}$ to be a
 parameter of the background distribution, with a flat prior.  Both the
 rates and the number of effective templates are recovered without
 significant loss of accuracy relative to the fixed $N_\mathrm{eff}$
-situation in \S \ref{sec:analytic-GW-example}.  
+situation in \S \ref{sec:analytic-GW-example}.
 
 If we consider the two alternative methods, the loudest event and
 foreground dominated statistics, we will recover the same foreground
@@ -745,7 +801,12 @@ property of the background. \jon{Technically, if we allowed really
   large values of $N_{\rm eff}$ we would get into a regime where the
   loudest event could be background and we'd get something here. But,
   we would need $N_{\rm max} \sim 10^{20}$ and so I don't think we
-  should consider these alternatives further in this case.} \ilya{On the other hand, this ties in with the comment at the end of the previous subsection about the difficulty of choosing $x_{min}$ for the foreground-dominated statistic when there are other parameters $\theta$ to be estimated simultaneously ($N_{eff}$ in this case), so perhaps it's worthwhile to add some comment about this?}
+  should consider these alternatives further in this case.} \ilya{On
+  the other hand, this ties in with the comment at the end of the
+  previous subsection about the difficulty of choosing $x_{min}$ for
+  the foreground-dominated statistic when there are other parameters
+  $\theta$ to be estimated simultaneously ($N_{eff}$ in this case), so
+  perhaps it's worthwhile to add some comment about this?}
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates-nt}
@@ -809,14 +870,14 @@ is the centroid of the observational domain.  \ilya{[I think that if
     symmetric domain (as it happens to be in this case).]}  \will{Yes,
   as you say, this function is only normalized for $\vec{x}_{1/2}$ is
   the center, and also for small enough $\vec{\gamma}$; both of these
-  conditions obtain here.}  
+  conditions obtain here.}
 
 We use simulated data drawn from our model with parameters
 \begin{equation}
 \label{eq:true-cluster-parameters}
 \theta_0 \equiv \left\{ x_0, y_0, r_0, \gamma_x, \gamma_y \right\} =
-\left\{ \frac{1}{2}, \frac{1}{2}, 0.18, -\frac{1}{2},
-\frac{1}{2} \right\},
+\left\{ \frac{1}{2}, \frac{1}{2}, 0.18, -\frac{1}{2}, \frac{1}{2}
+\right\},
 \end{equation}
 with $R_f = 1000$ and $R_b = 10000$.  For this set of parameters, the
 average density of the background and the peak density of the cluster
@@ -886,8 +947,8 @@ and total number are accurately recovered by our analysis.
   \caption{\label{fig:sky-loc} Contours of the posterior probability
     distribution for the center of the cluster, $\vec{x}_0$, in the
     example from \S~\ref{sec:star-cluster}.  The center $(x,y) =
-    \left(x_0, y_0\right)$ is determined to within about 5\%
-    of the structural radius of the cluster, $r_0$ (see
+    \left(x_0, y_0\right)$ is determined to within about 5\% of the
+    structural radius of the cluster, $r_0$ (see
     Eq.~\eqref{eq:true-cluster-parameters}).}
 \end{figure}
 
@@ -912,17 +973,64 @@ and total number are accurately recovered by our analysis.
 
 \section{Discussion}\label{sec:discussion}
 
-In this paper, we have developed a Bayesian framework for rate estimation when the data consists of a mixture of foreground and background events.  We demonstrated the application of this framework using several examples from gravitational-wave data analysis in the presence of signatures of binary mergers and noise triggers, and astronomical image analysis in the presence of several populations of stars.  We showed that this framework is generally superior to both the loudest-event statistic and and the foreground-dominated statistic.
+In this paper, we have developed a Bayesian framework for rate
+estimation when the data consists of a mixture of foreground and
+background events.  We demonstrated the application of this framework
+using several examples from gravitational-wave data analysis in the
+presence of signatures of binary mergers and noise triggers, and
+astronomical image analysis in the presence of several populations of
+stars.  We showed that this framework is generally superior to both
+the loudest-event statistic and and the foreground-dominated
+statistic.
 
-Throughout this paper, we have assumed that the shape of the foreground and background distributions is known, or at least can be modeled with several additional parameters.  This is not necessarily easy to do.  For example, in the case of gravitational-wave data analysis, the shape of the foreground distribution of events may depend on the details of a complex data-analysis pipeline as well as the astrophysical source distribution, while the background event distribution depends on data quality and may deviate significantly from the simple Gaussian-noise behavior modeled in section \ref{sec:GW-example}.  Several approaches have been developed to accurately model both distributions, e.g., through the use of injected signals to model the background \cite{ihope,CannonHannaKeppel:2012}.  However, this is a difficult problem (e.g., because of the need to estimate the background at the very tails of the distribution), and will require significant future work.
+Throughout this paper, we have assumed that the shape of the
+foreground and background distributions is known, or at least can be
+modeled with several additional parameters.  This is not necessarily
+easy to do.  For example, in the case of gravitational-wave data
+analysis, the shape of the foreground distribution of events may
+depend on the details of a complex data-analysis pipeline as well as
+the astrophysical source distribution, while the background event
+distribution depends on data quality and may deviate significantly
+from the simple Gaussian-noise behavior modeled in section
+\ref{sec:GW-example}.  Several approaches have been developed to
+accurately model both distributions, e.g., through the use of injected
+signals to model the background \cite{ihope,CannonHannaKeppel:2012}.
+However, this is a difficult problem (e.g., because of the need to
+estimate the background at the very tails of the distribution), and
+will require significant future work.
 
-A further complication is that we have considered the rate of events in the data as products of some analysis pipeline.  This rate may be different from the physical rate of interest, such as the rate of compact-binary mergers per unit time per unit volume which generate gravitational waves, or the physical numbers of stars in the cluster and field populations which produce the observed luminosities.  Again, the conversion between the two will depend on the details of the data-analysis algorithm and ranking statistic, including any selection effects, and would need to be determined on a case-by-case basis.
+A further complication is that we have considered the rate of events
+in the data as products of some analysis pipeline.  This rate may be
+different from the physical rate of interest, such as the rate of
+compact-binary mergers per unit time per unit volume which generate
+gravitational waves, or the physical numbers of stars in the cluster
+and field populations which produce the observed luminosities.  Again,
+the conversion between the two will depend on the details of the
+data-analysis algorithm and ranking statistic, including any selection
+effects, and would need to be determined on a case-by-case basis.
 
-Furthermore, in a practical application there could be multiple classes of events, not just foreground and background.  For example, we are not necessarily interested in the rate of gravitational-wave signals per se, but separately in the rate of signals from mergers of binary neutron stars and binary black holes -- populations that may sometimes be difficult to distinguish.  Our approach is readily extendable to this particular complication, however.  Note that it is symmetric with respect to foreground and background events (as expected, since one physicist's background is another physicist's foreground).  We could relabel foreground and background events into other competing event classes, and further classes could be added in a straightforward way.  However, the ability to distinguish classes relies on different distributions of their statistics.  In general, rankings may need to be extended to include other statistics in addition to the signal ``loudness'' statistic in order to indicate both event significance and the probability of event attribution to a particular class. 
+Furthermore, in a practical application there could be multiple
+classes of events, not just foreground and background.  For example,
+we are not necessarily interested in the rate of gravitational-wave
+signals per se, but separately in the rate of signals from mergers of
+binary neutron stars and binary black holes -- populations that may
+sometimes be difficult to distinguish.  Our approach is readily
+extendable to this particular complication, however.  Note that it is
+symmetric with respect to foreground and background events (as
+expected, since one physicist's background is another physicist's
+foreground).  We could relabel foreground and background events into
+other competing event classes, and further classes could be added in a
+straightforward way.  However, the ability to distinguish classes
+relies on different distributions of their statistics.  In general,
+rankings may need to be extended to include other statistics in
+addition to the signal ``loudness'' statistic in order to indicate
+both event significance and the probability of event attribution to a
+particular class.
 
 \begin{acknowledgments}
   We thank Kipp Cannon, Chad Hanna, Drew Keppel, and Richard
-  O'Shaughnessy for discussions and suggestions about this manuscript.  IM thanks KITP.
+  O'Shaughnessy for discussions and suggestions about this manuscript.
+  IM and WMF thank KITP.
 \end{acknowledgments}
 
 %%%%%%%%%%%%%%%%%%%% Bibliography 
