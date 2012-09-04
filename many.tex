@@ -405,17 +405,17 @@ p_{\rm LE}\left( R_f, \theta | d \right) \propto \left(
 This posterior has a maximum in $R_f$ at
 \begin{equation}
 R_f =
-\frac{\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta)\tilde{b}(x_N,\theta)
-  \pm
-  \sqrt{(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta)\tilde{b}(x_N,\theta))^2
+\frac{\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)
+  +
+  \sqrt{\left(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)\right)^2
     -
     4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)}}{4
-  \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta)}.
+  \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta))}.
 \end{equation}
 where $\tilde{b}(x_N,\theta)
 =\hat{b}(x_N,\theta)/(1-\hat{B}(x_N,\theta))$. If
 $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
-\hat{F}(x_N,\theta))\,R_f \approx 1/2$. This is can be understood as
+\hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as
 the statement that the rate of foreground events with ranking
 statistic greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of
 order $1$, as expected. However, $\tilde{b}(x_N,\theta) = -{\rm d}
@@ -464,7 +464,7 @@ p_{\rm LE}\left( R_f, \theta | d \right) \propto \left( \frac{R_{\rm
 \exp\left(-R_f(1-\hat{F}(x_N,\theta))\right)
 \end{equation}
 and if $\hat{f}(x_N,\theta) \gg R_{\rm max} \hat{b}(x_N.\theta)$ we
-find the same result as before $(1- \hat{F}(x_N,\theta))\,R_f \approx
+find the same result as before, $(1- \hat{F}(x_N,\theta))\,R_f \approx
 1/2$.
 
 \subsubsection{Foreground dominated statistic}
@@ -609,10 +609,10 @@ foreground rate using these alternatives are shown in
 Figure~\ref{fig:altmeth}. In this case, the loudest event had
 $x_N=9.5$\jon{(correct this)}. The loudest-event statistic depends on
 a specification of the maximum, $R_{\rm max}$, for the background
-rate. We show results for $R_{\rm max}=\infty$, i.e.m, the improper
+rate. We show results for $R_{\rm max}=\infty$, i.e., the improper
 prior, and $R_{\rm max}=10000$. The results for other reasonable
 choices of $R_{\rm max} = 100, 1000, 100000$ etc. gave exactly the
-same posterior, since $\hat{b}(x_N,) R_{\rm max} \ll \hat{f}(x_N)$ for
+same posterior, since $\hat{b}(x_N) R_{\rm max} \ll \hat{f}(x_N)$ for
 all these choices and we are therefore in the regime where the
 posterior is insensitive to $R_{\rm max}$. To apply the
 foreground-dominated statistic we must specify a threshold above which
@@ -629,7 +629,7 @@ cases --- setting $x_{\rm min}=3.5$ so that we assume all $98$
 observed events are foreground; and setting $x_{\rm min}=9$ so that
 only the loudest event is classified as foreground.
 
-The loudest event statistic with the improper-prior gives, as
+The loudest event statistic with the improper prior gives, as
 expected, a poor approximation to the foreground rate. The peak is
 more accurately located when a prior maximum rate is defined, but the
 distribution is much wider than using the full analysis described
@@ -674,7 +674,7 @@ therefore lead to narrower posteriors in general.
   \caption{\label{fig:analytic-rate-foreground-probs} Foreground
     probability for each event in the synthetic data set of \S
     \ref{sec:analytic-GW-example} marginalized over all other
-    parameters (errorbars are one standard deviation).  True
+    parameters (error bars are one standard deviation).  True
     foreground events are in dark grey, background events in light
     grey.  Even though our method cannot identify the status of most
     events with confidence, it can still correctly estimate the rates
@@ -689,7 +689,7 @@ therefore lead to narrower posteriors in general.
     different choices of the maximum a priori background rate, $R_{\rm
       max}$, in the case of the loudest event (``LE'') statistic, and
     for several different choices of the threshold, $x_{\rm min}$, in
-    the case of the foreground dominated (``FD'') statistic.}
+    the case of the foreground dominated (``FD'') statistic. \ilya{I can see the figure on the screen, but can't print it...}}
 \end{figure}
 
 \subsection{Gravitational Waves With Overlapping Templates}
@@ -740,7 +740,7 @@ property of the background. \jon{Technically, if we allowed really
   large values of $N_{\rm eff}$ we would get into a regime where the
   loudest event could be background and we'd get something here. But,
   we would need $N_{\rm max} \sim 10^{20}$ and so I don't think we
-  should consider these alternatives further in this case.}
+  should consider these alternatives further in this case.} \ilya{On the other hand, this ties in with the comment at the end of the previous subsection about the difficulty of choosing $x_{min}$ for the foreground-dominated statistic when there are other parameters $\theta$ to be estimated simultaneously ($N_{eff}$ in this case), so perhaps it's worthwhile to add some comment about this?}
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates-nt}
@@ -883,9 +883,7 @@ and total number are accurately recovered by our analysis.
     example from \S~\ref{sec:star-cluster}.  The center $(x,y) =
     \left(x_0, y_0\right)$ is determined to within about 5\%
     of the structural radius of the cluster, $r_0$ (see
-    Eq.~\eqref{eq:true-cluster-parameters}). \ilya{[Given the cluster
-        size of 0.1, it seems a bit surprising that the center is off
-        by $\sim 0.05$...]} \will{That is $0.1*r_0$, not $0.1$!}}
+    Eq.~\eqref{eq:true-cluster-parameters}).}
 \end{figure}
 
 \begin{figure}
