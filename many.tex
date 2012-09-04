@@ -59,21 +59,44 @@
 
 \section{Introduction}
 
-\fixme{Introduce the necessity of estimating rates, prior work (like
-  \cite{Biswas2009}), Bayesian inference.}
+The task of estimating a rate of foreground events when a mixture of foreground and background events is present in the data is a common one in physical and astrophysical applications.  This problem comes up, among others, in gravitational-wave data analysis \cite[e.g.,][]{s5-highmass,s6-lowmass} and in astronomical observations of a field of objects of mixed provenance \cite[GC cluster paper]{}..  In this paper, we introduce a robust formalism for estimating event rates from the data when the shape of foreground and background distributions are known (but may have additional free parameters), but the provenance of individual events as either background or foreground is unknown.  
+
+We use a Bayesian approach and consider all available data to ensure that the inferred rates are both unbiased and maximally constrained in the presence of limited observations.  Bayes' theorem yields the \emph{posterior} probability density function on a set of parameters, $\vec{\theta}$, given the observed data, $d$, under a model $M$:
+\begin{equation}
+p(\vec{\theta} | d, M) = \frac{p(\vec{\theta}|M) p(d|\vec{\theta},M)}{p(d|M)},
+\end{equation}
+where $p(\vec{\theta}|M)$ are the \emph{prior} probabilities of the model parameters, $p(d|\vec{\theta},M)$ is the \emph{likelihood} of obtaining the data given a particular choice of parameters, and the normalizing factor $p(d|M)$ is known as the \emph{evidence}.
+
+Two alternative approaches have been suggested in the past.  One, known as the \emph{loudest-event statistic} \cite{Biswas2009}, uses only the information from the highest-ranked event in the data to infer the rate distribution.  This approach has been used successfully \cite{s5-highmass,s6-lowmass} when the number of loud foreground events is small (typically zero or one) to obtain upper limits on foreground rates.  However, the loudest-event statistic ignores all events except the loudest one, and so suffers from an unnecessary loss of information; therefore, we expect it to yield a much larger variance than strictly necessary when multiple events are present in the data.  
+
+Another possible approach is based on the use of only loud, ``gold-plated'' events, ones which are certain (or nearly certain) to come from the foreground, to derive rates.  We refer to this approach as the \emph{foreground-dominated statistic}.  The foreground-dominated statistic may yield accurate results when the foreground and background are cleanly separated, at least for the loudest events, and the number of such loud events is sufficiently large.  However, it cannot properly account for marginal events.  While either the loudest-event statistic or the foreground-dominated statistic can approach the accuracy of our proposed method in specific regimes, both are suboptimal in a general case.
+
+In order to demonstrate our method, we consider three different examples.  The first two come from the field of gravitational-wave data analysis, but could equally arise in any application that employs matched filtering \cite{FINDCHIRP} to extract weak signals with known shapes from the data.  The last example considers the case of a globular cluster on a background of field stars.  Throughout, we compare the results obtained with our technique to the loudest-event and foreground-dominated statistics, which make use of a limited subset of the available information.
+
+ This paper is organized as follows...
+
+
+
+
+
+
+
+%\fixme{Introduce the necessity of estimating rates, prior work (like
+%  \cite{Biswas2009}), Bayesian inference.}
   
-Difficulty of measuring rate in presence of background
+  
+  
+%Difficulty of measuring rate in presence of background
 
-Want to add more than just the loudest event (cf. loudest event
-statistic)
+%Want to add more than just the loudest event (cf. loudest event statistic)
 
-Unknown background distribution, $\Lambda$
+%Unknown background distribution, $\Lambda$
 
-Cf. number of gold-plated detections in sensitive volume --
-frequentist approach OK if tons of events, otherwise need this.
+%Cf. number of gold-plated detections in sensitive volume --
+%frequentist approach OK if tons of events, otherwise need this.
 
 
-\section{Model}
+\section{Model}\label{sec:model}
 
 We assume that we are presented with a data set of $N$ events that exceed a pre-specified threshold in ranking statistic, $x_{\rm min}$.  Each
 event may be due to either a signal of interest or an uninteresting
