@@ -918,7 +918,8 @@ and an (approximately) Jeffreys prior on $r_0$,
     \frac{2}{r_0} - \frac{4 r_0}{r^2 + r_0^2} \right)^2 \right\rangle}
   = \sqrt{\frac{ 4 R_f}{3 r_0^2}} \propto \frac{\sqrt{R_f}}{r_0}.
 \end{equation}
-Note that the calculation of the prior uses the likelihood before
+}\ilya{Sorry, I still don't get it.  Isn't $\mathcal{L} = R_f \hat{f} + R_b \hat{b}$?  If so, how do you get the second equality above?}
+\will{Note that the calculation of the prior uses the likelihood before
 analytical marginalization over the flags, $f_i$.  We are ignoring the
 fact that $R_f$ and $r_0$ are correlated.  In truth, the Jeffreys
 prior would be the determinant of the matrix built out of terms like
@@ -994,7 +995,7 @@ distribution depends on data quality and may deviate significantly
 from the simple Gaussian-noise behavior modeled in section
 \ref{sec:GW-example}.  Several approaches have been developed to
 accurately model both distributions, e.g., through the use of injected
-signals to model the background \cite{ihope,CannonHannaKeppel:2012}.
+signals to model the foreground distribution \cite{ihope,CannonHannaKeppel:2012}.
 However, this is a difficult problem (e.g., because of the need to
 estimate the background at the very tails of the distribution), and
 will require significant future work.
