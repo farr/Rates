@@ -12,6 +12,12 @@
 \newcommand{\ilya}[1]{{\color{red} \bf #1}}
 \newcommand{\will}[1]{{\color{blue} \bf #1}}
 \newcommand{\jon}[1]{{\color{green} \bf #1}}
+\newcommand{\curt}[1]{{\color{magenta} \bf #1}}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ba}{\begin{eqnarray}}
+\newcommand{\ea}{\end{eqnarray}}
 
 \DeclareMathOperator{\erf}{erf}
 
@@ -828,6 +834,76 @@ property of the background. \jon{Technically, if we allowed really
     discussed in \S \ref{sec:gw-overlapping-template}, marginalized
     over all state flags and rates.  The true value, $N_\mathrm{eff} =
     1000$, is indicated by the vertical line.}
+\end{figure}
+
+\subsection{Dependence of the Bayesian Rate Estimate on the Value of the Threshold}
+This paper is concerned with Bayesian rate estimates based on a  lists of events (which are a certain kind of summary of the complete data set): either the loudest event, or a list of all events whose SNR exceeds a certain, pre-set threshold.  In this subsection we address the question of how the estimate depends on the threshold value.  
+
+To begin with, we recall the well-known fact that the Bayesian estimator is
+unbiased, in the following sense.  For simplicity, assume that the model consists of a single
+rate parameter $R$, with prior distribution $p(R)$.  Consider an ensemble of data sets 
+whose distribution is consistent with that prior; i.e., such that $p(data)$ is given by
+%Construct and ensemble of synthetic data sets consistent with $p(R)$; i.e., draw data from the %distribution
+\be
+p(data) = \int{ p(data|R)\,p(R) dR}\, .
+\ee
+For each data set in the ensemble, compute the Bayesian estimator $R_{BE} = \int{ R p(R|data) dR}$.
+Then it is immediate that 
+\be 
+\int{R_{BE}(data)} d(data) = \int{ R p(R) dR}\, .
+\ee
+\noindent I.e, the data-weighted average of the Bayesian estimate $R_{BE}$ equals the prior-weighted average $R$. \curt{Guys:  would you like me to supply the argument?}
+%
+Therefore (for any fixed prior) all threshold values will yield, on average, the same estimate of the rate.  However this equality of averages does {\it not} imply that all threshold values yield the same information. In general, as the threshold is lowered to include more events, the error bar on the estimate shrink.  In this subsection we give quantitative illustrations of how the error bar shrinks when the threshold is lowered.    
+
+Consider the following model problem.
+% in which the distribution of noise events is Gaussian.
+Let $P(\rho)\Delta\rho$ be the probability that data yields a putative event with SNR in the
+range $[\rho - \Delta\rho/2, \rho + \Delta\rho/2]$  We write $P = P_n + P_t$, where $P_n$ is
+the distribution of noise events and $P_t$ is the distribution of events from "true" astrophysical sources.   Both $P_n$ and $P_t$ are the product of a rate (of noise or true events) and the observation time.  Here we will assume that the noise distribution is Gaussian, so that $P_n$
+has the general form
+\be 
+P_n(\rho) = \Lambda_n {\rm exp}\big[-\rho^2/2\big] \, .
+\ee
+\noindent
+We find it useful to define $\rho_1$ as the SNR such that a data set will have on average
+a single noise event louder than $\rho_1$; i.e., such that
+\be
+\int_{\rho_1}^{\infty} P_n(\rho)\, d\rho  = 1 \, .
+\ee
+For this example we will assume that the spatial distribution of true events can be approximated as uniform in Euclidean space. Then we can write the full $P$ as
+%and that the spatial distribution of true events can be approximated as uniform in Euclidean %space. Then $P$ has the general form  
+\be
+P(\rho) = \big[\sqrt{\pi/2} {\rm erfc}(\rho_1/\sqrt{2})\big]^{-1} \ exp[-\rho^2/2] + 3 R_t \frac{\rho_1^3}{\rho^4} \, .
+\ee
+\noindent where $R_t$ is the mean number of true events with $\rho > \rho_1$.
+%What matters for the following analysis is the rate times the observation time.  
+
+For any pair $(\rho_1, R_t)$, it is straightforward to construct random event lists drawn from the corresponding $P(\rho)$, and straightforward to apply a threshold by "throwing away" all events with $\rho$ less than some threshold value $\rho_{th}$.  For any thresholded event list, we use
+Eqs. ..... to construct the probability density $p(R)$ (except that in this example, instead of the
+Jeffrey's prior, we assume a "hat-shaped" prior; see below).
+% that is uniform in some interval and zero elsewhere; see below).  
+For that event list, we define $\Delta R_t$ by
+\be
+(\Delta R_t)^2 = \int{(R - R_t)^2 p(R)\, dR }\, .
+\ee
+We initially set a rather low threshold, and see how $\Delta R_t$ varies as $rho_{th}$ is increased.
+To find the average behavior, we do many draws of $R_t$ and corresponding data sets.
+
+Illustrative results are displayed in Fig.~\ref{fig:delR}, where the mean value of $\Delta R_t$ is plotted as a function of $\rho_{th}$.
+%$x_{th} \equiv \rho_{th}/\rho_1$.  
+To create this figure, we chose $\rho_1 = 8$,
+and took our prior on $R_t$ to be a uniform distribution between $1$ and $10$.   Fig.~\ref{fig:delR} also shows how the mean number of noise events on the list varies with $\rho_{th}$.  Note the relative insensitivity of  $\Delta R_t$ to $\rho_{th}$:  as the mean
+number of noise events on the event list shrinks from $8$ to $\sim 10^{-6}$, 
+the average $\Delta R_t$ increases only from 2.4 to 2.8.
+\curt{Guys: I can produce more figs, and will produce cleaner ones.}
+
+
+\begin{figure}
+  \includegraphics[width=\columnwidth]{delR}
+  \caption{\label{fig:delR} The meanu uncertainty in the Bayesian rate estimate
+as function of the threshold value $\rho_{th}$.  Also shows how the mean number of
+noise events varies with $\rho_{th}$.}
 \end{figure}
 
 \subsection{Star Cluster Parameters With Background Contamination}
