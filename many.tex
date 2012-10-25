@@ -845,25 +845,26 @@ rate parameter $R$, with prior distribution $p(R)$.  Consider an ensemble of dat
 whose distribution is consistent with that prior; i.e., such that $p(data)$ is given by
 %Construct and ensemble of synthetic data sets consistent with $p(R)$; i.e., draw data from the %distribution
 \be
-p(data) = \int{ p(data|R)\,p(R) dR}\, .
+p(data) = \int{ p(data|R)\,p(R)\, dR}\, .
 \ee
-For each data set in the ensemble, compute the Bayesian estimator $R_{BE} = \int{ R p(R|data) dR}$.
+For each data set in the ensemble, compute the Bayesian estimator $R_{B} = \int{ R p(R|data) dR}$.
 Then it is immediate that 
 \be 
-\int{R_{BE}(data)} d(data) = \int{ R p(R) dR}\, .
+\int{R_{B}(data)\, p(data)\,d(data) }= \int{ R\, p(R) \,dR}\, .
 \ee
-\noindent I.e, the data-weighted average of the Bayesian estimate $R_{BE}$ equals the prior-weighted average $R$. \curt{Guys:  would you like me to supply the argument?}
+\noindent I.e, the data-weighted average of the Bayesian estimate $R_{B}$ equals the prior-weighted average $R$. 
+%\curt{Guys:  would you like me to supply the argument?}
 %
 Therefore (for any fixed prior) all threshold values will yield, on average, the same estimate of the rate.  However this equality of averages does {\it not} imply that all threshold values yield the same information. In general, as the threshold is lowered to include more events, the error bar on the estimate shrink.  In this subsection we give quantitative illustrations of how the error bar shrinks when the threshold is lowered.    
 
 Consider the following model problem.
 % in which the distribution of noise events is Gaussian.
-Let $P(\rho)\Delta\rho$ be the probability that data yields a putative event with SNR in the
-range $[\rho - \Delta\rho/2, \rho + \Delta\rho/2]$  We write $P = P_n + P_t$, where $P_n$ is
-the distribution of noise events and $P_t$ is the distribution of events from "true" astrophysical sources.   Both $P_n$ and $P_t$ are the product of a rate (of noise or true events) and the observation time.  Here we will assume that the noise distribution is Gaussian, so that $P_n$
+Let $p(\rho)\Delta\rho$ be the probability that data yields a putative event with SNR in the
+range $[\rho - \Delta\rho/2, \rho + \Delta\rho/2]$  We write $p = p_n + p_s$, where $p_n$ is
+the distribution of noise events and $p_s$ is the distribution of events from actual astrophysical sources.   Both $p_n$ and $p_s$ are the product of a rate (of noise or true events) and the observation time.  Here we will assume that the noise distribution is Gaussian, so that $p_n$
 has the general form
 \be 
-P_n(\rho) = \Lambda_n {\rm exp}\big[-\rho^2/2\big] \, .
+p_n(\rho) = \Lambda_n {\rm exp}\big[-\rho^2/2\big] \, .
 \ee
 \noindent
 We find it useful to define $\rho_1$ as the SNR such that a data set will have on average
@@ -871,40 +872,67 @@ a single noise event louder than $\rho_1$; i.e., such that
 \be
 \int_{\rho_1}^{\infty} P_n(\rho)\, d\rho  = 1 \, .
 \ee
-For this example we will assume that the spatial distribution of true events can be approximated as uniform in Euclidean space. Then we can write the full $P$ as
-%and that the spatial distribution of true events can be approximated as uniform in Euclidean %space. Then $P$ has the general form  
-\be
-P(\rho) = \big[\sqrt{\pi/2} {\rm erfc}(\rho_1/\sqrt{2})\big]^{-1} \ exp[-\rho^2/2] + 3 R_t \frac{\rho_1^3}{\rho^4} \, .
+For this example we will assume that the spatial distribution of true events can be approximated as uniform in Euclidean space. Then we can write the full $p(\rho)$ as
+%and that the spatial distribution of true events can be approximated as uniform in Euclidean %space. Then $p(\rho)$ has the general form  
+\be\label{eq:ptot}
+p(\rho) = \big[\sqrt{\pi/2} {\rm erfc}(\rho_1/\sqrt{2})\big]^{-1} \ exp[-\rho^2/2] + 3 R_t \frac{\rho_1^3}{\rho^4} \, .
 \ee
 \noindent where $R_t$ is the mean number of true events with $\rho > \rho_1$.
 %What matters for the following analysis is the rate times the observation time.  
 
-For any pair $(\rho_1, R_t)$, it is straightforward to construct random event lists drawn from the corresponding $P(\rho)$, and straightforward to apply a threshold by "throwing away" all events with $\rho$ less than some threshold value $\rho_{th}$.  For any thresholded event list, we use
+For any pair $(\rho_1, R_t)$, it is straightforward to construct random event lists drawn from the corresponding $p(\rho)$, and straightforward to apply a threshold by "throwing away" all events with $\rho$ less than some threshold value $\rho_{th}$.  For any thresholded event list, we use
 Eqs. ..... to construct the probability density $p(R)$ (except that in this example, instead of the
 Jeffrey's prior, we assume a "hat-shaped" prior; see below).
 % that is uniform in some interval and zero elsewhere; see below).  
-For that event list, we define $\Delta R_t$ by
+For that event list, we define $\Delta R$ by
 \be
-(\Delta R_t)^2 = \int{(R - R_t)^2 p(R)\, dR }\, .
+(\Delta R_B)^2 = \int{(R - R_B)^2 \, p(R)\, dR }\, .
 \ee
-We initially set a rather low threshold, and see how $\Delta R_t$ varies as $rho_{th}$ is increased.
-To find the average behavior, we do many draws of $R_t$ and corresponding data sets.
+%To find the average behavior, we do many draws of $R_t$ and corresponding data sets.
 
-Illustrative results are displayed in Fig.~\ref{fig:delR}, where the mean value of $\Delta R_t$ is plotted as a function of $\rho_{th}$.
-%$x_{th} \equiv \rho_{th}/\rho_1$.  
-To create this figure, we chose $\rho_1 = 8$,
-and took our prior on $R_t$ to be a uniform distribution between $1$ and $10$.   Fig.~\ref{fig:delR} also shows how the mean number of noise events on the list varies with $\rho_{th}$.  Note the relative insensitivity of  $\Delta R_t$ to $\rho_{th}$:  as the mean
+Figs.~\ref{fig:delRb} --\ref{fig:Rt10}  illustrate how $\Delta R$ varies with the threshold value $\rho_{th}$.  In all cases we assumed that $\rho_1 = 8$.
+%
+For Fig.~\ref{fig:delR1}, we adopted a flat prior on $R$ between $1$ and $10$ (i.e, we took
+$p(R) = 1/9$  for $1 < R <10$, and  zero outside that interval).  
+% To create Fig.~\ref{fig:delR1}, 
+We drew $10^3$ 
+%\curt{Curt needs to check this} 
+random realizations $(R_t, data)$, where $R_t$ was drawn from that flat prior and the data--a list of $\rho$ values-- was drawn from the distribution $p(data|R_t)$ given by Eq.~\ref{eq:ptot} .  For any given threshold value, $\rho_{th}$, we created an event list by taking the subset of the $\rho$ values
+% in the data set that are 
+greater than $\rho_{th}$  For each data set, we used a sequence of increasing threshold  values $\rho_{th}$ to create a corresponding sequence of (ever shorter)  event lists.  For each event list, we calculated $\Delta R$ and $R_B - R_t$.
+%and take the mean over all realizations.  
+As a code check, we verified that the mean of $R_B - R_t$ (over all realizations) was consistent with zero for all $\rho_{th}$.  Fig.~\ref{fig:delR1} displays both the mean value of $\Delta R$ and the mean number of noise events (as opposed to actual signals) as a function of $\rho_{th}$. 
+Note the relative insensitivity of  $\Delta R_t$ to $\rho_{th}$:  as the mean
 number of noise events on the event list shrinks from $8$ to $\sim 10^{-6}$, 
-the average $\Delta R_t$ increases only from 2.4 to 2.8.
-\curt{Guys: I can produce more figs, and will produce cleaner ones.}
-
+the average $\Delta R_B$ increases only $\sim 14\%$, from 0.42to 0.48.
 
 \begin{figure}
-  \includegraphics[width=\columnwidth]{delR}
-  \caption{\label{fig:delR} The meanu uncertainty in the Bayesian rate estimate
-as function of the threshold value $\rho_{th}$.  Also shows how the mean number of
-noise events varies with $\rho_{th}$.}
+\includegraphics[width=\columnwidth]{delRb}
+\caption{\label{fig:delRb} Displays the mean "error bar" $\Delta R_B$ as function of the threshold value $\rho_{th}$.  In this case, the values of $R_t$ were randomly drawn from a flat prior on the interval $[1,10]$.  We also show how the (mean) size of the event list varies with $\rho_{th}$.}
 \end{figure}
+
+Figs.~\ref{fig:Rt1} --\ref{fig:Rt10} were constructed similarly, but with the following differences.  First, we took the prior 
+$p(R)$ to be $p(R) \propto 1/R$ for  $0.03 < R < 30$, and zero outside that interval (i.e., $p(R)$ is the Jeffries prior, but restricted to some range).   Second, we regarded $R_t$ as fixed (as of course it would be in Nature), and only varied the data--randomly drawing $10^3$ realizations from $p(data|R_t)$.  For each realization we calculated $\Delta R_B$ and $(R_B - R_t)$, and then we calculated the mean over all realizations.  The mean of $(R_B - R_t)$ was generally {\it not} zero, since the
+prior biases the results.  (Of course, if one {\it updated} the prior after each realization, the 
+bias would decrease towards zero, but that is not what we did: we evaluated each realization with the same Jeffries prior.)   
+
+The number of noise events is the same as for the first case, shown in Fig.~\ref{fig:delR}.  Note that again, for all three values of $R_t$, the mean uncertainty $\Delta R_B$ increases by only $\sim 20\%$  as the mean number of noise events on the event list shrinks from $8$ to $\sim 10^{-6}$.  And as one would expect, the relative uncertainty shrinks as $R_t$ increases.
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{Rt1}
+\caption{\label{fig:Rt1} Displays the mean rms error $\Delta R_B$ and mean $(R_B - R_t)$ (i.e., the bias) as functions of the threshold value $\rho_{th}$.  In this case, the actual value of $R_t$ was $1.0$, and $p(R|data)$ was computed using the Jeffries prior on the interval $[0.03,30]$.}
+\end{figure} 
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{Rt3}
+\caption{\label{fig:Rt3} Same as the previous figure, but displaying the size of $\Delta R_B$  relative to $R_t$, with the actual $R_t$ equal to $3.0$.}
+\end{figure} 
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{Rt10}
+\caption{\label{fig:Rt10} Same as the previous figure, but with the actual $R_t$ equal to $10.0$.}
+\end{figure} 
+
 
 \subsection{Star Cluster Parameters With Background Contamination}
 \label{sec:star-cluster}
