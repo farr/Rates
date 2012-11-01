@@ -872,39 +872,44 @@ a single noise event louder than $\rho_1$; i.e., such that
 \be
 \int_{\rho_1}^{\infty} P_n(\rho)\, d\rho  = 1 \, .
 \ee
-For this example we will assume that the spatial distribution of true events can be approximated as uniform in Euclidean space. Then we can write the full $p(\rho)$ as
-%and that the spatial distribution of true events can be approximated as uniform in Euclidean %space. Then $p(\rho)$ has the general form  
-\be\label{eq:ptot}
-p(\rho) = \big[\sqrt{\pi/2} {\rm erfc}(\rho_1/\sqrt{2})\big]^{-1} \ exp[-\rho^2/2] + 3 R_t \frac{\rho_1^3}{\rho^4} \, .
+For this example we will assume that the spatial distribution of true events can be approximated as uniform in Euclidean space, so 
+\be\label{eq:ps}
+p_s(\rho) = 3 R_t \frac{\rho_1^3}{\rho^4} \, ,
 \ee
 \noindent where $R_t$ is the mean number of true events with $\rho > \rho_1$.
+Then we can write the full $p(\rho)$ as
+%and that the spatial distribution of true events can be approximated as uniform in %Euclidean %space. Then $p(\rho)$ has the general form  
+\be\label{eq:ptot}
+p(\rho) = \big[\sqrt{\pi/2} {\rm erfc}(\rho_1/\sqrt{2})\big]^{-1} \, {\rm exp}[-\rho^2/2]\  + \ 3 R_t \frac{\rho_1^3}{\rho^4} \, .
+\ee
+
 %What matters for the following analysis is the rate times the observation time.  
 
 For any pair $(\rho_1, R_t)$, it is straightforward to construct random event lists drawn from the corresponding $p(\rho)$, and straightforward to apply a threshold by "throwing away" all events with $\rho$ less than some threshold value $\rho_{th}$.  For any thresholded event list, we use
-Eqs. ..... to construct the probability density $p(R)$ (except that in this example, instead of the
+Eqs.~(\curt{need to supply, from earlier in paper} ) to construct the probability density $p(R|data)$ (except that in this example, instead of the
 Jeffrey's prior, we assume a "hat-shaped" prior; see below).
 % that is uniform in some interval and zero elsewhere; see below).  
-For that event list, we define $\Delta R$ by
+For that event list, we define $\Delta R_B$ by
 \be
-(\Delta R_B)^2 = \int{(R - R_B)^2 \, p(R)\, dR }\, .
+(\Delta R_B)^2 = \int{(R - R_B)^2 \, p(R|data)\, dR }\, .
 \ee
 %To find the average behavior, we do many draws of $R_t$ and corresponding data sets.
-
+%
 Figs.~\ref{fig:delRb} --\ref{fig:Rt10}  illustrate how $\Delta R$ varies with the threshold value $\rho_{th}$.  In all cases we assumed that $\rho_1 = 8$.
 %
-For Fig.~\ref{fig:delR1}, we adopted a flat prior on $R$ between $1$ and $10$ (i.e, we took
+
+For Fig.~\ref{fig:delRb}, we adopted a flat prior on $R$ between $1$ and $10$ (i.e, we took
 $p(R) = 1/9$  for $1 < R <10$, and  zero outside that interval).  
 % To create Fig.~\ref{fig:delR1}, 
-We drew $10^3$ 
-%\curt{Curt needs to check this} 
-random realizations $(R_t, data)$, where $R_t$ was drawn from that flat prior and the data--a list of $\rho$ values-- was drawn from the distribution $p(data|R_t)$ given by Eq.~\ref{eq:ptot} .  For any given threshold value, $\rho_{th}$, we created an event list by taking the subset of the $\rho$ values
+We drew $10^4$ 
+random realizations $(R_t, data)$, where $R_t$ was drawn from that flat prior and the data--a list of $\rho$ values-- was drawn from the distribution $p(data|R_t)$ given by Eq.~\ref{eq:ptot} .  For any particular threshold value, $\rho_{th}$, we created an  event list by taking the subset of the $\rho$ values
 % in the data set that are 
-greater than $\rho_{th}$  For each data set, we used a sequence of increasing threshold  values $\rho_{th}$ to create a corresponding sequence of (ever shorter)  event lists.  For each event list, we calculated $\Delta R$ and $R_B - R_t$.
+that were greater than $\rho_{th}$.  For each data set, we considered a sequence of increasing threshold  values $\rho_{th}$, using them to create a corresponding sequence of (ever shorter)  event lists.  For each event list, we calculated $\Delta R$ and $R_B - R_t$.
 %and take the mean over all realizations.  
 As a code check, we verified that the mean of $R_B - R_t$ (over all realizations) was consistent with zero for all $\rho_{th}$.  Fig.~\ref{fig:delR1} displays both the mean value of $\Delta R$ and the mean number of noise events (as opposed to actual signals) as a function of $\rho_{th}$. 
 Note the relative insensitivity of  $\Delta R_t$ to $\rho_{th}$:  as the mean
 number of noise events on the event list shrinks from $8$ to $\sim 10^{-6}$, 
-the average $\Delta R_B$ increases only $\sim 14\%$, from 0.42to 0.48.
+the average $\Delta R_B$ increases only $\sim 14\%$, from $0.42$ to $0.48$.
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{delRb}
@@ -912,11 +917,13 @@ the average $\Delta R_B$ increases only $\sim 14\%$, from 0.42to 0.48.
 \end{figure}
 
 Figs.~\ref{fig:Rt1} --\ref{fig:Rt10} were constructed similarly, but with the following differences.  First, we took the prior 
-$p(R)$ to be $p(R) \propto 1/R$ for  $0.03 < R < 30$, and zero outside that interval (i.e., $p(R)$ is the Jeffries prior, but restricted to some range).   Second, we regarded $R_t$ as fixed (as of course it would be in Nature), and only varied the data--randomly drawing $10^3$ realizations from $p(data|R_t)$.  For each realization we calculated $\Delta R_B$ and $(R_B - R_t)$, and then we calculated the mean over all realizations.  The mean of $(R_B - R_t)$ was generally {\it not} zero, since the
+$p(R)$ to be $p(R) \propto 1/R$ for  $0.03 < R < 30$, and zero outside that interval (i.e., $p(R)$ is the Jeffries prior, but restricted to some range).   Second, we regarded $R_t$ as fixed (as of course it would be in Nature), and only varied the data--randomly drawing $10^4$ realizations from $p(data|R_t)$.  For each realization we calculated $R_t^{-1}\,\Delta R_B$ and $(R_B - R_t)$, and then we calculated the means of these quantities over all realizations.  The mean of $(R_B - R_t)$ was generally {\it not} zero, since the
 prior biases the results.  (Of course, if one {\it updated} the prior after each realization, the 
 bias would decrease towards zero, but that is not what we did: we evaluated each realization with the same Jeffries prior.)   
 
-The number of noise events is the same as for the first case, shown in Fig.~\ref{fig:delR}.  Note that again, for all three values of $R_t$, the mean uncertainty $\Delta R_B$ increases by only $\sim 20\%$  as the mean number of noise events on the event list shrinks from $8$ to $\sim 10^{-6}$.  And as one would expect, the relative uncertainty shrinks as $R_t$ increases.
+For Figs.~\ref{fig:Rt1} --\ref{fig:Rt10}, the mean number of noise events as a function of $\rho_{th}$ was the same as for the case shown in Fig.~\ref{fig:delRb}.  Note that for all three values of $R_t$, the mean uncertainty $\Delta R_B$ increases by only $\sim 20\%$  as the mean number of noise events on the event list shrinks from $8$ to $\sim 10^{-6}$. 
+Thus the inference that the average $\Delta R_B$ is rather insensitive to  $\rho_{th}$ appears to be robust.
+Finally, we note that for all three cases the bias is much smaller than $\Delta R_B$.
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{Rt1}
@@ -933,6 +940,50 @@ The number of noise events is the same as for the first case, shown in Fig.~\ref
 \caption{\label{fig:Rt10} Same as the previous figure, but with the actual $R_t$ equal to $10.0$.}
 \end{figure} 
 
+\subsection{Extreme Sensitivity of the LE Rate Estimate to a Single, Unusually Loud Event}
+Here we discuss a very unattractive feature of the Bayesian loudest event estimate of $R$:
+a small percentage of the time it will yield a very large over-estimate.  
+
+To explain this, we will use the same model as described in the previous subsection, and we will begin with a very specific example.   Let the true rate (times the observation time) be $R_t = 1$, meaning (again) that the expected number of actual events with $\rho > \rho_1$ is one.   Then there is a $1/64$ chance ($\approx 1.6\%$) that the loudest event will have $\rho_{LE} > 4 \rho_1$.  Consider this case, and let us also assume that there are no events (noise or actual) with $\rho_1 < \rho < \rho_{LE}$.  The loudest event estimate basically "throws away" the information that there
+are no events in this interval, which (we show below) leads an estimate $R_{LE} \approx 64$,
+  which is $64$ times the true rate!  Now, if the true rate really were $R_t = 64$, then the expected number of 
+events with $\rho > \rho_1$ would be $64$.  So in this case, the loudest event estimate 
+ignores the fact that there are $\sim 56 -72$ "missing" events.  However a Bayesian estimate
+with $\rho_{th}$ set to $\rho_1$ incorporates this information quite naturally, and so (correctly) yields an estimated $R$ of order one.
+
+We now essentially repeat the above discussion, but in greater generality and with the derivations provided.   First recall that $R_B$ is given by
+\be\label{eq:rb1}
+R_B = \frac{  \int{ R\, p(\{\rho_i\}|R)  \, p(R)\, dR}}{  \int{ p(\{\rho_i\}|R)\, p(R)\, dR }}\, ,
+\ee
+\noindent
+where $p(R)$ is the prior on $R$ and (and up to an overall normalization)
+\be\label{eq:rb2}
+p(\{\rho_i\}|R) = {\rm exp}\bigg[\sum_{i \in  list} {\rm ln}\, p(\rho_i|R) - \int_{\rho_{th}}^{\infty} p(\rho)\, d\,\rho  \bigg] \,  ,
+\ee
+\noindent
+with $p(\rho)$ given by Eq.~().
+
+The loudest event estimate is obtained by setting the lower integration limit in the last term on the rhs of Eq.~(\ref{eq:rb2}) to $\rho_{th} = \rho_{LE}$, and replacing the sum 
+$\sum_i {\rm ln}\, p(\rho_i|R)$ by the single term ${\rm ln}\, p(\rho_{LE}|R)$.   For the case of interest here, where $\rho_{LE}$ is (at least) a few times larger than $\rho_1$ and $R_t$ is of order $1$, we can neglect the noise contribution $p_n(\rho)$. Then the integrals in Eq.~(\ref{eq:rb1}) become especially simple, and yield the estimate:
+\be\label{eq:rb3}
+R_B \approx 
+\begin{cases}
+(\rho_{LE}/\rho_1)^3 & \text{if $p(R) \propto 1/R$} \\
+2\, (\rho_{LE}/\rho_1)^3 & \text{if $p(R) =$ const \, .} 
+\end{cases}
+\ee
+
+If instead we set the lower integration limit to $\rho_{th} = \rho_1$, then the $p_n(\rho)$
+contribution to $p(\rho)$ can no longer be neglected.  But the integrals are still 
+straightforward, and we find:
+ \be\label{eq:rb3}
+R_B \approx 
+\begin{cases}
+1 \ \ \  & \text{if $p(R) \propto 1/R$} \\
+2  \ \ \ & \text{if $p(R) =$ const \, .} 
+\end{cases}
+\ee
+\noindent Thus (as emphasized above) simply incorporating the information that there are no events {\it between} $\rho_1$ and  $\rho_{LE}$ results in a far beter estimate.
 
 \subsection{Star Cluster Parameters With Background Contamination}
 \label{sec:star-cluster}
