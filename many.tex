@@ -71,8 +71,8 @@ foreground and background events is present in the data is a common
 one in physical and astrophysical applications.  This problem comes
 up, among others, in gravitational-wave data analysis
 \cite[e.g.,][]{s5-highmass,s6-lowmass} and in astronomical
-observations of a field of objects of mixed provenance \cite[GC
-  cluster paper]{}..  In this paper, we introduce a robust formalism
+observations of a field of objects of mixed provenance
+\cite{DeGennaro2009}.  In this paper, we introduce a robust formalism
 for estimating event rates from the data when the shape of foreground
 and background distributions are known (but may have additional free
 parameters), but the provenance of individual events as either
@@ -138,12 +138,13 @@ important remaining issues in section \ref{sec:discussion}.
 
 \section{Model}\label{sec:model}
 
-We assume that we are presented with a data set of $N$ events that
-exceed a pre-specified threshold in ranking statistic, $x_{\rm min}$.
-Each event may be due to either a signal of interest or an
-uninteresting background.  Each event is associated with a ranking
-statistic, $x$.  Our data set therefore consists of the ranking
-statistics for the set of events:
+We first consider one-dimensional data, but will generalize to the
+multidimensional case below.  We assume that we are presented with a
+data set of $N$ events that exceed a pre-specified threshold in
+ranking statistic, $x_{\rm min}$.  Each event may be due to either a
+signal of interest or an uninteresting background.  Each event is
+associated with a ranking statistic, $x$.  Our data set therefore
+consists of the ranking statistics for the set of events:
 \begin{equation}
   d = \mathset{ x_i | i = 1, \ldots, N } .
 \end{equation}
@@ -152,9 +153,9 @@ separate out $N$ and the observed ranking statistics, $d$, for
 convenience. We can choose how to label our events. Ultimately we will
 label the events in order of ranking statistic, i.e., $x_1 < x_2 <
 \cdots < x_N$, but some of the derivations that follow are simpler if
-the events are ordered by time of arrival. We will use $d$ to denote
-ranking statistic-ordered events, and $d_{\rm to}$ to denote
-time-ordered events.
+the events are ordered by time of arrival (i.e.\ randomly with respect
+to the $x_i$). We will use $d$ to denote ranking statistic-ordered
+events, and $d_{\rm to}$ to denote time-ordered events.
 
 We assume that both the foreground and background events are samples
 from an inhomogeneous Poisson process with respective differential
@@ -372,13 +373,13 @@ N!\,p(d_{\rm to},N)$, since there are $N!$ ways in which $N$ events
 can be ordered in time and would have the same set of ranking
 statistics.
 
-Not surprisingly, this ranking-statistic ordered posterior can be
-computed directly by assuming that the flags, $\mathset{f_i}$, are
-un-observed data and treating the sets $\mathset{x_i | f_i = 1}$ and
-$\mathset{x_i | f_i = 0}$ as samples from an inhomogeneous Poisson
-process.  For an inhomogeneous Poisson process with rate function
-$r(y)$ (cumulative rate $R(y)$), the likelihood of a set of samples
-$\mathset{y_i}$ is given by
+The ranking-statistic ordered posterior can be computed directly by
+assuming that the flags, $\mathset{f_i}$, are un-observed data and
+treating the sets $\mathset{x_i | f_i = 1}$ and $\mathset{x_i | f_i =
+  0}$ as samples from an inhomogeneous Poisson process.  For an
+inhomogeneous Poisson process with rate function $r(y)$ (cumulative
+rate $R(y)$), the likelihood of a set of samples $\mathset{y_i}$ is
+given by
 \begin{multline}
   p\left( \mathset{y_i} | r \right) \,{\rm d}^Ny_i= P\left(
   \textnormal{zero events below } y_1 \right) \times P\left(
@@ -394,7 +395,7 @@ $\mathset{y_i}$ is given by
 \end{multline}
 Applying this once to the foreground samples, once to the background
 samples and taking the product, we obtain $p(d,\mathset{f_i}, N | R_f,
-R_b, \theta)$ and thence $p(\mathset{f_i}, R_f, R_b, \theta | d,N) =
+R_b, \theta)$ and thus $p(\mathset{f_i}, R_f, R_b, \theta | d,N) =
 p(d,\mathset{f_i}, N | R_f, R_b, \theta)\ p(R_f, R_b, \theta)\, /\,
 p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm to},N)$, as
 justified above, we reproduce Eq.~\eqref{eq:posterior}.
@@ -476,9 +477,12 @@ R_f =
     4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)}}{4
   \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta))}.
 \end{equation}
-where $\tilde{b}(x_N,\theta)
-=\hat{b}(x_N,\theta)/(1-\hat{B}(x_N,\theta))$. If
-$\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
+where $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /
+(1-\hat{B}(x_N,\theta))$\footnote{The quantity $\Lambda$ from
+  \citet{Biswas2009} is related to $\hat{b}$ and $\tilde{f}$ by
+  \begin{equation}
+    \Lambda(x, \theta) = \frac{\tilde{f}(x,\theta)}{R_b \hat{b}(x,\theta)}.
+\end{equation}}.  If $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
 \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
 statement that the rate of foreground events with ranking statistic
 greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of order $1$,
@@ -551,7 +555,8 @@ p_{\rm FD}\left( R_f, \theta | d \right) \propto \prod_{i} \left[
 Ignoring the dependence on $\theta$, this is peaked at a rate $R_f =
 N-1/2$, so we have the expected result that, in the foreground
 dominated regime, the rate is approximately equal to the number of
-events observed. We note that the rate $R_f$ is defined as the rate of
+events observed (the $1/2$ comes from our use of the Jeffreys prior on
+the rate).  We note that the rate $R_f$ is defined as the rate of
 events occurring above the specified threshold and therefore if the
 foreground dominated statistic were used to estimate rates $R_{f,1}$
 and $R_{f,2}$ for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$
@@ -601,10 +606,10 @@ over the entire template bank,
 and consider only events that have a maximum SNR above some threshold,
 $x > \xmin$.
 
-For a data stream of pure noise, $d(f) = n(f)$, the SNR of a each
-template follows a $N(0,1)$ distribution.  The background ranking
-statistic (i.e.\ the maximum SNR over the template bank) then has a
-cumulative distribution without thresholding of
+For a data stream of pure noise, $d(f) = n(f)$, the SNRs of the
+templates are independent $N(0,1)$ random variables.  The background
+ranking statistic (i.e.\ the maximum SNR over the template bank) then
+has a cumulative distribution without thresholding of
 \begin{equation}
   \hat{B}(x) = \left( \frac{1 + \erf\left( \frac{x}{\sqrt{2}}
     \right)}{2} \right)^N
@@ -637,10 +642,10 @@ foreground and background distributions.
 To demonstrate the effectiveness of our formalism, we applied it to a
 synthetic data set with foreground and background distributions drawn
 from Eqs.~\eqref{eq:analytic-background-rate} and
-\eqref{eq:analytic-foreground-rate} with $R_f^\mathrm{true} = 10.4$
-and $R_b^\mathrm{true} = 95.1$, using 1000 templates.  \ilya{[Specify
-    $\xmin$?]} The synthetic data consisted of 13 foreground events
-and 85 background events; the cumulative distribution for the ranking
+\eqref{eq:analytic-foreground-rate} using $x_\mathrm{min} = 3.5$, with
+$R_f^\mathrm{true} = 10.4$ and $R_b^\mathrm{true} = 95.1$ and 1000
+templates.  The synthetic data consisted of 13 foreground events and
+85 background events; the cumulative distribution for the ranking
 statistic of the synthetic data appears in Figure
 \ref{fig:analytic-data-cumulative}.  We used a Markov Chain Monte
 Carlo simulation to draw samples of state flags and rates from the
@@ -671,8 +676,8 @@ approximations described earlier, the loudest-event statistic and the
 foreground-dominated statistic. The marginalised distribution for the
 foreground rate using these alternatives are shown in
 Figure~\ref{fig:altmeth}. In this case, the loudest event had
-$x_N=9.5$\jon{(correct this)}. The loudest-event statistic depends on
-a specification of the maximum, $R_{\rm max}$, for the background
+$x_N\simeq 9.47$. The loudest-event statistic depends on a
+specification of the maximum, $R_{\rm max}$, for the background
 rate. We show results for $R_{\rm max}=\infty$, i.e., the improper
 prior, and $R_{\rm max}=10000$. The results for other reasonable
 choices of $R_{\rm max} = 100, 1000, 100000$ etc. gave exactly the
@@ -683,44 +688,42 @@ foreground-dominated statistic we must specify a threshold above which
 we assume all events are foreground. It is reasonable to do this based
 on a specification for the relative probability of an event being
 fore/background, $\hat{f}(x)/\hat{b}(x)=p_{\rm thresh}$. Setting
-$p_{\rm thresh}=0.99$ gives $x_{\rm min}=4.07$ and there are $N=13$
-events exceeding that threshold. Setting $p_{\rm thresh}=0.5$ gives
-$x_{\rm min}=3.82$ and there are $N=15$ events exceeding that
-threshold \jon{(correct these numbers using Will's data)}. We show
-results for both of these choices of $x_{\rm min}$ in
-Figure~\ref{fig:altmeth}. We also show similar results for two extreme
-cases --- setting $x_{\rm min}=3.5$ so that we assume all $98$
-observed events are foreground; and setting $x_{\rm min}=9$ so that
-only the loudest event is classified as foreground.
+$p_{\rm thresh}=0.99$ gives $x_{\rm min}=4.07$ and there are $N=18$
+(11 foreground and 7 background) events exceeding that
+threshold. Setting $p_{\rm thresh}=0.5$ gives $x_{\rm min}=3.82$ and
+there are $N=30$ (11 foreground and 19 background) events exceeding
+that threshold.  Each of these thresholds gives a biased estimate of
+the rate because there are background events still above threshold.
+The ``omniscient'' threshold of $x_\mathrm{min} = 4.38$ produces $N=7$
+(7 foreground and 0 background) events in this data set, and therefore
+an unbiased estimate, but of course this threshold can only be
+determined because we can examine the synthetic foreground and
+background data samples.  We show results for the first two choices of
+$x_{\rm min}$ in Figure~\ref{fig:altmeth}; the omniscient choice
+produces essentially the same posterior as our full analysis.
 
 The loudest event statistic with the improper prior gives, as
 expected, a poor approximation to the foreground rate. The peak is
 more accurately located when a prior maximum rate is defined, but the
-distribution is much wider than using the full analysis described
-here. This is to be expected as much of the information is being
-thrown away. The foreground-dominated statistic gives a reasonable
-approximation to the true foreground rate, and a distribution that is
-not much wider than the full analysis, for the non-extreme choices of
-$x_{\rm min}$. For $x_{\rm min}=9$, the foreground dominated statistic
-has equivalent performance to the loudest event statistic, as we might
-expect, while when $x_{\rm min}=3.5$, it performs poorly since we are
+distribution is much wider than using the full analysis described here
+in any case. This is to be expected as much of the information is
+being thrown away. The foreground-dominated statistic gives a
+reasonable approximation to the true foreground rate, and a
+distribution that is essentially equal to the full analysis, for the
+``omniscent'' choice of threshold value that excludes all background
+data. For lower thresholds, even for a threshold where
+$p_\mathrm{thresh} = 0.99$, it performs poorly since we are
 approximating the foreground rate by the total foreground plus
-background rate. This indicates that, provided the threshold is chosen
-appropriately, the foreground dominated statistic can perform quite
-well at estimating the rate. The fact that it reproduces the posterior
-from the full analysis so well is indicative of the fact that most of
-the information about the foreground comes from the loudest
-events. Indeed, for $x_{\rm min} \approx 4$, the set of events
-consists mostly of foreground sources and that set contains a decent
-number of events ($13$), so it is not surprising that this statistic
-can estimate the foreground rate well. The choice of $x_{\rm min}$ was
-motivated by knowledge of $\hat{b}(x,\theta)$ and $\hat{f}(x,\theta)$,
-which we have in this case, but this might not be possible if the
-parameters $\theta$ were simultaneously being estimated. The full
-analysis naturally incorporates inference about the rate parameters
-$\theta$ and the background rate $R_b$ along with the foreground rate
-and incorporates maximum information from the data set and should
-therefore lead to narrower posteriors in general.
+background rate.  This indicates that, provided the threshold is
+chosen appropriately, the foreground dominated statistic can perform
+quite well at estimating the rate---but choosing this threshold
+correctly is difficult. The fact that it reproduces the posterior from
+the full analysis so well is indicative of the fact that most of the
+information about the foreground comes from the loudest events. The
+full analysis naturally incorporates inference about the background
+rate $R_b$ along with the foreground rate and incorporates maximum
+information from the data set and should therefore lead to narrower
+posteriors in general.
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates}
@@ -738,23 +741,30 @@ therefore lead to narrower posteriors in general.
   \caption{\label{fig:analytic-rate-foreground-probs} Foreground
     probability for each event in the synthetic data set of \S
     \ref{sec:analytic-GW-example} marginalized over all other
-    parameters (error bars are one standard deviation).  True
-    foreground events are in dark grey, background events in light
-    grey.  Even though our method cannot identify the status of most
-    events with confidence, it can still correctly estimate the rates
-    (Figure \ref{fig:analytic-rate-recovery}).}
+    parameters.  True foreground events are in dark grey, background
+    events in light grey.  Even though our method cannot identify the
+    status of most events with confidence, it can still correctly
+    estimate the rates (Figure \ref{fig:analytic-rate-recovery}).}
 \end{figure}
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{AltMethodComp}
   \caption{\label{fig:altmeth}Posteriors on foreground rate obtained
-    using alternative methods --- the loudest event statistic and the
-    foreground dominated statistic. Results are shown for two
-    different choices of the maximum a priori background rate, $R_{\rm
-      max}$, in the case of the loudest event (``LE'') statistic, and
-    for several different choices of the threshold, $x_{\rm min}$, in
-    the case of the foreground dominated (``FD'') statistic. \ilya{I
-      can see the figure on the screen, but can't print it...}}
+    using the method described in this paper, the loudest event
+    statistic and the foreground dominated analysis for the data set
+    from \S \ref{sec:analytic-GW-example}.  For the loudest event
+    statistic, we present the posterior with and without an upper
+    limit on the background rate, $R_b$; in both cases the rate
+    posterior is significantly wider than the one obtained with the
+    method described in this paper.  For the foreground dominated
+    statistic, the limits $x_\mathrm{min} = 3.82$ and $x_\mathrm{min}
+    = 4.07$ give likelihood ratios of $\hat{f}/\hat{b} = 0.5$ and
+    $0.99$.  For this data set, the thresholds in fact include 19 and
+    7 background events, respectively, so the corresponding rate
+    estimates are significantly biased.  An ``omniscient'' threshold
+    of $x_\mathrm{min} = 4.38$ would produce exactly 7 foreground and
+    zero background events, and the resulting posterior is essentially
+    indistinguishable from the curve for the full analysis.}
 \end{figure}
 
 \subsection{Gravitational Waves With Overlapping Templates}
@@ -784,35 +794,30 @@ background cumulative distribution:
 
 Results from such an analysis appear in Figures \ref{fig:rates-nt} and
 \ref{fig:ntemplates}.  We use the same parameters and data set as in
-\S \ref{sec:analytic-GW-example}, with $R_f = 10.4$, $R_b = 95.1$, and
-$N_\mathrm{eff} = 1000$, but now allow $N_\mathrm{eff}$ to be a
-parameter of the background distribution, with a flat prior.  Both the
-rates and the number of effective templates are recovered without
-significant loss of accuracy relative to the fixed $N_\mathrm{eff}$
-situation in \S \ref{sec:analytic-GW-example}.
+\S \ref{sec:analytic-GW-example}, with $x_\mathrm{min} = 3.5$, $R_f =
+10.4$, $R_b = 95.1$, and $N_\mathrm{eff} = 1000$, but now allow
+$N_\mathrm{eff}$ to be a parameter of the background distribution,
+with a flat prior.  Both the rates and the number of effective
+templates are recovered without significant loss of accuracy relative
+to the fixed $N_\mathrm{eff}$ situation in \S
+\ref{sec:analytic-GW-example}.
 
 If we consider the two alternative methods, the loudest event and
-foreground dominated statistics, we will recover the same foreground
-distributions as in the case with $N_{\rm eff}$ fixed, which are shown
-in Figure~\ref{fig:altmeth}. This is because the parameter $N_{\rm
-  eff}$ affects only the background distribution, to which the
-foreground-dominated statistic is insensitive, and in the loudest
-event case, after marginalisation over $N_{\rm eff}$ we find
-$\int_0^{N_{\rm max}} \hat{b}(x_N,N_{\rm eff}) {\rm d}N_{\rm eff} \ll
-3 N_{\rm max}/R_{\rm max} \hat{f}(x_N, N_{\rm eff})$ and so we are
-still in the foreground-dominated regime in which the loudest event
-tells us nothing about the background. Similarly, neither of these
-alternative methods can inform us about the value of $N_{\rm eff}$, a
-property of the background. \jon{Technically, if we allowed really
-  large values of $N_{\rm eff}$ we would get into a regime where the
-  loudest event could be background and we'd get something here. But,
-  we would need $N_{\rm max} \sim 10^{20}$ and so I don't think we
-  should consider these alternatives further in this case.} \ilya{On
-  the other hand, this ties in with the comment at the end of the
-  previous subsection about the difficulty of choosing $x_{min}$ for
-  the foreground-dominated statistic when there are other parameters
-  $\theta$ to be estimated simultaneously ($N_{eff}$ in this case), so
-  perhaps it's worthwhile to add some comment about this?}
+foreground dominated statistics, and apply the same
+foreground-dominated thresholds as before, we will recover the same
+foreground distributions as are shown in Figure~\ref{fig:altmeth}.
+This is because the parameter $N_{\rm eff}$ affects only the
+background distribution, to which the foreground-dominated statistic
+is insensitive, and in the loudest event case, after marginalisation
+over $N_{\rm eff}$ we find $\int_0^{N_{\rm max}} \hat{b}(x_N,N_{\rm
+  eff}) {\rm d}N_{\rm eff} \ll 3 N_{\rm max}/R_{\rm max} \hat{f}(x_N,
+N_{\rm eff})$ and so we are still in the foreground-dominated regime
+in which the loudest event tells us nothing about the background.
+Neither of these alternative methods can inform us about the value of
+$N_{\rm eff}$, a property of the background.  Moreover, the choice of
+threshold value for the foreground-dominated statistic becomes
+significantly more complicated in this case, since $p_\mathrm{thresh}$
+now depends on $N_\mathrm{eff}$.
 
 \begin{figure}
   \includegraphics[width=\columnwidth]{rates-nt}
