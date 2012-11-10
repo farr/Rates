@@ -1062,17 +1062,18 @@ $\rho_{LE}$ results in a far beter estimate.
 \subsection{Star Cluster Parameters With Background Contamination}
 \label{sec:star-cluster}
 
-\will{Look up von Hippel paper about Bayes 9, the cluster isochrone
-  fitting software---we should cite, since our approach to cluster
-  membership.}
-
 Our final example concerns fitting for the location and shape
 parameters of a cluster of stars observed on top of a stellar
 background with a density gradient.  In this example, stars are either
 members of the cluster (i.e.~foreground) or background contamination,
 with a spatially varying density (i.e.~our rate functions are
-two-dimensional).  We assume that a star cluster has a Plummer
-surface-density profile \citep{Plummer1911,Aarseth1974},
+two-dimensional).  Our method of analysis here is similar to that of
+\citet{DeGennaro2009}, but here we marginalize over membership flags
+and are simultaneously fitting foreground and background densities
+(i.e.\ rates) \emph{and} cluster properties.  
+
+We assume that a star cluster has a Plummer surface-density profile
+\citep{Plummer1911,Aarseth1974},
 \begin{equation}
   \label{eq:plummer-surface-density}
   \hat{f}(\vec{x}, \theta) = \frac{1}{\pi r_0^2 \left( 1 +
@@ -1093,13 +1094,7 @@ observational axes:
   \vec{x} - \vec{x}_{1/2} \right),
 \end{equation}
 where $\vec{\gamma}$ is the gradient, and $\vec{x}_{1/2} = [1/2, 1/2]$
-is the centroid of the observational domain.  \ilya{[I think that if
-    the domain is finite, the previous equation is only normalized for
-    all $\vec{\gamma}$ if $\vec{x}_{1/2}$ is in the center of a
-    symmetric domain (as it happens to be in this case).]}  \will{Yes,
-  as you say, this function is only normalized for $\vec{x}_{1/2}$ is
-  the center, and also for small enough $\vec{\gamma}$; both of these
-  conditions obtain here.}
+is the centroid of the observational domain.  
 
 We use simulated data drawn from our model with parameters
 \begin{equation}
@@ -1112,17 +1107,25 @@ with $R_f = 1000$ and $R_b = 10000$.  For this set of parameters, the
 average density of the background and the peak density of the cluster
 are comparable; there are an order of magnitude more background stars
 than cluster stars in the field.  Figure \ref{fig:sky-density} shows
-the density of stars (cluster and background) on the sky for our
-particular data set.
+the density of stars on the sky and the particular synthetic data set
+used for this analysis.  Because the peak density of the cluster is
+equal to the background density at the center of the domain, there is
+no single star in the domain that is more likely to be a cluster
+member than a background star (i.e.\ $\left \langle f_i \right \rangle
+\lesssim 0.5$ for all stars); nevertheless, we will see that our
+method provides good constraints on the cluster parameters.
 
 \begin{figure}
-  \includegraphics[width=\columnwidth]{sky-density}
-  \caption{\label{fig:sky-density} The density contours on the sky of
-    our synthetic data set of cluster and background stars for the
-    parametrs in Eq.~\eqref{eq:true-cluster-parameters}.  There are a
-    factor of 10 more stars (10000) in the background than in the
-    cluster (1000), but the average density of cluster and background
-    stars is similar.}
+  \includegraphics[width=\columnwidth]{cluster-density}
+  \caption{\label{fig:sky-density} Density contours and synthetic data
+    for the example in \S~\ref{sec:star-cluster}.  The contours
+    describe the true density profile with the parameters in
+    Eq.~\eqref{eq:true-cluster-parameters}.  The points are the
+    realization of this density profile used as sythetic data in
+    \S~\ref{sec:star-cluster}; the dashed line encloses one Plummer
+    scale radius about the true cluster center.  Because the peak
+    cluster density is equal to the background density at the cluster
+    center, the cluster is barely apparent to the eye.}
 \end{figure}
 
 To analyze our synthetic data set, we analytically marginalized over
@@ -1135,51 +1138,32 @@ and an (approximately) Jeffreys prior on $r_0$,
 \begin{equation}
   p\left( r_0 \right) = \frac{\sqrt{R_f}}{r_0}.
 \end{equation}
-\ilya{[Why is this the Jeffreys prior (BTW, it's Jeffreys, or perhaps
-    Jeffreys', but definitely not Jeffrey's ;) )?  It's not obvious
-    why the prior on $r_0$ should depend on $R_f$?]}  \will{Here is
-  the calculation:
-\begin{equation}
-  p\left( r_0 \right) = \sqrt{\left\langle \left(\frac{\partial \log
-      \mathcal{L}}{\partial r_0 } \right)^2 \right\rangle} = \sqrt{
-    R_f \left\langle \left(\frac{\partial \log\hat{f}}{\partial r_0
-    }\right)^2 \right\rangle } = \sqrt{R_f \left\langle \left(
-    \frac{2}{r_0} - \frac{4 r_0}{r^2 + r_0^2} \right)^2 \right\rangle}
-  = \sqrt{\frac{ 4 R_f}{3 r_0^2}} \propto \frac{\sqrt{R_f}}{r_0}.
-\end{equation}
-}\ilya{Sorry, I still don't get it.  Isn't $\mathcal{L} = R_f \hat{f} + R_b \hat{b}$?  If so, how do you get the second equality above?}
-\will{Note that the calculation of the prior uses the likelihood before
-analytical marginalization over the flags, $f_i$.  We are ignoring the
-fact that $R_f$ and $r_0$ are correlated.  In truth, the Jeffreys
-prior would be the determinant of the matrix built out of terms like
-$\partial \log\mathcal{L} / \partial \theta_i \times \partial
-\log\mathcal{L} /\partial \theta_j$, but let's not get carried
-away\ldots.  As another aside, note that we could have predicted the
-$1/r_0$ dependence because $r_0$ has units, so the only unit-invariant
-prior is to be flat in $\log r_0$; I'm don't have a similar argument
-for the appearance of the $\sqrt{R_f}$ factor.}  (Note that this
-factor of $\sqrt{R_f}$ cancels with the Jeffreys prior on the rate,
-$1/\sqrt{R_f}$; we have verified that the priors on these parameters
-are irrelevant to our results, as would be expected from the
-measurement of $\sim 1000$ foreground stars.)
+(Note that this factor of $\sqrt{R_f}$ cancels with the Jeffreys prior
+on the rate, $1/\sqrt{R_f}$; we have verified that the priors on these
+parameters are irrelevant to our results, as would be expected from
+the measurement of $\sim 1000$ foreground stars.)
 
-Figure \ref{fig:sky-loc} shows the posterior for the location
-parameters, $\vec{x}_0$; the center of the cluster is localized to
-within about 10\% of the cluster scale.  Figure
-\ref{fig:cluster-number} shows the posteriors inferred on the cluster
-and background numbers, $R_f$ and $R_b$, and Figure
-\ref{fig:cluster-scale} shows the posterior for the cluster's scale
-parameter.  In spite of the significant background, the cluster scale
-and total number are accurately recovered by our analysis.
+Figure \ref{fig:cluster-params} shows the posteriors for the cluster
+parameters.  The center of the cluster, $\vec{x}_0$, is localized to
+within about 5\% of the cluster scale, and the cluster radius with a
+relative error of about 10\%.  In spite of the significant background,
+the cluster parameters are recovered to a relative accuracy consistent
+with the expected uncertainty from $N_\mathrm{eff} \simeq R_f = 1000$
+measurements.  Figure \ref{fig:cluster-number} shows the posteriors
+inferred on the cluster and background numbers, $R_f$ and $R_b$.
 
 \begin{figure}
-  \includegraphics[width=\columnwidth]{sky_location}
-  \caption{\label{fig:sky-loc} Contours of the posterior probability
-    distribution for the center of the cluster, $\vec{x}_0$, in the
-    example from \S~\ref{sec:star-cluster}.  The center $(x,y) =
+  \includegraphics[width=0.4\columnwidth]{sky_location}\includegraphics[width=0.4\columnwidth]{scale}
+  \caption{\label{fig:cluster-params} Posterior density for the
+    cluster parameters for the example from \S~\ref{sec:star-cluster}.
+    (Left) Contours of the posterior probability distribution for the
+    center of the cluster, $\vec{x}_0$.  The center $(x,y) =
     \left(x_0, y_0\right)$ is determined to within about 5\% of the
     structural radius of the cluster, $r_0$ (see
-    Eq.~\eqref{eq:true-cluster-parameters}).}
+    Eq.~\eqref{eq:true-cluster-parameters}).  (Right) Posterior
+    density for the scale parameter for the cluster, $r_0$.  The true
+    value is indicated by the vertical line (see
+    Eq.~\ref{eq:true-cluster-parameters}).}
 \end{figure}
 
 \begin{figure}
@@ -1189,16 +1173,6 @@ and total number are accurately recovered by our analysis.
     the example from \S~\ref{sec:star-cluster}.  Vertical lines
     indicate the true values (see
     Eq.~\eqref{eq:true-cluster-parameters}). }
-\end{figure}
-
-\begin{figure}
-  \includegraphics[width=\columnwidth]{scale}
-  \caption{\label{fig:cluster-scale} Posterior density for the scale
-    parameter for the cluster, $r_0$, from the example in
-    \S~\ref{sec:star-cluster}.  The true value is indicated by the
-    vertical line (see Eq.~\ref{eq:true-cluster-parameters}).
-    \ilya{[Perhaps combine Figs.~8 and 9 (put an extra scale for $r_0$
-        at the top of 8?]} }
 \end{figure}
 
 \section{Discussion}\label{sec:discussion}
