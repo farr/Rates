@@ -616,10 +616,9 @@ For any pair $(\rho_1, R_t)$, it is straightforward to construct
 random event lists drawn from the corresponding $p(\rho)$, and
 straightforward to apply a threshold by "throwing away" all events
 with $\rho$ less than some threshold value $\rho_{th}$.  For any
-thresholded event list, we use Eqs.~(\curt{need to supply, from
-  earlier in paper} ) to construct the probability density $p(R|data)$
+thresholded event list, we use Eq.~(\ref{eq:rate-shape-posterior}) to construct the probability density $p(R|data)$
 (except that in this example, instead of the Jeffrey's prior, we
-assume a "hat-shaped" prior; see below).
+assume a ``hat-shaped'' prior; see below).
 % that is uniform in some interval and zero elsewhere; see below).  
 For that event list, we define $\Delta R_B$ by \be (\Delta R_B)^2 =
 \int{(R - R_B)^2 \, p(R|data)\, dR }\, .  \ee
@@ -743,7 +742,7 @@ normalization) \be\label{eq:rb2} p(\{\rho_i\}|R) = {\rm
   exp}\bigg[\sum_{i \in list} {\rm ln}\, p(\rho_i|R) -
   \int_{\rho_{th}}^{\infty} p(\rho)\, d\,\rho \bigg] \, , \ee
 \noindent
-with $p(\rho)$ given by Eq.~().
+with $p(\rho)$ given by Eq.~(\ref{eq:ptot}).
 
 The loudest event estimate is obtained by setting the lower
 integration limit in the last term on the rhs of Eq.~(\ref{eq:rb2}) to
@@ -1050,6 +1049,17 @@ now depends on $N_\mathrm{eff}$.
     over all state flags and rates.  The true value, $N_\mathrm{eff} =
     1000$, is indicated by the vertical line.}
 \end{figure}
+
+\subsection{Uncertainty in the Foreground and Background Distributions}
+\label{sec:uncertain-dist}
+The framework outlined above relies on the existence of models for the foreground, $\hat{f}(x,\theta)$, and background, $\hat{b}(x,\theta)$, distributions parameterised by a small number of model parameters, $\theta$. While in many situations simple analytic functions such as power laws will provide an adequate description, this will not always be the case. In the absence of a good analytic model, the space of the ranking statistic, $x$ could be divided into bins and $\hat{f}(x)$/$\hat{b}(x)$ taken to be flat in each of these bins. The number of free parameters characterising each of $\hat{f}$ and $\hat{b}$ is then the number of bins used. While such a framework is model free, the increase in model parameters will mean that more observed events will typically be required to achieve the same precision on the rates and foreground/background distributions.
+
+In the context of gravitational wave experiments, additional information on the ranking statistic distributions for the foreground and background can be obtained using injections into and timeslides of the data respectively. This information can be readily incorporated in the current framework by assuming there is another set of $N_I$ events with ranking statistics $\{ w_i \}$, known to be drawn from the foreground distribution ($f_i=1$) and a set of $N_T$ events with ranking statistics $\{z_i\}$ known to be drawn from the background distribution ($f_i=0$). These events will typically not be drawn with the correct rate parameters, so they do not contribute to the estimates of $R_f$ and $R_b$, but they do contribute an extra factor
+\be
+\prod_{l=1}^{N_I} \hat{f}(w_l, \theta ) \prod_{m=1}^{N_T} \hat{b}(z_i, \theta) 
+\ee
+to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo non-stationarities in the detector data, but the latter relies on knowledge of the astrophysical rate of events which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterise the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterise the variation in the astrophysical rate of mergers as a function of source type.
+
 
 \subsection{Star Cluster Parameters With Background Contamination}
 \label{sec:star-cluster}
