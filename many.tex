@@ -1,4 +1,4 @@
-\documentclass[aps,prd]{revtex4-1}
+\documentclass[aps,prd,reprint]{revtex4-1}
 
 \usepackage{hyperref} \usepackage{amsmath} \usepackage{amssymb}
 \usepackage{graphicx} \usepackage{color}
@@ -14,16 +14,20 @@
 \newcommand{\jon}[1]{{\color{green} \bf #1}}
 \newcommand{\curt}[1]{{\color{magenta} \bf #1}}
 
+
+
 \newcommand{\be}{\begin{equation}}
 \newcommand{\ee}{\end{equation}}
 \newcommand{\ba}{\begin{eqnarray}}
 \newcommand{\ea}{\end{eqnarray}}
 
 \DeclareMathOperator{\erf}{erf}
+\DeclareMathOperator{\erfc}{erfc}
 
 \begin{document}
 
-\title{Bayesian Rate Estimation}
+\title{Counting With Confusion: Bayesian Rate Estimation With Multiple
+  Populations}
 
 \author{Will M. Farr} \email{w-farr@northwestern.edu}
 \homepage{http://faculty.wcas.northwestern.edu/will-farr/}
@@ -48,16 +52,17 @@
 
 
 \begin{abstract}
-  We show how to obtain a Bayesian estimate of the rate of signal
-  events from a set of signal and background events when the shapes of
+  We show how to obtain a Bayesian estimate of the rates or numbers of
+  signal and background events from a set of events when the shapes of
   the signal and background distributions are known, can be estimated,
   or approximated; our method works well even if the foreground and
-  background event distributions overlap significantly.  We give
-  examples of determining the rates of gravitatonal-wave events in the
-  presence of background triggers from a template bank when noise
-  parameters are known and/or can be fit from the trigger data.  We
-  also give an example of determining globular-cluster shape and
-  location parameters from an observation of a stellar field that
+  background event distributions overlap significantly and the status
+  of any individual event cannot be determined with any certainty.  We
+  give examples of determining the rates of gravitational-wave events
+  in the presence of background triggers from a template bank when
+  noise parameters are known and/or can be fit from the trigger data.
+  We also give an example of determining globular-cluster shape,
+  location, and density from an observation of a stellar field that
   contains a non-uniform background density of stars superimposed on
   the cluster stars.
 \end{abstract}
@@ -66,17 +71,17 @@
 
 \section{Introduction}
 
-The task of estimating a rate of foreground events when a mixture of
-foreground and background events is present in the data is a common
-one in physical and astrophysical applications.  This problem comes
-up, among others, in gravitational-wave data analysis
+The task of estimating rates of events when a mixture of foreground
+and background events is present in data is a common one in physical
+and astrophysical applications.  This problem comes up, among others,
+in gravitational-wave data analysis
 \cite[e.g.,][]{s5-highmass,s6-lowmass} and in astronomical
 observations of a field of objects of mixed provenance
 \cite{DeGennaro2009}.  In this paper, we introduce a robust formalism
 for estimating event rates from the data when the shape of foreground
-and background distributions are known (but may have additional free
-parameters), but the provenance of individual events as either
-background or foreground is unknown.
+and background distributions are known (or parameterized), but the
+provenance of individual events as either background or foreground is
+unknown.
 
 We use a Bayesian approach and consider all available data to ensure
 that the inferred rates are both unbiased and maximally constrained in
@@ -92,17 +97,17 @@ model parameters, $p(d|\vec{\theta},M)$ is the \emph{likelihood} of
 obtaining the data given a particular choice of parameters, and the
 normalizing factor $p(d|M)$ is known as the \emph{evidence}.
 
-Two alternative approaches have been suggested in the past.  One,
-known as the \emph{loudest-event statistic} \cite{Biswas2009}, uses
-only the information from the highest-ranked event in the data to
-infer the rate distribution.  This approach has been used successfully
-\cite{s5-highmass,s6-lowmass} when the number of loud foreground
-events is small (typically zero or one) to obtain upper limits on
-foreground rates.  However, the loudest-event statistic ignores all
-events except the loudest one, and so suffers from an unnecessary loss
-of information; therefore, we expect it to yield a much larger
-variance than strictly necessary when multiple events are present in
-the data.
+Two alternative approaches to rate estimation have been suggested and
+are commonly used.  One, known as the \emph{loudest-event statistic}
+\cite{Biswas2009}, uses only the information from the highest-ranked
+event in the data to infer the rate distribution.  This approach has
+been used successfully \cite{s5-highmass,s6-lowmass} when the number
+of loud foreground events is small (typically zero or one) to obtain
+upper limits on foreground rates.  However, the loudest-event
+statistic ignores all events except the loudest one, and so suffers
+from an unnecessary loss of information; therefore, we expect it to
+yield a much larger variance than strictly necessary when multiple
+events are present in the data.
 
 Another possible approach is based on the use of only loud,
 ``gold-plated'' events, ones which are certain (or nearly certain) to
@@ -111,10 +116,15 @@ as the \emph{foreground-dominated statistic}.  The
 foreground-dominated statistic may yield accurate results when the
 foreground and background are cleanly separated, at least for the
 loudest events, and the number of such loud events is sufficiently
-large.  However, it cannot properly account for marginal events.
-While either the loudest-event statistic or the foreground-dominated
-statistic can approach the accuracy of our proposed method in specific
-regimes, both are suboptimal in a general case.
+large.  However, it cannot properly account for marginal events.  In
+addition, the results of the method are very sensitive to
+contamination by the background events, and therefore the method
+requires a careful choice of \emph{threshold} or reliable
+\emph{membership} information to distinguish foregrounds and
+backgrounds for individual events.  While either the loudest-event
+statistic or the foreground-dominated statistic can approach the
+accuracy of our proposed method in specific regimes, both are
+suboptimal in a general case.
 
 In order to demonstrate our method, we consider three different
 examples.  The first two come from the field of gravitational-wave
@@ -224,13 +234,13 @@ and shape parameters, $p\left(\mathset{f_i}, R_f, R_b, \theta | d_{\rm
 \mathset{f_i}, N, R_f, R_b, \theta\right)$, and the prior probability
 of state flags, rates and shape parameters before any data are
 obtained, $p\left( \mathset{f_i}, N, R_f, R_b, \theta\right)$:
-\begin{equation}
+\begin{multline}
   \label{eq:Bayes}
-  p\left(\mathset{f_i}, R_f, R_b, \theta | d_{\rm to}, N \right) =
+  p\left(\mathset{f_i}, R_f, R_b, \theta | d_{\rm to}, N \right) \\ =
   \frac{p\left( d_{\rm to} | \mathset{f_i}, N, R_f, R_b, \theta\right)
     p\left(\mathset{f_i}, N, R_f, R_b, \theta\right)}{p(d_{\rm to},
     N)}.
-\end{equation}
+\end{multline}
 The normalization constant, called the evidence, $p(d_{\rm to}, N)$,
 is independent of the state flags, rates, and shape parameters.
 
@@ -238,12 +248,12 @@ Each foreground event is drawn from the probability distribution
 $\hat{f}$ and each background event is drawn from the probability
 distribution $\hat{b}$.  The events are independent of each other.
 Therefore, the likelihood of the data is
-\begin{equation}
-  p\left( d_{\rm to} | \mathset{f_i}, N, R_f, R_b, \theta\right) =
+\begin{multline}
+  p\left( d_{\rm to} | \mathset{f_i}, N, R_f, R_b, \theta\right) \\ =
   \left[ \prod_{\mathset{i | f_i = 1}} \hat{f}\left(x_i, \theta\right)
     \right] \left[ \prod_{\mathset{i | f_i = 0}} \hat{b}\left( x_i,
     \theta\right) \right].
-\end{equation}
+\end{multline}
 This is the probability that the first observed event is a
 fore/background event (if $f_1=1,0$) with ranking statistic $x_1$ and
 the second observed event is a fore/background event (if $f_2=1,0$)
@@ -253,59 +263,26 @@ $x_1$ is now the event from foreground or background with the smallest
 ranking statistic, etc. We will return to the statistic-ordered case
 later.
 
-%The prior distribution can be factorized as
-%\begin{equation}
-%  \label{eq:combined-flag-rate-prior}
-%  p\left(\mathset{f_i}, R_f, R_b, \theta\right)  = p\left(
-%   \mathset{f_i} | R_f, R_b, \theta\right)p(R_f, R_b, \theta).
-%\end{equation}
-%The first term is not actually a ``prior'' in the usual sense; the
-%conditional probability of the flags $\mathset{f_i}$ on the rates is given
-%by
-%\begin{equation}
-%  \label{eq:flag-conditional-prior}
-%  p\left(\mathset{f_i} | R_f, R_b, \theta\right) = \frac{R_f^{N_f}
-%    R_b^{N_b}}{N_f! N_b!} \exp\left[ - \left(R_f + R_b\right) \right]
-%  N_f! N_b! = R_f^{N_f}R_b^{N_b} \exp\left[ - \left(R_f + R_b\right) \right],
-%\end{equation}
-%where $N_f$ and $N_b$ are the number of foreground and background
-%events.  This expression follows from Property \ref{prop:Poisson} of
-%inhomogeneous Poisson processes and the $N_f! N_b!$ different ways of
-%assigning foreground and background flags to events for fixed $N_f$,
-%$N_b$.  
-%
-%\ilya{[I agree with the final result, but I find this way of deriving
-%    it to be confusing.  First of all, the number of ways to assign
-%    flags to events for fixed $N_f$ and $N_b$ is $N!/(N_f! N_b!)$, not
-%    $N_f! N_b!$ as written.  Secondly, you are computing the
-%    probability of having a particular ordered list of flags, so
-%    there's no reason to consider different permutations.  Thirdly,
-%    you are not properly including the fact that the length of the
-%    flags vector must be exactly $N$, the total number of data points.
-%    (Well, you have the right result, so you are obviously doing these
-%    things properly, but the explanation just doesn't seem clear to
-%    me. :) ) I would make that $N$ explicit, by writing Eq.~(12) as
-
 The prior distribution can be factorized as
-\begin{equation}
+\begin{multline}
   \label{eq:combined-flag-rate-prior}
-  p\left(\mathset{f_i}, N, R_f, R_b, \theta\right) = p\left(
+  p\left(\mathset{f_i}, N, R_f, R_b, \theta\right) \\ = p\left(
   \mathset{f_i} | N, R_f, R_b\right) p\left(N |R_f, R_b\right)
-  p\left(R_f, R_b, \theta\right) = p\left( \mathset{f_i},N | R_f,
+  p\left(R_f, R_b, \theta\right) \\ = p\left( \mathset{f_i},N | R_f,
   R_b\right) p\left(R_f, R_b, \theta\right).
- \end{equation}
+ \end{multline}
  
 The probability that the $i$'th state flag is $f_i=1$ is given by
 $R_f/(R_f+R_b)$, while the probability that it is zero is
 $R_b/(R_f+R_b)$, provided the data are time-ordered as we have
 assumed.  Then
-\begin{equation}
-p\left( \mathset{f_i} | N, R_f, R_b\right) = \prod_{\mathset{i|f_i=1}}
+\begin{multline}
+p\left( \mathset{f_i} | N, R_f, R_b\right) \\ = \prod_{\mathset{i|f_i=1}}
 \left(\frac{R_f}{R_f+R_b}\right) \prod_{\mathset{i|f_i=0}}
-\left(\frac{R_b}{R_f+R_b}\right) =
+\left(\frac{R_b}{R_f+R_b}\right) \\ =
 \left(\frac{R_f}{R_f+R_b}\right)^{N_f}
 \left(\frac{R_b}{R_f+R_b}\right)^{N_b},
-\end{equation}
+\end{multline}
 where $N_f$ and $N_b$ are the numbers of foreground and background
 flags, $N_f+N_b=N$.  Meanwhile,
 \begin{equation}
@@ -331,22 +308,22 @@ parameters
   p\left( R_f, R_b, \theta\right) = \alpha \frac{1}{\sqrt{R_f R_b}}
   p(\theta),
 \end{equation}
-where $\alpha$ is a normalisation constant, but of course other
+where $\alpha$ is a normalization constant, but of course other
 choices are possible.  This choice has the advantage that the prior is
 normalizable as $R_f, R_b \to 0$, and the exponentials in
 Eq.~\eqref{eq:flag-conditional-prior} regularize the posterior as
 $R_f, R_b \to \infty$.
 
 Putting everything together, the posterior is
-\begin{equation}
+\begin{multline}
   \label{eq:posterior}
   p\left( \mathset{f_i}, R_f, R_b, \theta | d_{\rm to},N \right) =
-  \frac{\alpha}{p(d_{\rm to},N)\,N!} \left[ \prod_{\mathset{i | f_i =
+  \frac{\alpha}{p(d_{\rm to},N)\,N!} \\ \times \left[ \prod_{\mathset{i | f_i =
         1}} R_f \hat{f}\left(x_i, \theta\right) \right] \left[
     \prod_{\mathset{i | f_i = 0}} R_b \hat{b}\left( x_i, \theta\right)
-    \right] \exp\left[ - \left(R_f + R_b\right) \right]
-  \frac{p(\theta)}{\sqrt{R_f R_b}}
-\end{equation}
+    \right] \\ \times \exp\left[ - \left(R_f + R_b\right) \right]
+  \frac{p(\theta)}{\sqrt{R_f R_b}}.
+\end{multline}
 When sampling the posterior, the first term, which is independent of
 the parameters of interest, can be omitted and the equals sign
 replaced by proportionality; however, we have kept this term
@@ -371,14 +348,17 @@ inhomogeneous Poisson process with rate function $r(y)$ (cumulative
 rate $R(y)$), the likelihood of a set of samples $\mathset{y_i}$ is
 given by
 \begin{multline}
-  p\left( \mathset{y_i} | r \right) \,{\rm d}^Ny_i= P\left(
-  \textnormal{zero events below } y_1 \right) \times P\left(
+  p\left( \mathset{y_i} | r \right) \,{\rm d}^Ny_i = P\left(
+  \textnormal{zero events below } y_1 \right) \\ \times P\left(
   \textnormal{one event between } y_1 \textnormal{ and } y_1 + {\rm
     d}y_1 \right) \\ \times P\left( \textnormal{zero events between }
-  y_1+{\rm d}y_1 \textnormal{ and } y_2 \right) \ldots \\ p\left(
-  \mathset{y_i} | r \right) = \lim_{\delta y_i \to 0} \exp\left[ -
+  y_1+{\rm d}y_1 \textnormal{ and } y_2 \right) \ldots,
+\end{multline}
+so 
+\begin{multline}
+p\left(\mathset{y_i} | r \right) = \lim_{\delta y_i \to 0} \exp\left[ -
     R\left(y_1\right) \right] \left[ r\left( y_1 \right) +
-    \order{\delta y_1} \right] \times \exp\left[ - \left[ R\left( y_2
+    \order{\delta y_1} \right] \\ \times \exp\left[ - \left[ R\left( y_2
       \right) - R\left( y_1 + \delta y_1\right) \right] \right] \times
   \ldots \\ = \left[\prod_i r\left( y_i \right)\right] \exp\left[ -
     R\left( \infty \right) \right].
@@ -391,21 +371,21 @@ p(d,N)$. With the identification $p(d,N) = N!\,p(d_{\rm to},N)$, as
 justified above, we reproduce Eq.~\eqref{eq:posterior}.
 
 We can marginalize the posterior over the flags, $f_i$, obtaining
-\begin{equation}
+\begin{multline}
   \label{eq:rate-shape-posterior}
   p\left( R_f, R_b, \theta | d, N \right) = \sum_{\mathset{f_i} \in
     \mathset{0,1}^N} p\left( \mathset{f_i}, R_f, R_b, \theta | d, N
-  \right) \propto \prod_{i} \left[ R_f \hat{f}\left(x_i, \theta\right)
-    + R_b \hat{b}\left( x_i, \theta\right) \right] \exp\left[-\left(
+  \right) \\ \propto \prod_{i} \left[ R_f \hat{f}\left(x_i, \theta\right)
+    + R_b \hat{b}\left( x_i, \theta\right) \right] \\ \times \exp\left[-\left(
     R_f + R_b \right) \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
-\end{equation}
+\end{multline}
 This expression is useful if we are only interested in rates and not
 the probability that any particular event is foreground or background.
 Unlike the full posterior (Eq.~\eqref{eq:posterior}),
 Eq.~\eqref{eq:rate-shape-posterior} contains only continuous
 parameters. We note that the terms that depend on the overall rate
 parameters, $R_b$ or $R_f$, are of the form $R_b^{n-1/2} \exp(-R_b)$
-and so marginalisation over either $R_b$ or $R_f$ can be achieved
+and so marginalization over either $R_b$ or $R_f$ can be achieved
 analytically using
 \begin{equation}
 I_n = \int_0^{\infty} x^{n-\frac{1}{2}} \, {\rm e}^{-x} {\rm d} x =
@@ -442,23 +422,24 @@ ordered by loudness, so that $x_{N-k+1}$ is the $k$-th loudest
 event. This term accounts for the data-dependent threshold that a
 loudest event statistic employs.
 
-For the usual $k=1$ case \citep{Biswas2009}, the marginalised
+For the usual $k=1$ case \citep{Biswas2009}, the marginalized
 posterior (Eq.~\eqref{eq:rate-shape-posterior}) becomes
-\begin{equation}
+\begin{multline}
 p_{\rm LE}\left( R_f, R_b, \theta | d \right) \propto \left(R_f
-\hat{f}(x_N,\theta) + R_b \hat{b}(x_N,\theta)\right)\exp\left[-\left(
+\hat{f}(x_N,\theta) + R_b \hat{b}(x_N,\theta)\right) \\ \times \exp\left[-\left(
   R_f (1-\hat{F}(x_N,\theta)) + R_b (1-\hat{B}(x_N,\theta)) \right)
-  \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
-\end{equation}
-where $x_N$ denotes the loudness of the loudest event. Marginalising
+  \right] \\ \times \frac{p(\theta)}{\sqrt{R_f R_b}}.
+\end{multline}
+where $x_N$ denotes the loudness of the loudest event. Marginalizing
 over $R_b$ we obtain
-\begin{equation}
+\begin{multline}
 p_{\rm LE}\left( R_f, \theta | d \right) \propto \left(
 \frac{\hat{b}(x_N,\theta)}{2(1-\hat{B}(x_N,\theta))} + R_f
-\hat{f}(x_N,\theta)\right)\frac{\sqrt{\pi}\,
+\hat{f}(x_N,\theta)\right) \\ \times \frac{\sqrt{\pi}\,
   p(\theta)}{\sqrt{1-\hat{B}(x_N,\theta)}\,\sqrt{R_f}}
 \exp\left(-R_f(1-\hat{F}(x_N,\theta))\right) .
-\end{equation}
+\end{multline}
+\begin{widetext}
 This posterior has a maximum in $R_f$ at
 \begin{equation}
 R_f =
@@ -474,7 +455,9 @@ where $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /
   \citet{Biswas2009} is related to $\hat{b}$ and $\tilde{f}$ by
   \begin{equation}
     \Lambda(x, \theta) = \frac{\tilde{f}(x,\theta)}{R_b \hat{b}(x,\theta)}.
-\end{equation}}.  If $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
+\end{equation}}.  
+\end{widetext}
+If $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
 \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
 statement that the rate of foreground events with ranking statistic
 greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of order $1$,
@@ -494,12 +477,13 @@ incorporate the information that no such events are seen. This problem
 is avoided in the new framework described here, since we use all
 events detected above threshold and combined rates, $R_f+R_b$,
 significantly greater than the total number of observed events are
-strongly disfavoured.
+strongly disfavored.
 
 This problem can be avoided in the loudest event framework, by
 including an upper limit on the rate, $R_{\rm max}$, in the prior for
-$R_b$. The marginalised distribution for the foreground rate then
-becomes
+$R_b$. 
+\begin{widetext}
+The marginalized distribution for the foreground rate then becomes
 \begin{eqnarray}
 p_{\rm LE}\left( R_f, \theta | d \right) &\propto& \left(
 \frac{\hat{b}(x_N,\theta)}{(1-\hat{B}(x_N,\theta))^{\frac{3}{2}}}
@@ -526,24 +510,25 @@ p_{\rm LE}\left( R_f, \theta | d \right) \propto \left( \frac{R_{\rm
 and if $\hat{f}(x_N,\theta) \gg R_{\rm max} \hat{b}(x_N.\theta)$ we
 find the same result as before, $(1- \hat{F}(x_N,\theta))\,R_f \approx
 1/2$.
+\end{widetext}
 
 \subsection{Foreground dominated statistic}
 If we set the threshold for including an event, $x_{\rm min}$,
 sufficiently high, we can ensure that $\hat{f}(x_i,\theta) \gg
 \hat{b}(x_i,\theta)$ for all ranking statistics $x_i$ in the data
 set. The posterior can then be approximated by
-\begin{equation}
-p_{\rm FD}\left( R_f, R_b, \theta | d \right) \propto \prod_{i} \left[
+\begin{multline}
+p_{\rm FD}\left( R_f, R_b, \theta | d \right) \\ \propto \prod_{i} \left[
   \hat{f}\left(x_i, \theta\right)\right] R_f^N \exp\left[-\left( R_f +
   R_b \right) \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
-\end{equation}
-Normalisation over $R_b$ gives a constant factor and the posterior on
+\end{multline}
+Normalization over $R_b$ gives a constant factor and the posterior on
 the foreground rate becomes
-\begin{equation}
-p_{\rm FD}\left( R_f, \theta | d \right) \propto \prod_{i} \left[
+\begin{multline}
+p_{\rm FD}\left( R_f, \theta | d \right) \\ \propto \prod_{i} \left[
   \hat{f}\left(x_i, \theta\right)\right] R_f^{N-\frac{1}{2}}
 \exp\left[-R_f \right] p(\theta).
-\end{equation}
+\end{multline}
 Ignoring the dependence on $\theta$, this is peaked at a rate $R_f =
 N-1/2$, so we have the expected result that, in the foreground
 dominated regime, the rate is approximately equal to the number of
@@ -555,222 +540,228 @@ and $R_{f,2}$ for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$
 respectively, these rates should be compared by equating $R_{f,1}
 (1-\hat{F}(x_2,\theta))$ and $R_{f,2} (1-\hat{F}(x_1,\theta))$.
 
-\section{Dependence of the Bayesian Rate Estimate on the Value of the Threshold}
-This paper is concerned with Bayesian rate estimates based on a lists
-of events (which are a certain kind of summary of the complete data
-set): either the loudest event, or a list of all events whose SNR
-exceeds a certain, pre-set threshold.  In this subsection we address
-the question of how the estimate depends on the threshold value.
+\section{Thresholding}
+This paper is concerned with Bayesian rate estimates based on lists of
+events.  Ideally, the lists should contain all events in the data set.
+However, for experimental or computational reasons one may wish to
+restrict the events to only those above some loudness threshold; in
+some cases the rate of foreground or background events, or both, is
+even expected to diverge at certain loudnesses.  In this subsection we
+address the question of how the rate estimate depends on the threshold
+value.
 
 To begin with, we recall the well-known fact that the Bayesian
 estimator is unbiased, in the following sense.  For simplicity, assume
 that the model consists of a single rate parameter $R$, with prior
 distribution $p(R)$.  Consider an ensemble of data sets whose
-distribution is consistent with that prior; i.e., such that $p(data)$
-is given by
+distribution is consistent with that prior; i.e., such that $p(d)$ is
+given by
 %Construct and ensemble of synthetic data sets consistent with $p(R)$; i.e., draw data from the %distribution
-\be p(data) = \int{ p(data|R)\,p(R)\, dR}\, .  \ee For each data set
-in the ensemble, compute the Bayesian estimator $R_{B} = \int{ R
-  p(R|data) dR}$.  Then it is immediate that \be \int{R_{B}(data)\,
-  p(data)\,d(data) }= \int{ R\, p(R) \,dR}\, .  \ee
-\noindent I.e, the data-weighted average of the Bayesian estimate
-$R_{B}$ equals the prior-weighted average $R$.
-%\curt{Guys:  would you like me to supply the argument?}
-%
-Therefore (for any fixed prior) all threshold values will yield, on
-average, the same estimate of the rate.  However this equality of
-averages does {\it not} imply that all threshold values yield the same
-information. In general, as the threshold is lowered to include more
-events, the error bar on the estimate shrink.  In this subsection we
-give quantitative illustrations of how the error bar shrinks when the
-threshold is lowered.
+\begin{equation}
+ p(d) = \int{ p(d|R)\,p(R)\, dR}\, .  
+\end{equation}
+For each data set in the ensemble, compute the Bayesian estimator
+$R_{B} = \int{ R p(R|d) dR}$.  Then it is immediate that
+\begin{equation}
+\int{R_{B}(d)\, p(d)\,d(d) }= \int{ R\, p(R) \,dR},
+\end{equation}
+i.e.\ the data-weighted average of the Bayesian estimate $R_{B}$
+equals the prior-weighted average $R$.  Therefore all threshold values
+will yield, on average, the same estimate of the rate.  However this
+equality of averages does {\it not} imply that all threshold values
+yield the same information. In general, as the threshold is lowered to
+include more events, the error bar on the estimate shrinks.  In this
+subsection we give quantitative illustrations of how the error bar
+shrinks when the threshold is lowered.
 
-Consider the following model problem.
-% in which the distribution of noise events is Gaussian.
-Let $p(\rho)\Delta\rho$ be the probability that data yields a putative
-event with SNR in the range $[\rho - \Delta\rho/2, \rho +
-  \Delta\rho/2]$ We write $p = p_n + p_s$, where $p_n$ is the
-distribution of noise events and $p_s$ is the distribution of events
-from actual astrophysical sources.  Both $p_n$ and $p_s$ are the
-product of a rate (of noise or true events) and the observation time.
-Here we will assume that the noise distribution is Gaussian, so that
-$p_n$ has the general form \be p_n(\rho) = \Lambda_n {\rm
-  exp}\big[-\rho^2/2\big] \, .  \ee
-\noindent
-We find it useful to define $\rho_1$ as the SNR such that a data set
-will have on average a single noise event louder than $\rho_1$; i.e.,
-such that \be \int_{\rho_1}^{\infty} P_n(\rho)\, d\rho = 1 \, .  \ee
-For this example we will assume that the spatial distribution of true
-events can be approximated as uniform in Euclidean space, so
-\be\label{eq:ps} p_s(\rho) = 3 R_t \frac{\rho_1^3}{\rho^4} \, , \ee
-\noindent where $R_t$ is the mean number of true events with $\rho >
-\rho_1$.  Then we can write the full $p(\rho)$ as
-%and that the spatial distribution of true events can be approximated as uniform in %Euclidean %space. Then $p(\rho)$ has the general form  
-\be\label{eq:ptot} p(\rho) = \big[\sqrt{\pi/2} {\rm
-    erfc}(\rho_1/\sqrt{2})\big]^{-1} \, {\rm exp}[-\rho^2/2]\ + \ 3
-R_t \frac{\rho_1^3}{\rho^4} \, .  \ee
+Consider the following model problem.  Let $p(x) = b(x) + f(x) = R_b
+\hat{b}(x) + R_f \hat{f}(x)$ be the rate density of events (of both
+foreground and background type) per unit loudness.  Here we will
+assume that the background is normally-distributed in loudness, so
+that $b$ has the form
+\begin{equation}
+b(x) = \Lambda_b \exp \left(- \frac{x^2}{2} \right).
+\end{equation}
+We find it useful to define $x_1$ as the loudness such that a data set
+will have on average a single noise event louder than $x_1$; i.e.,
+such that 
+\begin{equation}
+ \int_{x_1}^{\infty} b(x) dx = R_b - B\left(x_1\right) = 1.
+\end{equation}
+This condition fixes 
+\begin{equation}
+  \Lambda_b = \left[ \sqrt{\frac{\pi}{2}} \erfc\left(
+    \frac{x_1}{\sqrt{2}} \right) \right]^{-1},
+\end{equation}
+while $R_b$ will depend on the threshold, $x_\mathrm{th}$, as 
+\begin{equation}
+  R_b = \frac{\erfc\left( \frac{x_\mathrm{th}}{\sqrt{2}}
+    \right)}{\erfc\left( \frac{x_1}{\sqrt{2}} \right)}.
+\end{equation}
 
-%What matters for the following analysis is the rate times the observation time.  
+Let the foreground distribution follow a power law in loudness (this
+is, for example, the distribution of SNR for gravitational wave events
+from uniformly-distributed sources in a single detector)
+\begin{equation}
+\label{eq:ps}
+f(x) = 3 \Lambda_f \frac{x_1^3}{x^4},
+\end{equation}
+where $\Lambda_f = R_f - F\left(x_1\right)$ is the mean number of
+foreground events with $x > x_1$.  The overall foreground rate is
+given by 
+\begin{equation}
+  \label{eq:foreground-from-lambda}
+  R_f = \Lambda_f \frac{x_1^3}{x_\mathrm{th}^3}.
+\end{equation}
 
-For any pair $(\rho_1, R_t)$, it is straightforward to construct
-random event lists drawn from the corresponding $p(\rho)$, and
-straightforward to apply a threshold by "throwing away" all events
-with $\rho$ less than some threshold value $\rho_{th}$.  For any
-thresholded event list, we use Eq.~(\ref{eq:rate-shape-posterior}) to construct the probability density $p(R|data)$
-(except that in this example, instead of the Jeffrey's prior, we
-assume a ``hat-shaped'' prior; see below).
-% that is uniform in some interval and zero elsewhere; see below).  
-For that event list, we define $\Delta R_B$ by \be (\Delta R_B)^2 =
-\int{(R - R_B)^2 \, p(R|data)\, dR }\, .  \ee
-%To find the average behavior, we do many draws of $R_t$ and corresponding data sets.
-%
-Figs.~\ref{fig:delRb} --\ref{fig:Rt10} illustrate how $\Delta R$
-varies with the threshold value $\rho_{th}$.  In all cases we assumed
-that $\rho_1 = 8$.
-%
+We can write the full $p(x)$ as
+\begin{equation}
+\label{eq:ptot} 
+p(x) = \left[\sqrt{\frac{\pi}{2}}
+  \erfc\left(\frac{x_1}{\sqrt{2}}\right)\right]^{-1}\exp\left[-\frac{x^2}{2}\right]
++ \Lambda_f \frac{x_1^3}{x^4}
+\end{equation}
 
-For Fig.~\ref{fig:delRb}, we adopted a flat prior on $R$ between $1$
-and $10$ (i.e, we took $p(R) = 1/9$ for $1 < R <10$, and zero outside
-that interval).
-% To create Fig.~\ref{fig:delR1}, 
-We drew $10^4$ random realizations $(R_t, data)$, where $R_t$ was
-drawn from that flat prior and the data--a list of $\rho$ values-- was
-drawn from the distribution $p(data|R_t)$ given by Eq.~\ref{eq:ptot} .
-For any particular threshold value, $\rho_{th}$, we created an event
-list by taking the subset of the $\rho$ values
-% in the data set that are 
-that were greater than $\rho_{th}$.  For each data set, we considered
-a sequence of increasing threshold values $\rho_{th}$, using them to
-create a corresponding sequence of (ever shorter) event lists.  For
-each event list, we calculated $\Delta R$ and $R_B - R_t$.
-%and take the mean over all realizations.  
-As a code check, we verified that the mean of $R_B - R_t$ (over all
-realizations) was consistent with zero for all $\rho_{th}$.
-Fig.~\ref{fig:delRb} displays both the mean value of $\Delta R$ and
-the mean number of noise events (as opposed to actual signals) as a
-function of $\rho_{th}$.  Note the relative insensitivity of $\Delta
-R_t$ to $\rho_{th}$: as the mean number of noise events on the event
-list shrinks from $8$ to $\sim 10^{-6}$, the average $\Delta R_B$
-increases only $\sim 14\%$, from $0.42$ to $0.48$.
+For any pair $(x_1, \Lambda_f)$, it is straightforward to construct
+random event lists drawn from the corresponding $p(x)$, and
+straightforward to apply a threshold by ``throwing away'' all events
+with $x$ less than the threshold value $x_\mathrm{th}$.  If $\Lambda_f
+\gg 1$, then we are in the foreground-dominated regime at $x = x_1$,
+if $\Lambda_f \ll 1$ we are in the background-dominated regime, and if
+$\Lambda_f \sim 1$ the foreground and background counts above $x_1$
+are about equal.  For any thresholded event list, we use
+Eq.~(\ref{eq:rate-shape-posterior}) to construct the probability
+density $p(R_f|d)$.  For that event list, we define the foreground
+rate uncertainty, $\Delta R_f$, by
+\begin{equation}
+\label{eq:delta-R-definition}
+(\Delta R_f)^2 \equiv \int{(R_f - R_f^\mathrm{true})^2 \, p(R_f|d)\, dR_f },
+\end{equation}
+where $R_f^\mathrm{true}$ is given by
+Eq.~\eqref{eq:foreground-from-lambda}.
 
 \begin{figure}
-\includegraphics[width=\columnwidth]{delRb}
-\caption{\label{fig:delRb} Displays the mean "error bar" $\Delta R_B$
-  as function of the threshold value $\rho_{th}$.  In this case, the
-  values of $R_t$ were randomly drawn from a flat prior on the
-  interval $[1,10]$.  We also show how the (mean) size of the event
-  list varies with $\rho_{th}$.}
+  \includegraphics[width=\columnwidth]{threshold.pdf}
+  \caption{\label{fig:threshold-rate-dependence} The mean foreground
+    rate uncertainty, Eq.~\eqref{eq:delta-R-definition}, as a function
+    of threshold for data sets with $\Lambda_f = 100$ (blue),
+    $\Lambda_f = 10$ (green), and $\Lambda_f = 1$ (red).  Recall that
+    $\Lambda_f$ is the mean number of foreground events above
+    $x_\mathrm{th} = 8$.  The total background rate, $R_b\left(
+    x_\mathrm{th} \right)$, is shown in black; we fix $R_b \left(
+    x_\mathrm{th} = x_1 = 8\right) = 1$, so on average there is one
+    background event above $x = 8$.  For $x_\mathrm{th} \gtrsim x_1$,
+    increasing the threshold tends to increase the foreground rate
+    uncertainty because the rate is foreground-dominated and fewer
+    events are included in the data set.  For $x_\mathrm{th} \lesssim
+    x_1$, the background rate dominates at small loudness, and the
+    foreground rate uncertainty asymptotes to the counting error on
+    the events that stand out from the background, $\Delta R_f / R_f
+    \simeq 1/\sqrt{\Lambda_f}$.  Note that this uncertainty applies
+    even when the total number of background events is orders of
+    magnitude larger than the number of foreground events.  When a
+    threshold must be chosen, it is safest---in the sense of producing
+    the minimal foreground rate uncertainty---to choose the threshold
+    \emph{well into the background-dominated loudness regime}; the
+    extra background events in the data set do not affect the estimate
+    of the foreground rate, and, when the background distribution is
+    parameterized, can help to better determine these parameters (see
+    \S~\ref{sec:gw-overlapping-template}). }
 \end{figure}
 
-Figs.~\ref{fig:Rt1} --\ref{fig:Rt10} were constructed similarly, but
-with the following differences.  First, we took the prior $p(R)$ to be
-$p(R) \propto 1/R$ for $0.03 < R < 30$, and zero outside that interval
-(i.e., $p(R)$ is the Jeffries prior, but restricted to some range).
-Second, we regarded $R_t$ as fixed (as of course it would be in
-Nature), and only varied the data--randomly drawing $10^4$
-realizations from $p(data|R_t)$.  For each realization we calculated
-$R_t^{-1}\,\Delta R_B$ and $(R_B - R_t)$, and then we calculated the
-means of these quantities over all realizations.  The mean of $(R_B -
-R_t)$ was generally {\it not} zero, since the prior biases the
-results.  (Of course, if one {\it updated} the prior after each
-realization, the bias would decrease towards zero, but that is not
-what we did: we evaluated each realization with the same Jeffries
-prior.)
+Figure \ref{fig:threshold-rate-dependence} illustrates how the mean
+fractional foreground uncertainty, $\left\langle \Delta R_f
+\right\rangle / R_f$, varies with the threshold value $x_\mathrm{th}$
+for the foreground-dominated and comparable-rate regime.  In all cases
+we assumed that $x_1 = 8$.  For large thresholds, where $R_b \ll 1$,
+increasing the threshold tends to increase the fractional uncertainty
+on the foreground rate, since fewer foreground events are included in
+the sample.  However, as the threshold passes into the
+background-dominated regime, the uncertainty in the foreground rate
+asymptotes to
+\begin{equation}
+  \frac{\Delta R_f}{R_f} \simeq \frac{1}{\sqrt{\Lambda_f}},
+\end{equation}
+which is the usual Poisson counting uncertainty on the events that
+stand out from the background (those with $x \gtrsim x_1$).  Note that
+this uncertainty applies even when the total number of background
+events is orders of magnitude larger than the number of foreground
+events.  When a threshold must be chosen, it is safest---in the sense
+of producing the minimal foreground rate uncertainty---to choose the
+threshold \emph{well into the background-dominated loudness regime};
+the extra background events in the data set do not affect the estimate
+of the foreground rate, and, when the background distribution is
+parameterized, can help to better determine these parameters (see
+\S~\ref{sec:gw-overlapping-template}).
 
-For Figs.~\ref{fig:Rt1} --\ref{fig:Rt10}, the mean number of noise
-events as a function of $\rho_{th}$ was the same as for the case shown
-in Fig.~\ref{fig:delRb}.  Note that for all three values of $R_t$, the
-mean uncertainty $\Delta R_B$ increases by only $\sim 20\%$ as the
-mean number of noise events on the event list shrinks from $8$ to
-$\sim 10^{-6}$.  Thus the inference that the average $\Delta R_B$ is
-rather insensitive to $\rho_{th}$ appears to be robust.  Finally, we
-note that for all three cases the bias is much smaller than $\Delta
-R_B$.
-
-\begin{figure}
-\includegraphics[width=\columnwidth]{Rt1}
-\caption{\label{fig:Rt1} Displays the mean rms error $\Delta R_B$ and
-  mean $(R_B - R_t)$ (i.e., the bias) as functions of the threshold
-  value $\rho_{th}$.  In this case, the actual value of $R_t$ was
-  $1.0$, and $p(R|data)$ was computed using the Jeffries prior on the
-  interval $[0.03,30]$.}
-\end{figure} 
-
-\begin{figure}
-\includegraphics[width=\columnwidth]{Rt3}
-\caption{\label{fig:Rt3} Same as the previous figure, but displaying
-  the size of $\Delta R_B$ relative to $R_t$, with the actual $R_t$
-  equal to $3.0$.}
-\end{figure} 
-
-\begin{figure}
-\includegraphics[width=\columnwidth]{Rt10}
-\caption{\label{fig:Rt10} Same as the previous figure, but with the
-  actual $R_t$ equal to $10.0$.}
-\end{figure} 
+Though we have only illustrated the behavior of the rate estimate
+quantitatively for this specific example of foreground and background
+rates, the conclusions hold in general.  Consider the Fisher
+information matrix for the posterior distribution in
+Eq.~\eqref{eq:rate-shape-posterior}.  For a model with parameters
+$\mathset{\theta_i}$, the Fisher information matrix has components
+\begin{equation}
+  F_{ij} \equiv \left\langle \frac{\partial \log p\left( \theta | d
+    \right)}{\partial \theta_i} \frac{\partial \log p\left( \theta | d
+    \right)}{\partial \theta_j} \right\rangle,
+\end{equation}
+where the average is taken over the data distribution at fixed
+$\theta$, $p(d | \theta)$.  The components of the Fisher information
+matrix describe the maximum amount of information about the
+corresponding parameters available in a given data set; the inverse of
+the Fisher information matrix gives the Cramer-Rao bound on the
+covariance matrix of unbiased estimators of $\theta$.  For the
+likelihood that enters Eq.~\eqref{eq:rate-shape-posterior}, the Fisher
+information matrix is 
+\begin{multline}
+  \mathbf{F} = \left( R_f + R_b \right) \\ \times \begin{pmatrix}
+    \left \langle \left(\frac{\hat{f}}{R_f \hat{f} + R_b \hat{b}}\right)^2 \right
+    \rangle & \left \langle \frac{\hat{f} \hat{b}}{\left( R_f \hat{f}
+      + R_b \hat{b} \right)^2} \right\rangle \\
+    \left \langle \frac{\hat{f} \hat{b}}{\left( R_f \hat{f}
+      + R_b \hat{b} \right)^2} \right\rangle & \left \langle
+    \left(\frac{\hat{b}}{R_f \hat{f} + R_b \hat{b}}\right)^2 \right 
+    \rangle
+  \end{pmatrix},
+\end{multline}
+where the expectation values are taken over the distributions
+$\hat{f}$ and $\hat{b}$ (i.e.\ they are expectations for one event
+from the combined rate distribution).  If the cross-terms are small,
+then the Cramer-Rao bound on the uncertainty of $R_f$ will be given by
+\begin{equation}
+  \sigma_{R_f} \simeq \frac{1}{\sqrt{R_f + R_b}} \left[ \left\langle \left(
+    \frac{\hat{f}}{R_f \hat{f} + R_b \hat{b}} \right)^2 \right\rangle\right]^{-1/2}
+\end{equation}
+Extending a threshold into regions where the factor 
+\begin{equation}
+  \left( \frac{\hat{f}}{R_f \hat{f} + R_b \hat{b}} \right)^2
+\end{equation}
+becomes small---that is, into background-dominated
+regions---contributes little to reducing the overall uncertainty in the
+foreground rate.  This is consistent with the behavior of the specific
+example in Figure \ref{fig:threshold-rate-dependence}.
 
 \subsection{Extreme Sensitivity of the LE Rate Estimate to a Single, Unusually Loud Event}
 Here we discuss a very unattractive feature of the Bayesian loudest
-event estimate of $R$: a small percentage of the time it will yield a
-very large over-estimate.
+event estimate of $R$ \citep{Biswas2009}: a small percentage of the
+time it will yield a very large over-estimate.
 
 To explain this, we will use the same model as described in the
 previous subsection, and we will begin with a very specific example.
-Let the true rate (times the observation time) be $R_t = 1$, meaning
-(again) that the expected number of actual events with $\rho > \rho_1$
-is one.  Then there is a $1/64$ chance ($\approx 1.6\%$) that the
-loudest event will have $\rho_{LE} > 4 \rho_1$.  Consider this case,
-and let us also assume that there are no events (noise or actual) with
-$\rho_1 < \rho < \rho_{LE}$.  The loudest event estimate basically
-"throws away" the information that there are no events in this
-interval, which (we show below) leads an estimate $R_{LE} \approx 64$,
-which is $64$ times the true rate!  Now, if the true rate really were
-$R_t = 64$, then the expected number of events with $\rho > \rho_1$
-would be $64$.  So in this case, the loudest event estimate ignores
-the fact that there are $\sim 56 -72$ "missing" events.  However a
-Bayesian estimate with $\rho_{th}$ set to $\rho_1$ incorporates this
-information quite naturally, and so (correctly) yields an estimated
-$R$ of order one.
-
-We now essentially repeat the above discussion, but in greater
-generality and with the derivations provided.  First recall that $R_B$
-is given by \be\label{eq:rb1} R_B = \frac{ \int{ R\, p(\{\rho_i\}|R)
-    \, p(R)\, dR}}{ \int{ p(\{\rho_i\}|R)\, p(R)\, dR }}\, , \ee
-\noindent
-where $p(R)$ is the prior on $R$ and (and up to an overall
-normalization) \be\label{eq:rb2} p(\{\rho_i\}|R) = {\rm
-  exp}\bigg[\sum_{i \in list} {\rm ln}\, p(\rho_i|R) -
-  \int_{\rho_{th}}^{\infty} p(\rho)\, d\,\rho \bigg] \, , \ee
-\noindent
-with $p(\rho)$ given by Eq.~(\ref{eq:ptot}).
-
-The loudest event estimate is obtained by setting the lower
-integration limit in the last term on the rhs of Eq.~(\ref{eq:rb2}) to
-$\rho_{th} = \rho_{LE}$, and replacing the sum $\sum_i {\rm ln}\,
-p(\rho_i|R)$ by the single term ${\rm ln}\, p(\rho_{LE}|R)$.  For the
-case of interest here, where $\rho_{LE}$ is (at least) a few times
-larger than $\rho_1$ and $R_t$ is of order $1$, we can neglect the
-noise contribution $p_n(\rho)$. Then the integrals in
-Eq.~(\ref{eq:rb1}) become especially simple, and yield the estimate:
-\be\label{eq:rb3} R_B \approx
-\begin{cases}
-(\rho_{LE}/\rho_1)^3 & \text{if $p(R) \propto 1/R$} \\ 2\,
-  (\rho_{LE}/\rho_1)^3 & \text{if $p(R) =$ const \, .}
-\end{cases}
-\ee
-
-If instead we set the lower integration limit to $\rho_{th} = \rho_1$,
-then the $p_n(\rho)$ contribution to $p(\rho)$ can no longer be
-neglected.  But the integrals are still straightforward, and we find:
-\be\label{eq:rb3} R_B \approx
-\begin{cases}
-1 \ \ \ & \text{if $p(R) \propto 1/R$} \\ 2 \ \ \ & \text{if $p(R) =$
-  const \, .}
-\end{cases}
-\ee
-\noindent Thus (as emphasized above) simply incorporating the
-information that there are no events {\it between} $\rho_1$ and
-$\rho_{LE}$ results in a far beter estimate.
+Let $\Lambda_f = 1$, meaning that the expected number of actual events
+with $x > x_1$ is one.  Then there is a $1/64$ chance ($\approx
+1.6\%$) that the loudest event will have $x_{LE} > 4 x_1$.  Consider
+this case, and let us also assume that there are no events (noise or
+actual) with $x_1 < x < x_{LE}$.  The loudest event estimate basically
+``throws away'' the information that there are no events in this
+interval, which (we show below) leads an estimate
+$\Lambda_f^\mathrm{LE} \approx 64$, which is $64$ times the true rate!
+Now, if the true rate really were $\Lambda_f = 64$, then the expected
+number of events with $x > x_1$ would be $64$.  So in this case, the
+loudest event estimate ignores the fact that there are $\sim 56 -72$
+``missing'' events.  However a Bayesian estimate with $x_\mathrm{th}$
+set to $x_1$ incorporates this information quite naturally, and so
+(correctly) yields an estimated $\Lambda_f$ of order one.
 
 \section{Examples}
 \label{sec:GW-example}
@@ -807,7 +798,7 @@ that
   \left\langle h_i, h_j \right\rangle \simeq \delta_{ij}.
 \end{equation}
 In the following subsection, we will generalize the model to
-overlapping templates.  We rank candidate events by their maxmim SNR
+overlapping templates.  We rank candidate events by their maximum SNR
 over the entire template bank,
 \begin{equation}
   x \equiv \max_{h} \rho_h,
@@ -882,7 +873,7 @@ events' types and the foreground and background rates.
 
 We can compare these results to results obtained using the two
 approximations described earlier, the loudest-event statistic and the
-foreground-dominated statistic. The marginalised distribution for the
+foreground-dominated statistic. The marginalized distribution for the
 foreground rate using these alternatives are shown in
 Figure~\ref{fig:altmeth}. In this case, the loudest event had
 $x_N\simeq 9.47$. The loudest-event statistic depends on a
@@ -919,7 +910,7 @@ in any case. This is to be expected as much of the information is
 being thrown away. The foreground-dominated statistic gives a
 reasonable approximation to the true foreground rate, and a
 distribution that is essentially equal to the full analysis, for the
-``omniscent'' choice of threshold value that excludes all background
+``omniscient'' choice of threshold value that excludes all background
 data. For lower thresholds, even for a threshold where
 $p_\mathrm{thresh} = 0.99$, it performs poorly since we are
 approximating the foreground rate by the total foreground plus
@@ -1017,7 +1008,7 @@ foreground-dominated thresholds as before, we will recover the same
 foreground distributions as are shown in Figure~\ref{fig:altmeth}.
 This is because the parameter $N_{\rm eff}$ affects only the
 background distribution, to which the foreground-dominated statistic
-is insensitive, and in the loudest event case, after marginalisation
+is insensitive, and in the loudest event case, after marginalization
 over $N_{\rm eff}$ we find $\int_0^{N_{\rm max}} \hat{b}(x_N,N_{\rm
   eff}) {\rm d}N_{\rm eff} \ll 3 N_{\rm max}/R_{\rm max} \hat{f}(x_N,
 N_{\rm eff})$ and so we are still in the foreground-dominated regime
@@ -1052,13 +1043,13 @@ now depends on $N_\mathrm{eff}$.
 
 \subsection{Uncertainty in the Foreground and Background Distributions}
 \label{sec:uncertain-dist}
-The framework outlined above relies on the existence of models for the foreground, $\hat{f}(x,\theta)$, and background, $\hat{b}(x,\theta)$, distributions parameterised by a small number of model parameters, $\theta$. While in many situations simple analytic functions such as power laws will provide an adequate description, this will not always be the case. In the absence of a good analytic model, the space of the ranking statistic, $x$ could be divided into bins and $\hat{f}(x)$/$\hat{b}(x)$ taken to be flat in each of these bins. The number of free parameters characterising each of $\hat{f}$ and $\hat{b}$ is then the number of bins used. While such a framework is model free, the increase in model parameters will mean that more observed events will typically be required to achieve the same precision on the rates and foreground/background distributions.
+The framework outlined above relies on the existence of models for the foreground, $\hat{f}(x,\theta)$, and background, $\hat{b}(x,\theta)$, distributions parameterized by a small number of model parameters, $\theta$. While in many situations simple analytic functions such as power laws will provide an adequate description, this will not always be the case. In the absence of a good analytic model, the space of the ranking statistic, $x$ could be divided into bins and $\hat{f}(x)$/$\hat{b}(x)$ taken to be flat in each of these bins. The number of free parameters characterizing each of $\hat{f}$ and $\hat{b}$ is then the number of bins used. While such a framework is model free, the increase in model parameters will mean that more observed events will typically be required to achieve the same precision on the rates and foreground/background distributions.
 
 In the context of gravitational wave experiments, additional information on the ranking statistic distributions for the foreground and background can be obtained using injections into and timeslides of the data respectively. This information can be readily incorporated in the current framework by assuming there is another set of $N_I$ events with ranking statistics $\{ w_i \}$, known to be drawn from the foreground distribution ($f_i=1$) and a set of $N_T$ events with ranking statistics $\{z_i\}$ known to be drawn from the background distribution ($f_i=0$). These events will typically not be drawn with the correct rate parameters, so they do not contribute to the estimates of $R_f$ and $R_b$, but they do contribute an extra factor
 \be
 \prod_{l=1}^{N_I} \hat{f}(w_l, \theta ) \prod_{m=1}^{N_T} \hat{b}(z_i, \theta) 
 \ee
-to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo non-stationarities in the detector data, but the latter relies on knowledge of the astrophysical rate of events which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterise the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterise the variation in the astrophysical rate of mergers as a function of source type.
+to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo non-stationarities in the detector data, but the latter relies on knowledge of the astrophysical rate of events which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterize the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterize the variation in the astrophysical rate of mergers as a function of source type.
 
 
 \subsection{Star Cluster Parameters With Background Contamination}
@@ -1123,7 +1114,7 @@ method provides good constraints on the cluster parameters.
     for the example in \S~\ref{sec:star-cluster}.  The contours
     describe the true density profile with the parameters in
     Eq.~\eqref{eq:true-cluster-parameters}.  The points are the
-    realization of this density profile used as sythetic data in
+    realization of this density profile used as synthetic data in
     \S~\ref{sec:star-cluster}; the dashed line encloses one Plummer
     scale radius about the true cluster center.  Because the peak
     cluster density is equal to the background density at the cluster
@@ -1133,7 +1124,7 @@ method provides good constraints on the cluster parameters.
 To analyze our synthetic data set, we analytically marginalized over
 the state flags (i.e.~cluster membership), using the likelihood in
 Eq.~\eqref{eq:rate-shape-posterior}.  We did this to take advantage of
-the \textit{emcee} sampler of \citet{ForemanMackey2012}, which
+the \texttt{emcee} sampler of \citet{ForemanMackey2012}, which
 requires all parameters to be in $\mathbb{R}$.  We applied a prior on
 the shape parameters that is flat in $\vec{x}_0$ and $\vec{\gamma}$,
 and an (approximately) Jeffreys prior on $r_0$,
@@ -1234,9 +1225,9 @@ both event significance and the probability of event attribution to a
 particular class.
 
 \begin{acknowledgments}
-  We thank Kipp Cannon, Chad Hanna, Drew Keppel, and Richard
-  O'Shaughnessy for discussions and suggestions about this manuscript.
-  IM and WMF thank KITP.
+  We thank Kipp Cannon, Chad Hanna, Drew Keppel, Richard
+  O'Shaughnessy, and Ted von Hippel for discussions and suggestions
+  about this manuscript.  IM and WMF thank KITP.
 \end{acknowledgments}
 
 %%%%%%%%%%%%%%%%%%%% Bibliography 
