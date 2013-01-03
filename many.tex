@@ -1,4 +1,4 @@
-\documentclass[aps,prd,reprint]{revtex4-1}
+\documentclass[aps,prd,reprint,nofootinbib]{revtex4-1}
 
 \usepackage{hyperref} \usepackage{amsmath} \usepackage{amssymb}
 \usepackage{graphicx} \usepackage{color}
@@ -257,7 +257,7 @@ Therefore, the likelihood of the data is
 This is the probability that the first observed event is a
 fore/background event (if $f_1=1,0$) with ranking statistic $x_1$ and
 the second observed event is a fore/background event (if $f_2=1,0$)
-with ranking statistic $x_2$ etc. If the events are ordered by ranking
+with ranking statistic $x_2$, etc. If the events are ordered by ranking
 statistic the corresponding expression is more complicated, since
 $x_1$ is now the event from foreground or background with the smallest
 ranking statistic, etc. We will return to the statistic-ordered case
@@ -299,7 +299,7 @@ the flags on the rates:
 \end{equation} 
 
 
-The second term in Eq.~\eqref{eq:combined-flag-rate-prior} is a
+The last term in Eq.~\eqref{eq:combined-flag-rate-prior} is a
 traditional prior.  Because the rate parameters enter the posterior in
 the same form as Poisson rates, we choose here the Poisson Jeffreys
 prior on rates \citep{Jeffreys1946}, independent of the shape
@@ -308,7 +308,7 @@ parameters
   p\left( R_f, R_b, \theta\right) = \alpha \frac{1}{\sqrt{R_f R_b}}
   p(\theta),
 \end{equation}
-where $\alpha$ is a normalization constant, but of course other
+where $\alpha$ is a normalization constant; but of course other
 choices are possible.  This choice has the advantage that the prior is
 normalizable as $R_f, R_b \to 0$, and the exponentials in
 Eq.~\eqref{eq:flag-conditional-prior} regularize the posterior as
@@ -337,8 +337,7 @@ R_f, R_b, \theta | d,N \right)$, which means $p\left( \mathset{f_i},
 R_f, R_b, \theta | d,N \right) = p\left( \mathset{f_i}, R_f, R_b,
 \theta | d_{\rm to},N \right)$. However, the evidence $p(d,N) =
 N!\,p(d_{\rm to},N)$, since there are $N!$ ways in which $N$ events
-can be ordered in time and would have the same set of ranking
-statistics.
+with a given set of ranking statistics can be ordered in time.
 
 The ranking-statistic ordered posterior can be computed directly by
 assuming that the flags, $\mathset{f_i}$, are un-observed data and
@@ -451,11 +450,11 @@ R_f =
   \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta))}.
 \end{equation}
 where $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /
-(1-\hat{B}(x_N,\theta))$\footnote{The quantity $\Lambda$ from
+(1-\hat{B}(x_N,\theta))$ and similarly for $\tilde{f}(x_N,\theta)$.\footnote{The quantity $\Lambda$ from
   \citet{Biswas2009} is related to $\hat{b}$ and $\tilde{f}$ by
   \begin{equation}
     \Lambda(x, \theta) = \frac{\tilde{f}(x,\theta)}{R_b \hat{b}(x,\theta)}.
-\end{equation}}.  
+\end{equation}}  
 \end{widetext}
 If $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
 \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
@@ -507,7 +506,7 @@ p_{\rm LE}\left( R_f, \theta | d \right) \propto \left( \frac{R_{\rm
 \hat{f}(x_N,\theta)\right)\frac{p(\theta)}{\sqrt{R_f}}
 \exp\left(-R_f(1-\hat{F}(x_N,\theta))\right)
 \end{equation}
-and if $\hat{f}(x_N,\theta) \gg R_{\rm max} \hat{b}(x_N.\theta)$ we
+and if $\hat{f}(x_N,\theta) \gg R_{\rm max} \hat{b}(x_N,\theta)$ we
 find the same result as before, $(1- \hat{F}(x_N,\theta))\,R_f \approx
 1/2$.
 \end{widetext}
