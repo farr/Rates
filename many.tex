@@ -56,7 +56,7 @@
   signal and background events from a set of events when the shapes of
   the signal and background distributions are known, can be estimated,
   or approximated; our method works well even if the foreground and
-  background event distributions overlap significantly and the status
+  background event distributions overlap significantly and the nature
   of any individual event cannot be determined with any certainty.  We
   give examples of determining the rates of gravitational-wave events
   in the presence of background triggers from a template bank when
@@ -618,7 +618,7 @@ We can write the full $p(x)$ as
 \label{eq:ptot} 
 p(x) = \left[\sqrt{\frac{\pi}{2}}
   \erfc\left(\frac{x_1}{\sqrt{2}}\right)\right]^{-1}\exp\left[-\frac{x^2}{2}\right]
-+ \Lambda_f \frac{x_1^3}{x^4}
++ 3 \Lambda_f \frac{x_1^3}{x^4}
 \end{equation}
 
 For any pair $(x_1, \Lambda_f)$, it is straightforward to construct
@@ -1042,13 +1042,13 @@ now depends on $N_\mathrm{eff}$.
 
 \subsection{Uncertainty in the Foreground and Background Distributions}
 \label{sec:uncertain-dist}
-The framework outlined above relies on the existence of models for the foreground, $\hat{f}(x,\theta)$, and background, $\hat{b}(x,\theta)$, distributions parameterized by a small number of model parameters, $\theta$. While in many situations simple analytic functions such as power laws will provide an adequate description, this will not always be the case. In the absence of a good analytic model, the space of the ranking statistic, $x$ could be divided into bins and $\hat{f}(x)$/$\hat{b}(x)$ taken to be flat in each of these bins. The number of free parameters characterizing each of $\hat{f}$ and $\hat{b}$ is then the number of bins used. While such a framework is model free, the increase in model parameters will mean that more observed events will typically be required to achieve the same precision on the rates and foreground/background distributions.
+The framework outlined above relies on the existence of models for the foreground, $\hat{f}(x,\theta)$, and background, $\hat{b}(x,\theta)$, distributions parameterized by a small number of model parameters, $\theta$. While in many situations simple analytic functions such as power laws will provide an adequate description, this will not always be the case. In the absence of a good analytic model, the space of the ranking statistic $x$ could be divided into bins and $\hat{f}(x)$ and $\hat{b}(x)$ are taken to be flat in each of these bins. The number of free parameters characterizing each of $\hat{f}$ and $\hat{b}$ is then the number of bins used. While such a framework is model free, the increase in model parameters will mean that more observed events will typically be required to achieve the same precision on the rates and foreground/background distributions.
 
 In the context of gravitational wave experiments, additional information on the ranking statistic distributions for the foreground and background can be obtained using injections into and timeslides of the data respectively. This information can be readily incorporated in the current framework by assuming there is another set of $N_I$ events with ranking statistics $\{ w_i \}$, known to be drawn from the foreground distribution ($f_i=1$) and a set of $N_T$ events with ranking statistics $\{z_i\}$ known to be drawn from the background distribution ($f_i=0$). These events will typically not be drawn with the correct rate parameters, so they do not contribute to the estimates of $R_f$ and $R_b$, but they do contribute an extra factor
 \be
 \prod_{l=1}^{N_I} \hat{f}(w_l, \theta ) \prod_{m=1}^{N_T} \hat{b}(z_i, \theta) 
 \ee
-to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo non-stationarities in the detector data, but the latter relies on knowledge of the astrophysical rate of events which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterize the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterize the variation in the astrophysical rate of mergers as a function of source type.
+to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo non-stationarities in the detector data, but the latter relies on knowledge of the relative the astrophysical rates of different events, which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterize the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterize the variation in the astrophysical rate of mergers as a function of source type.
 
 
 \subsection{Star Cluster Parameters With Background Contamination}
@@ -1226,7 +1226,7 @@ particular class.
 \begin{acknowledgments}
   We thank Kipp Cannon, Chad Hanna, Drew Keppel, Richard
   O'Shaughnessy, and Ted von Hippel for discussions and suggestions
-  about this manuscript.  IM and WMF thank KITP.  CC's work was carried out  at the Jet Propulsion Laboratory, California Institute of Technology, under contract to the National Aeronautics and Space Administration.  CC also gratefully acknowledges support from NSF grant PHY1068881.  Copyright 2012.  All rights reserved.
+  about this manuscript.  IM and WMF acknowledge the hospitality of KITP, supported in part by the National Science Foundation under No. NSF Grant PHY11-25915.  CC's work was carried out  at the Jet Propulsion Laboratory, California Institute of Technology, under contract to the National Aeronautics and Space Administration.  CC also gratefully acknowledges support from NSF grant PHY1068881.  JG's work is supported by the Royal Society.  Copyright 2012.  All rights reserved.
 \end{acknowledgments}
 
 %%%%%%%%%%%%%%%%%%%% Bibliography 
