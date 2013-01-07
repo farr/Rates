@@ -423,14 +423,37 @@ loudest event statistic employs.
 
 For the usual $k=1$ case \citep{Biswas2009}, the marginalized
 posterior (Eq.~\eqref{eq:rate-shape-posterior}) becomes
-\begin{multline}
+\begin{multline}\label{LEeq1}
 p_{\rm LE}\left( R_f, R_b, \theta | d \right) \propto \left(R_f
 \hat{f}(x_N,\theta) + R_b \hat{b}(x_N,\theta)\right) \\ \times \exp\left[-\left(
   R_f (1-\hat{F}(x_N,\theta)) + R_b (1-\hat{B}(x_N,\theta)) \right)
   \right] \\ \times \frac{p(\theta)}{\sqrt{R_f R_b}}.
 \end{multline}
-where $x_N$ denotes the loudness of the loudest event. Marginalizing
-over $R_b$ we obtain
+where $x_N$ denotes the loudness of the loudest event. In the loudest event statistic paper~\citep{Biswas2009}, the authors assume the background distribution and rate are known, which corresponds to using a delta function prior on $R_b$. They further assume a flat prior on $R_f$ and that the foreground and background distributions do not depend on any unknown free parameters. With these assumptions, the posterior on $R_f$, Eq.~\eqref{LEeq1}, is modified to
+\begin{multline}
+p_{\rm LE}(R_f|d) \propto  \left(R_f
+\hat{f}(x_N) + R_b \hat{b}(x_N)\right) \\ \times \exp\left[-\left(
+  R_f (1-\hat{F}(x_N)) + R_b (1-\hat{B}(x_N)) \right)
+  \right] .
+\end{multline}
+Integrating over $R_f$ gives
+\begin{multline}
+\int_0^\infty p_{\rm LE}(R_f|d) {\rm d}R_f =  \frac{R_b \hat{b}(x_N)}{(1-\hat{F}(x_N))} {\rm e}^{-(1-\hat{B}(x_N)) R_b}\\
+%\exp\left[-(1-\hat{B}(x_N))R_b\right] \\ 
+\times \left(\frac{\hat{f}(x_N)}{(1-\hat{F}(x_N)) R_b \hat{b}(x_N)} + 1 \right)
+\end{multline}
+and so the normalised posterior is
+\begin{multline}
+p_{\rm LE}(R_f|d) = \frac{(1-\hat{F}(x_N))}{1+\Lambda} \left( 1+ R_f (1-\hat{F}(x_N))\Lambda \right) \\
+\times \exp\left[-R_f (1-\hat{F}(x_N))\right]
+\end{multline}
+in which we have defined
+\begin{equation}
+\Lambda \equiv \frac{\hat{f}(x_N)}{(1-\hat{F}(x_N)) R_b \hat{b}(x_N)}.
+\end{equation}
+With the further identification $\mu \equiv R_f$ and $\hat{\epsilon} \equiv 1 - \hat{F}(x_N)$, this is Eq.~(18) of~\citep{Biswas2009} and we have shown how their parameter $\Lambda$ is related to the foreground and background distributions used here.
+
+Returning now to Eq.~\eqref{LEeq1} and marginalizing over $R_b$, we obtain
 \begin{multline}
 p_{\rm LE}\left( R_f, \theta | d \right) \propto \left(
 \frac{\hat{b}(x_N,\theta)}{2(1-\hat{B}(x_N,\theta))} + R_f
@@ -438,24 +461,28 @@ p_{\rm LE}\left( R_f, \theta | d \right) \propto \left(
   p(\theta)}{\sqrt{1-\hat{B}(x_N,\theta)}\,\sqrt{R_f}}
 \exp\left(-R_f(1-\hat{F}(x_N,\theta))\right) .
 \end{multline}
-\begin{widetext}
+%\begin{widetext}
+%This posterior has a maximum in $R_f$ at
+%\begin{equation}
+%R_f =
+%\frac{\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)  +
+%  \sqrt{\left(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)\right)^2  -
+%    4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)}}{4
+%  \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta))}.
+%\end{equation}
+%where $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /(1-\hat{B}(x_N,\theta))$ and similarly for $\tilde{f}(x_N,\theta)$.
+%\footnote{The quantity $\Lambda$ from  \citet{Biswas2009} is related to $\hat{b}$ and $\tilde{f}$ by  \begin{equation}    \Lambda(x, \theta) = \frac{\tilde{f}(x,\theta)}{R_b \hat{b}(x,\theta)}.\end{equation}}  
+%\end{widetext}
 This posterior has a maximum in $R_f$ at
-\begin{equation}
+\begin{multline}
 R_f =
 \frac{\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)
-  +
-  \sqrt{\left(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)\right)^2
-    -
-    4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)}}{4
-  \hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta))}.
-\end{equation}
-where $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /
-(1-\hat{B}(x_N,\theta))$ and similarly for $\tilde{f}(x_N,\theta)$.\footnote{The quantity $\Lambda$ from
-  \citet{Biswas2009} is related to $\hat{b}$ and $\tilde{f}$ by
-  \begin{equation}
-    \Lambda(x, \theta) = \frac{\tilde{f}(x,\theta)}{R_b \hat{b}(x,\theta)}.
-\end{equation}}  
-\end{widetext}
+  + \sqrt{g(x_N,\theta)}}{4\hat{f}(x_N,\theta)(1-\hat{F}(x_N,\theta))} \\
+\mbox{where }  g(x_N,\theta) =\left(\hat{f}(x_N,\theta)-(1-\hat{F}(x_N,\theta))\tilde{b}(x_N,\theta)\right)^2
+    \\ - 4\tilde{b}(x_N,\theta)(1-\hat{F}(x_N,\theta))\hat{f}(x_N,\theta)
+\end{multline}
+and $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /(1-\hat{B}(x_N,\theta))$ and similarly for $\tilde{f}(x_N,\theta)$.
+
 If $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
 \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
 statement that the rate of foreground events with ranking statistic
