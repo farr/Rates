@@ -806,7 +806,7 @@ our simplistic model, we suppose the data stream consists of
 stationary Gaussian noise with a power spectral density $S(f)$
 combined additively with some number of gravitational wave signals.
 We assume that the signals are sufficiently rare that they do not
-overlap in the data stream.  The signal to noise ratio (SNR) of a
+overlap in the data stream.  The signal-to-noise ratio (SNR) of a
 template, $h(f)$, given data, $d(f)$, is
 \begin{equation}
   \rho_h \equiv \frac{\left\langle h, d \right\rangle}{\sqrt{\left
@@ -852,7 +852,7 @@ becomes
 \end{equation}
 for $x>\xmin$, $0$ otherwise.
 
-The SNR of a gravitational wave signal in an interferometric detector
+The SNR of a gravitational-wave signal in an interferometric detector
 scales as $1/d$ \citep{Finn1992}, where $d$ is the distance to the
 source.  Ignoring cosmological effects, the number of sources scales
 as $d^3$.  Thus, we expect that the foreground cumulative distribution
@@ -891,8 +891,8 @@ joint posterior (Eq.~\eqref{eq:posterior}).
 \end{figure}
 
 In Figure \ref{fig:analytic-rate-recovery}, we show the marginalized
-posterior densities for the foreground and background rates.  (Refer
-to Eq.~\eqref{eq:rate-shape-posterior}.)  Figure
+posterior densities for the foreground and background rates (see
+Eq.~\eqref{eq:rate-shape-posterior}).  Figure
 \ref{fig:analytic-rate-foreground-probs} shows the posterior
 foreground probability for each event marginalized over all other
 events' types and the foreground and background rates.
@@ -924,7 +924,10 @@ The ``omniscient'' threshold of $x_\mathrm{min} = 4.38$ produces $N=7$
 (7 foreground and 0 background) events in this data set, and therefore
 an unbiased estimate, but of course this threshold can only be
 determined because we can examine the synthetic foreground and
-background data samples.  We show results for the first two choices of
+background data samples. The threshold may seem obvious from a 
+visual examination of Figure \ref{fig:analytic-rate-foreground-probs}; 
+however, the construction of this figure relies on the application of the full
+framework in the first place.  We show results for the first two choices of
 $x_{\rm min}$ in Figure~\ref{fig:altmeth}; the omniscient choice
 produces essentially the same posterior as our full analysis.
 
@@ -1071,11 +1074,11 @@ now depends on $N_\mathrm{eff}$.
 \label{sec:uncertain-dist}
 The framework outlined above relies on the existence of models for the foreground, $\hat{f}(x,\theta)$, and background, $\hat{b}(x,\theta)$, distributions parameterized by a small number of model parameters, $\theta$. While in many situations simple analytic functions such as power laws will provide an adequate description, this will not always be the case. In the absence of a good analytic model, the space of the ranking statistic $x$ could be divided into bins and $\hat{f}(x)$ and $\hat{b}(x)$ are taken to be flat in each of these bins. The number of free parameters characterizing each of $\hat{f}$ and $\hat{b}$ is then the number of bins used. While such a framework is model free, the increase in model parameters will mean that more observed events will typically be required to achieve the same precision on the rates and foreground/background distributions.
 
-In the context of gravitational wave experiments, additional information on the ranking statistic distributions for the foreground and background can be obtained using injections into and timeslides of the data respectively. This information can be readily incorporated in the current framework by assuming there is another set of $N_I$ events with ranking statistics $\{ w_i \}$, known to be drawn from the foreground distribution ($f_i=1$) and a set of $N_T$ events with ranking statistics $\{z_i\}$ known to be drawn from the background distribution ($f_i=0$). These events will typically not be drawn with the correct rate parameters, so they do not contribute to the estimates of $R_f$ and $R_b$, but they do contribute an extra factor
+In the context of gravitational wave experiments, additional information on the ranking statistic distributions for the foreground can be obtained using mock signal injections into the data, while distributions for the background can be estimated by analyzing time slides of data sets from different detectors relative to each other \cite[e.g.,][]{ihope}. This information can be readily incorporated in the current framework by assuming there is another set of $N_I$ events with ranking statistics $\{ w_i \}$, known to be drawn from the foreground distribution ($f_i=1$) and a set of $N_T$ events with ranking statistics $\{z_i\}$ known to be drawn from the background distribution ($f_i=0$). These events will typically not be drawn with the correct rate parameters, so they do not contribute to the estimates of $R_f$ and $R_b$, but they do contribute an extra factor
 \be
 \prod_{l=1}^{N_I} \hat{f}(w_l, \theta ) \prod_{m=1}^{N_T} \hat{b}(z_i, \theta) 
 \ee
-to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo non-stationarities in the detector data, but the latter relies on knowledge of the relative the astrophysical rates of different events, which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterize the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterize the variation in the astrophysical rate of mergers as a function of source type.
+to the right hand sides of Eqs~(\ref{eq:posterior}) and (\ref{eq:rate-shape-posterior}). This approach provides a way to incorporate extra information into the analysis in order to simultaneously fit for the shape of the background and foreground as well as the rates. In the limit that there are many more events in the timeslide and injection data set, this will reduce to the analysis that was described above with fixed ranking statistic distributions $\hat{f}(x)$ and $\hat{b}(x)$ given by the injection and time slide data. We note that this analysis makes the assumption that the background distribution is the same in the time slide and real data and that the foreground distribution is the same between the injection and real data. The former assumption is probably reasonable, modulo correlations of non-gravitational-wave origin between data in different detectors, but the latter relies on knowledge of the relative the astrophysical rates of different events, which is more uncertain. These astrophysical uncertainties could be handled with a hybrid approach, in which injections are used to characterize the statistic distribution for sources of a particular type, while additional rate or shape parameters are introduced to characterize the variation in the astrophysical rate of mergers as a function of source type.
 
 
 \subsection{Star Cluster Parameters With Background Contamination}
@@ -1203,10 +1206,10 @@ using several examples from gravitational-wave data analysis in the
 presence of signatures of binary mergers and noise triggers, and
 astronomical image analysis in the presence of several populations of
 stars.  We showed that this framework is generally superior to both
-the loudest-event statistic and and the foreground-dominated
+the loudest-event statistic and the foreground-dominated
 statistic.
 
-Throughout this paper, we have assumed that the shape of the
+Through most of this paper, we have assumed that the shape of the
 foreground and background distributions is known, or at least can be
 modeled with several additional parameters.  This is not necessarily
 easy to do.  For example, in the case of gravitational-wave data
@@ -1220,7 +1223,10 @@ accurately model both distributions, e.g., through the use of injected
 signals to model the foreground distribution \cite{ihope,CannonHannaKeppel:2012}.
 However, this is a difficult problem (e.g., because of the need to
 estimate the background at the very tails of the distribution), and
-will require significant future work.
+will require significant future work.  In Section \ref{sec:uncertain-dist}, 
+we discussed some of the possible
+approaches when the shapes of the background and foreground distributions
+cannot be confidently described by models with a few adjustable parameters. 
 
 A further complication is that we have considered the rate of events
 in the data as products of some analysis pipeline.  This rate may be
@@ -1253,7 +1259,7 @@ particular class.
 \begin{acknowledgments}
   We thank Kipp Cannon, Chad Hanna, Drew Keppel, Richard
   O'Shaughnessy, and Ted von Hippel for discussions and suggestions
-  about this manuscript.  IM and WMF acknowledge the hospitality of KITP, supported in part by the National Science Foundation under No. NSF Grant PHY11-25915.  CC's work was carried out  at the Jet Propulsion Laboratory, California Institute of Technology, under contract to the National Aeronautics and Space Administration.  CC also gratefully acknowledges support from NSF grant PHY1068881.  JG's work is supported by the Royal Society.  Copyright 2012.  All rights reserved.
+  about this manuscript.  IM and WMF acknowledge the hospitality of KITP, supported in part by the National Science Foundation under No. NSF Grant PHY11-25915.  CC's work was carried out  at the Jet Propulsion Laboratory, California Institute of Technology, under contract to the National Aeronautics and Space Administration.  CC also gratefully acknowledges support from NSF grant PHY1068881.  JG's work is supported by the Royal Society.  Copyright 2013.  All rights reserved.
 \end{acknowledgments}
 
 %%%%%%%%%%%%%%%%%%%% Bibliography 
