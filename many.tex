@@ -429,7 +429,16 @@ p_{\rm LE}\left( R_f, R_b, \theta | d \right) \propto \left(R_f
   R_f (1-\hat{F}(x_N,\theta)) + R_b (1-\hat{B}(x_N,\theta)) \right)
   \right] \\ \times \frac{p(\theta)}{\sqrt{R_f R_b}}.
 \end{multline}
-where $x_N$ denotes the loudness of the loudest event. In the loudest event statistic paper~\citep{Biswas2009}, the authors assume the background distribution and rate are known, which corresponds to using a delta function prior on $R_b$. They further assume a flat prior on $R_f$ and that the foreground and background distributions do not depend on any unknown free parameters. With these assumptions, the posterior on $R_f$, Eq.~\eqref{LEeq1}, is modified to
+where $x_N$ denotes the loudness of the loudest event, and $R_f$ and
+$R_b$ are the number of events expected \emph{above our original
+  threshold} (so, for example, $R_f (1 - \hat{F}(x_N,\theta))$ is the
+number of foreground events expected above loudness $x_N$).  In the
+loudest event statistic paper~\citep{Biswas2009}, the authors assume
+the background distribution and rate are known, which corresponds to
+using a delta function prior on $R_b$. They further assume a flat
+prior on $R_f$ and that the foreground and background distributions do
+not depend on any unknown free parameters. With these assumptions, the
+posterior on $R_f$, Eq.~\eqref{LEeq1}, is modified to
 \begin{multline}
 p_{\rm LE}(R_f|d) \propto  \left(R_f
 \hat{f}(x_N) + R_b \hat{b}(x_N)\right) \\ \times \exp\left[-\left(
