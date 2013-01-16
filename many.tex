@@ -594,8 +594,8 @@ given by
 \begin{equation}
  p(d) = \int{ p(d|R)\,p(R)\, dR}\, .  
 \end{equation}
-For each data set in the ensemble, compute the Bayesian estimator
-$R_{B} = \int{ R p(R|d) dR}$.  Then it is immediate that
+For each data set in the ensemble, compute the Bayesian estimator 
+for the mean of the posterior $R_{B} = \int{ R p(R|d) dR}$.  Then it is immediate that
 \begin{equation}
 \int{R_{B}(d)\, p(d)\,d(d) }= \int{ R\, p(R) \,dR},
 \end{equation}
@@ -614,7 +614,7 @@ foreground and background type) per unit loudness.  Here we will
 assume that the background is normally-distributed in loudness, so
 that $b$ has the form
 \begin{equation}
-b(x) = \Lambda_b \exp \left(- \frac{x^2}{2} \right).
+b(x) = \Gamma_b \exp \left(- \frac{x^2}{2} \right).
 \end{equation}
 We find it useful to define $x_1$ as the loudness such that a data set
 will have on average a single noise event louder than $x_1$; i.e.,
@@ -624,7 +624,7 @@ such that
 \end{equation}
 This condition fixes 
 \begin{equation}
-  \Lambda_b = \left[ \sqrt{\frac{\pi}{2}} \erfc\left(
+  \Gamma_b = \left[ \sqrt{\frac{\pi}{2}} \erfc\left(
     \frac{x_1}{\sqrt{2}} \right) \right]^{-1},
 \end{equation}
 while $R_b$ will depend on the threshold, $x_\mathrm{th}$, as 
@@ -638,14 +638,14 @@ is, for example, the distribution of SNR for gravitational wave events
 from uniformly-distributed sources in a single detector)
 \begin{equation}
 \label{eq:ps}
-f(x) = 3 \Lambda_f \frac{x_1^3}{x^4},
+f(x) = 3 \Gamma_f \frac{x_1^3}{x^4},
 \end{equation}
-where $\Lambda_f = R_f - F\left(x_1\right)$ is the mean number of
+where $\Gamma_f = R_f - F\left(x_1\right)$ is the mean number of
 foreground events with $x > x_1$.  The overall foreground rate is
 given by 
 \begin{equation}
   \label{eq:foreground-from-lambda}
-  R_f = \Lambda_f \frac{x_1^3}{x_\mathrm{th}^3}.
+  R_f = \Gamma_f \frac{x_1^3}{x_\mathrm{th}^3}.
 \end{equation}
 
 We can write the full $p(x)$ as
@@ -653,16 +653,16 @@ We can write the full $p(x)$ as
 \label{eq:ptot} 
 p(x) = \left[\sqrt{\frac{\pi}{2}}
   \erfc\left(\frac{x_1}{\sqrt{2}}\right)\right]^{-1}\exp\left[-\frac{x^2}{2}\right]
-+ 3 \Lambda_f \frac{x_1^3}{x^4}
++ 3 \Gamma_f \frac{x_1^3}{x^4}
 \end{equation}
 
-For any pair $(x_1, \Lambda_f)$, it is straightforward to construct
+For any pair $(x_1, \Gamma_f)$, it is straightforward to construct
 random event lists drawn from the corresponding $p(x)$, and
 straightforward to apply a threshold by ``throwing away'' all events
-with $x$ less than the threshold value $x_\mathrm{th}$.  If $\Lambda_f
+with $x$ less than the threshold value $x_\mathrm{th}$.  If $\Gamma_f
 \gg 1$, then we are in the foreground-dominated regime at $x = x_1$,
-if $\Lambda_f \ll 1$ we are in the background-dominated regime, and if
-$\Lambda_f \sim 1$ the foreground and background counts above $x_1$
+if $\Gamma_f \ll 1$ we are in the background-dominated regime, and if
+$\Gamma_f \sim 1$ the foreground and background counts above $x_1$
 are about equal.  For any thresholded event list, we use
 Eq.~(\ref{eq:rate-shape-posterior}) to construct the probability
 density $p(R_f|d)$.  For that event list, we define the foreground
@@ -678,10 +678,10 @@ Eq.~\eqref{eq:foreground-from-lambda}.
   \includegraphics[width=\columnwidth]{threshold.pdf}
   \caption{\label{fig:threshold-rate-dependence} The mean foreground
     rate uncertainty, Eq.~\eqref{eq:delta-R-definition}, as a function
-    of threshold for data sets with $\Lambda_f = 100$ (solid line),
-    $\Lambda_f = 10$ (dashed line), and $\Lambda_f = 1$ (dash-dotted
-    line).  Recall that $\Lambda_f$ is the mean number of foreground
-    events above $x_\mathrm{th} = 8$.  The total background rate,
+    of threshold for data sets with $\Gamma_f = 100$ (solid line),
+    $\Gamma_f = 10$ (dashed line), and $\Gamma_f = 1$ (dash-dotted
+    line).  Recall that $\Gamma_f$ is the mean number of foreground
+    events above $x_\mathrm{th}=x_1= 8$.  The total background rate,
     $R_b\left( x_\mathrm{th} \right)$, is shown by the dotted line; we
     fix $R_b \left( x_\mathrm{th} = x_1 = 8\right) = 1$, so on average
     there is one background event above $x = 8$.  For $x_\mathrm{th}
@@ -691,17 +691,7 @@ Eq.~\eqref{eq:foreground-from-lambda}.
     set.  For $x_\mathrm{th} \lesssim x_1$, the background rate
     dominates at small loudness, and the foreground rate uncertainty
     asymptotes to the counting error on the events that stand out from
-    the background, $\Delta R_f / R_f \simeq 1/\sqrt{\Lambda_f}$.
-    Note that this uncertainty applies even when the total number of
-    background events is orders of magnitude larger than the number of
-    foreground events.  When a threshold must be chosen, it is
-    safest---in the sense of producing the minimal foreground rate
-    uncertainty---to choose the threshold \emph{well into the
-      background-dominated loudness regime}; the extra background
-    events in the data set do not affect the estimate of the
-    foreground rate, and, when the background distribution is
-    parameterized, can help to better determine these parameters (see
-    \S~\ref{sec:gw-overlapping-template}). }
+    the background, $\Delta R_f / R_f \simeq 1/\sqrt{\Gamma_f}$.}
 \end{figure}
 
 Figure \ref{fig:threshold-rate-dependence} illustrates how the mean
@@ -715,7 +705,7 @@ the sample.  However, as the threshold passes into the
 background-dominated regime, the uncertainty in the foreground rate
 asymptotes to
 \begin{equation}
-  \frac{\Delta R_f}{R_f} \simeq \frac{1}{\sqrt{\Lambda_f}},
+  \frac{\Delta R_f}{R_f} \simeq \frac{1}{\sqrt{\Gamma_f}},
 \end{equation}
 which is the usual Poisson counting uncertainty on the events that
 stand out from the background (those with $x \gtrsim x_1$).  Note that
@@ -773,8 +763,8 @@ Extending a threshold into regions where the factor
 \end{equation}
 becomes small---that is, into background-dominated
 regions---contributes little to reducing the overall uncertainty in the
-foreground rate.  This is consistent with the behavior of the specific
-example in Figure \ref{fig:threshold-rate-dependence}.
+foreground rate.  Thus, when the background distribution itself is of no interest and computational costs are high, the threshold does not need to be pushed into background-dominated regions in order to obtain an accurate foreground estimate. This is consistent with the behavior of the specific
+example in Figure \ref{fig:threshold-rate-dependence}.  
 
 \subsection{Extreme Sensitivity of the LE Rate Estimate to a Single, Unusually Loud Event}
 Here we discuss a very unattractive feature of the Bayesian loudest
@@ -783,7 +773,7 @@ time it will yield a very large over-estimate.
 
 To explain this, we will use the same model as described in the
 previous subsection, and we will begin with a very specific example.
-Let $\Lambda_f = 1$, meaning that the expected number of actual events
+Let $\Gamma_f = 1$, meaning that the expected number of actual events
 with $x > x_1$ is one.  Then there is a $1/64$ chance ($1-\hat{F}(x_{LE}) \approx
 1.6\%$) that the loudest event will have $x_{LE} > 4 x_1$.  Consider
 this case, and let us also assume that there are no events (noise or
@@ -791,12 +781,12 @@ actual) with $x_1 < x < x_{LE}$.
 
 The loudest event estimate basically ``throws away'' the information that there are no events in this interval.  The maximum of the loudest-event-statistic posterior on $R_f$,  Eq.~(\ref{loudest-eq}), is at $R_f = \frac{\Lambda - 1}{ \Lambda (1-\hat{F}(x_{LE}))}$.  If the value of $\Lambda$ is sufficiently high at $x_1$ (and $\Lambda$ will be even greater at $x_{LE}$), then, for this data set, we would estimate $R_f \approx \frac{1}{1-\hat{F}(x_{LE})} \gtrsim 64$.  Thus, for our assumed shape of the foreground distribution, we will estimate the rate of events above $x_1$ to be $64$ times the true rate!  
 
-Now, if the true rate really were $\Lambda_f = 64$, then the expected
+Now, if the true rate really were $\Gamma_f = 64$, then the expected
 number of events with $x > x_1$ would be $64$.  So in this case, the
 loudest event estimate ignores the fact that there are $\sim 56 -72$
 ``missing'' events.  However a Bayesian estimate with $x_\mathrm{th}$
 set to $x_1$ incorporates this information quite naturally, and so
-(correctly) yields an estimated $\Lambda_f$ of order one.
+(correctly) yields an estimated $\Gamma_f$ of order one.
 
 \section{Examples}
 \label{sec:GW-example}
