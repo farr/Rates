@@ -455,6 +455,7 @@ and so the normalised posterior is
 \begin{multline}
 p_{\rm LE}(R_f|d) = \frac{(1-\hat{F}(x_N))}{1+\Lambda} \left( 1+ R_f (1-\hat{F}(x_N))\Lambda \right) \\
 \times \exp\left[-R_f (1-\hat{F}(x_N))\right]
+\label{loudest-eq}
 \end{multline}
 in which we have defined
 \begin{equation}
@@ -551,12 +552,15 @@ find the same result as before, $(1- \hat{F}(x_N,\theta))\,R_f \approx
 If we set the threshold for including an event, $x_{\rm min}$,
 sufficiently high, we can ensure that $\hat{f}(x_i,\theta) \gg
 \hat{b}(x_i,\theta)$ for all ranking statistics $x_i$ in the data
-set. The posterior can then be approximated by
+set.  If we can further be confident that $R_f \hat{f}(x_i,\theta) \gg R_b \hat{b}(x_i,\theta)$ for all events, then the posterior can be approximated by
 \begin{multline}
 p_{\rm FD}\left( R_f, R_b, \theta | d \right) \\ \propto \prod_{i} \left[
   \hat{f}\left(x_i, \theta\right)\right] R_f^N \exp\left[-\left( R_f +
   R_b \right) \right] \frac{p(\theta)}{\sqrt{R_f R_b}}.
 \end{multline}
+Note that these are posteriors on the number of events expected \emph{above the
+threshold $x_{\rm min}$}.  The threshold choice for the foreground-dominated statistic could be different from the threshold choice applied elsewhere.  If rates $R_{f,1}$ and $R_{f,2}$ are estimated for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$ respectively, these rates should be compared by equating $R_{f,1} (1-\hat{F}(x_2,\theta))$ and $R_{f,2} (1-\hat{F}(x_1,\theta))$.
+
 Normalization over $R_b$ gives a constant factor and the posterior on
 the foreground rate becomes
 \begin{multline}
@@ -568,12 +572,7 @@ Ignoring the dependence on $\theta$, this is peaked at a rate $R_f =
 N-1/2$, so we have the expected result that, in the foreground
 dominated regime, the rate is approximately equal to the number of
 events observed (the $1/2$ comes from our use of the Jeffreys prior on
-the rate).  We note that the rate $R_f$ is defined as the rate of
-events occurring above the specified threshold and therefore if the
-foreground dominated statistic were used to estimate rates $R_{f,1}$
-and $R_{f,2}$ for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$
-respectively, these rates should be compared by equating $R_{f,1}
-(1-\hat{F}(x_2,\theta))$ and $R_{f,2} (1-\hat{F}(x_1,\theta))$.
+the rate).  
 
 \section{Thresholding}
 This paper is concerned with Bayesian rate estimates based on lists of
@@ -785,13 +784,13 @@ time it will yield a very large over-estimate.
 To explain this, we will use the same model as described in the
 previous subsection, and we will begin with a very specific example.
 Let $\Lambda_f = 1$, meaning that the expected number of actual events
-with $x > x_1$ is one.  Then there is a $1/64$ chance ($\approx
+with $x > x_1$ is one.  Then there is a $1/64$ chance ($1-\hat{F}(x_{LE}) \approx
 1.6\%$) that the loudest event will have $x_{LE} > 4 x_1$.  Consider
 this case, and let us also assume that there are no events (noise or
-actual) with $x_1 < x < x_{LE}$.  The loudest event estimate basically
-``throws away'' the information that there are no events in this
-interval, which (we show below) leads an estimate
-$\Lambda_f^\mathrm{LE} \approx 64$, which is $64$ times the true rate!
+actual) with $x_1 < x < x_{LE}$.  
+
+The loudest event estimate basically ``throws away'' the information that there are no events in this interval.  The maximum of the loudest-event-statistic posterior on $R_f$,  Eq.~(\ref{loudest-eq}), is at $R_f = \frac{\Lambda - 1}{ \Lambda (1-\hat{F}(x_{LE}))}$.  If the value of $\Lambda$ is sufficiently high at $x_1$ (and $\Lambda$ will be even greater at $x_{LE}$), then, for this data set, we would estimate $R_f \approx \frac{1}{1-\hat{F}(x_{LE})} \gtrsim 64$.  Thus, for our assumed shape of the foreground distribution, we will estimate the rate of events above $x_1$ to be $64$ times the true rate!  
+
 Now, if the true rate really were $\Lambda_f = 64$, then the expected
 number of events with $x > x_1$ would be $64$.  So in this case, the
 loudest event estimate ignores the fact that there are $\sim 56 -72$
