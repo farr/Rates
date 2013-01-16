@@ -493,15 +493,15 @@ R_f =
 \end{multline}
 and $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /(1-\hat{B}(x_N,\theta))$ and similarly for $\tilde{f}(x_N,\theta)$.
 
-If $\tilde{b}(x_N,\theta) \ll 1$, we obtain the result $(1-
+If $\tilde{b}(x_N,\theta) \ll \tilde{f}(x_N,\theta)$, we obtain the result $(1-
 \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
 statement that the rate of foreground events with ranking statistic
 greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of order $1$,
 as expected. However, $\tilde{b}(x_N,\theta) = -{\rm d}
 [\ln(1-\hat{B}(x,\theta))]/{\rm d}x$ and $(1-\hat{B}(x,\theta))
-\rightarrow 0$ as $x \rightarrow \infty$, so this term will be
+\rightarrow 0$ as $x \rightarrow \infty$, so this term may be
 divergent and for many reasonable examples, we will find
-$\tilde{b}(x_N,\theta) >> \hat{f}(x_N,\theta)$, in which case the
+$\tilde{b}(x_N,\theta) \gg \tilde{f}(x_N,\theta)$, in which case the
 posterior on $R_f$ is peaked at $0$. This issue highlights the problem
 with using a loudest-event statistic with an improper prior on the
 background rate $R_b$. No matter how improbable an event with $x=x_N$
