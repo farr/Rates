@@ -75,13 +75,13 @@ The task of estimating rates of events when a mixture of foreground
 and background events is present in data is a common one in physical
 and astrophysical applications.  This problem comes up, among others,
 in gravitational-wave data analysis
-\cite[e.g.,][]{s5-highmass,s6-lowmass} and in astronomical
-observations of a field of objects of mixed provenance
-\cite{DeGennaro2009}.  In this paper, we introduce a robust formalism
-for estimating event rates from the data when the shape of foreground
-and background distributions are known (or parameterized), but the
-provenance of individual events as either background or foreground is
-unknown.
+\cite[e.g.,][]{s5-lowmass,s5-highmass,s5-highmass-erratum,s5-lowmass-2,s6-lowmass,s6-highmass}
+and in astronomical observations of a field of objects of mixed
+provenance \cite{DeGennaro2009}.  In this paper, we introduce a robust
+formalism for estimating event rates from the data when the shape of
+foreground and background distributions are known (or parameterized),
+but the provenance of individual events as either background or
+foreground is unknown.
 
 We use a Bayesian approach and consider all available data to ensure
 that the inferred rates are both unbiased and maximally constrained in
@@ -99,15 +99,23 @@ normalizing factor $p(d|M)$ is known as the \emph{evidence}.
 
 Two alternative approaches to rate estimation have been suggested and
 are commonly used.  One, known as the \emph{loudest-event statistic}
-\cite{Biswas2009}, uses only the information from the highest-ranked
-event in the data to infer the rate distribution.  This approach has
-been used successfully \cite{s5-highmass,s6-lowmass} when the number
-of loud foreground events is small (typically zero or one) to obtain
-upper limits on foreground rates.  However, the loudest-event
-statistic ignores all events except the loudest one, and so suffers
-from an unnecessary loss of information; therefore, we expect it to
-yield a much larger variance than strictly necessary when multiple
-events are present in the data.
+\cite{Biswas2009,Brady2004,Brady2008}, uses only the information from
+the highest-ranked event in the data to infer the rate distribution.
+This approach has been used successfully
+\cite{s5-lowmass,s5-lowmass-2,s5-highmass,s5-highmass-erratum,s6-lowmass,s6-highmass}
+when the number of loud foreground events is small (typically zero or
+one) to obtain upper limits on foreground rates.  However, the
+loudest-event statistic ignores all events except the loudest one, and
+so suffers from an unnecessary loss of information; therefore, we
+expect it to yield a much larger variance than strictly necessary when
+multiple events are present in the data.  In practice, the
+loudest-event statistic is typically applied repeatedly to multiple
+``chunks'' of data, using the estimated rate posterior from each chunk
+as a rate prior for the next chunk's analysis
+\cite{s5-lowmass-2,s5-highmass,s5-highmass-erratum}.  Even when used
+in this mode, the method discards information, with the amout of
+information loss depending on the (arbitrary) division of the data
+into chunks.
 
 Another possible approach is based on the use of only loud,
 ``gold-plated'' events, ones which are certain (or nearly certain) to
@@ -125,6 +133,15 @@ backgrounds for individual events.  While either the loudest-event
 statistic or the foreground-dominated statistic can approach the
 accuracy of our proposed method in specific regimes, both are
 suboptimal in a general case.
+
+Ref.~\cite{Messenger2012} considered the problem of determining an
+intrinsic rate and population parameters in the presence of missing
+data, either due to thresholding, poor sensitivity, or contamination
+from noise events.  The approach is complementary to ours: we consider
+the problem of accurately counting the events of different classes
+present in a dataset, while Ref.~\cite{Messenger2012} deals with
+translating such counts into physical rates by properly accounting for
+the selection effects on the data set.  
 
 In order to demonstrate our method, we consider three different
 examples.  The first two come from the field of gravitational-wave
@@ -435,10 +452,11 @@ $R_b$ are the number of events expected \emph{above our original
 number of foreground events expected above loudness $x_N$).  In the
 loudest event statistic paper~\citep{Biswas2009}, the authors assume
 the background distribution and rate are known, which corresponds to
-using a delta function prior on $R_b$. They further assume a flat
-prior on $R_f$ and that the foreground and background distributions do
-not depend on any unknown free parameters. With these assumptions, the
-posterior on $R_f$, Eq.~\eqref{LEeq1}, is modified to
+using a narrow prior on $R_b$. They further assume a flat prior (in
+the absence of other experimental data) on $R_f$ and that the
+foreground and background distributions do not depend on any unknown
+free parameters. With these assumptions, the posterior on $R_f$,
+Eq.~\eqref{LEeq1}, is modified to
 \begin{multline}
 p_{\rm LE}(R_f|d) \propto  \left(R_f
 \hat{f}(x_N) + R_b \hat{b}(x_N)\right) \\ \times \exp\left[-\left(
@@ -461,7 +479,7 @@ in which we have defined
 \begin{equation}
 \Lambda \equiv \frac{\hat{f}(x_N)}{(1-\hat{F}(x_N)) R_b \hat{b}(x_N)}.
 \end{equation}
-With the further identification $\mu \equiv R_f$ and $\hat{\epsilon} \equiv 1 - \hat{F}(x_N)$, this is Eq.~(18) of~\citep{Biswas2009} and we have shown how their parameter $\Lambda$ is related to the foreground and background distributions used here.
+With the further identification $\mu \equiv R_f$ and $\hat{\epsilon} \equiv 1 - \hat{F}(x_N)$, this is Eq.~(14) of~\citep{Biswas2009} and we have shown how their parameter $\Lambda$ is related to the foreground and background distributions used here.
 
 Returning now to Eq.~\eqref{LEeq1} and marginalizing over $R_b$, we obtain
 \begin{multline}
@@ -493,12 +511,12 @@ R_f =
 \end{multline}
 and $\tilde{b}(x_N,\theta) = \hat{b}(x_N,\theta) /(1-\hat{B}(x_N,\theta))$ and similarly for $\tilde{f}(x_N,\theta)$.
 
-If $\tilde{b}(x_N,\theta) \ll \tilde{f}(x_N,\theta)$, we obtain the result $(1-
-\hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be understood as the
-statement that the rate of foreground events with ranking statistic
-greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$, is of order $1$,
-as expected. However, $\tilde{b}(x_N,\theta) = -{\rm d}
-[\ln(1-\hat{B}(x,\theta))]/{\rm d}x$ and $(1-\hat{B}(x,\theta))
+If $\tilde{b}(x_N,\theta) \ll \tilde{f}(x_N,\theta)$, we obtain the
+result $(1- \hat{F}(x_N,\theta))\,R_f \approx 1/2$. This can be
+understood as the statement that the rate of foreground events with
+ranking statistic greater than $x_N$, $(1- \hat{F}(x_N,\theta))\,R_f$,
+is of order $1$, as expected. However, $\tilde{b}(x_N,\theta) = -{\rm
+  d} [\ln(1-\hat{B}(x,\theta))]/{\rm d}x$ and $(1-\hat{B}(x,\theta))
 \rightarrow 0$ as $x \rightarrow \infty$, so this term may be
 divergent and for many reasonable examples, we will find
 $\tilde{b}(x_N,\theta) \gg \tilde{f}(x_N,\theta)$, in which case the
@@ -513,7 +531,10 @@ incorporate the information that no such events are seen. This problem
 is avoided in the new framework described here, since we use all
 events detected above threshold and combined rates, $R_f+R_b$,
 significantly greater than the total number of observed events are
-strongly disfavored.
+strongly disfavored.  As we will see, the problem can also be avoided
+in the context of the loudest-event framework by even very weak prior
+information on the background rate, $R_b$, of the kind present in
+nearly all experiments.
 
 This problem can be avoided in the loudest event framework, by
 including an upper limit on the rate, $R_{\rm max}$, in the prior for
@@ -582,7 +603,9 @@ restrict the events to only those above some loudness threshold; in
 some cases the rate of foreground or background events, or both, is
 even expected to diverge at certain loudnesses.  In this subsection we
 address the question of how the rate estimate depends on the threshold
-value.
+value.  For a discussion of selection effects, of which thresholding
+is but one, on the estimate of physical rates, see
+Ref.~\cite{Messenger2012}.
 
 To begin with, we recall the well-known fact that the Bayesian
 estimator is unbiased, in the following sense.  For simplicity, assume
@@ -800,8 +823,11 @@ background.
 
 Suppose we attempt to detect gravitational wave signals in a data
 stream by matched filtering in the frequency domain against a set of
-$N$ template waveforms \citep[e.g.,][]{findchirppaper,LVC2011}.  In
-our simplistic model, we suppose the data stream consists of
+$N$ template waveforms \citep[e.g.,][]{findchirppaper,s6-lowmass}.  We
+use an extremely simplified model of such a search and the ensuing
+analysis to demonstrate how our framework could be used in practice.
+
+In our simplistic model, we suppose the data stream consists of
 stationary Gaussian noise with a power spectral density $S(f)$
 combined additively with some number of gravitational wave signals.
 We assume that the signals are sufficiently rare that they do not
@@ -1219,13 +1245,14 @@ distribution depends on data quality and may deviate significantly
 from the simple Gaussian-noise behavior modeled in section
 \ref{sec:GW-example}.  Several approaches have been developed to
 accurately model both distributions, e.g., through the use of injected
-signals to model the foreground distribution \cite{ihope,CannonHannaKeppel:2012}.
-However, this is a difficult problem (e.g., because of the need to
-estimate the background at the very tails of the distribution), and
-will require significant future work.  In Section \ref{sec:uncertain-dist}, 
-we discussed some of the possible
-approaches when the shapes of the background and foreground distributions
-cannot be confidently described by models with a few adjustable parameters. 
+signals \cite{ihope} or other methods \cite{CannonHannaKeppel:2012} to
+model the foreground distribution.  However, this is a difficult
+problem (e.g., because of the need to estimate the background at the
+very tails of the distribution), and will require significant future
+work.  In Section \ref{sec:uncertain-dist}, we discussed some of the
+possible approaches when the shapes of the background and foreground
+distributions cannot be confidently described by models with a few
+adjustable parameters.
 
 A further complication is that we have considered the rate of events
 in the data as products of some analysis pipeline.  This rate may be
@@ -1235,7 +1262,10 @@ gravitational waves, or the physical numbers of stars in the cluster
 and field populations which produce the observed luminosities.  Again,
 the conversion between the two will depend on the details of the
 data-analysis algorithm and ranking statistic, including any selection
-effects, and would need to be determined on a case-by-case basis.
+effects \cite{Messenger2012}, and would need to be determined on a
+case-by-case basis.  See Ref.~\cite{Brady2008} for an example of such
+conversion when the underlying framework is the loudest-event
+statistic.
 
 Furthermore, in a practical application there could be multiple
 classes of events, not just foreground and background.  For example,
