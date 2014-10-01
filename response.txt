@@ -1,0 +1,187 @@
+Dear Editor:
+
+This is a response to the referee report on our manuscript DB11163 by Farr et al.
+
+We apologize for the very delayed response.  We are grateful to the referee for a thorough reading of the manuscript and a number of useful comments.  We have incorporated the suggestions of the referee.  The text in bold represents the changes that have been made relative to the initial submission.  We also describe specific changes inline below.
+
+
+
+>> ----------------------------------------------------------------------
+>> Report of the Referee -- DB11163/Farr
+>> ----------------------------------------------------------------------
+>>
+>> Referee report for manuscript DB11163 Farr
+>> ==========================================
+>>
+>> The manuscript presents an application of Bayesian inference to the
+>> problem of estimating the number of events in observed data which
+>> belong to two independent populations, an example of a mixture model
+>> with latent variables indicating the class of each event. It
+>> illustrates the approach with examples from gravitational wave
+>> searches and from fitting parameters of a stellar cluster superimposed
+>> on a background. Although the authors only use simulated data in their
+>> examples, the method employed is interesting and makes an advance on
+>> the earlier methods used in the literature for approaching these
+>> problems, although I do not think the statistics are novel in
+>> themselves.
+>>
+>> The quality of writing and clarity of explanations is consistently
+>> very high, and I believe the article is appropriate for publication in
+>> PRD, but I have a few comments noted below that I recommend the
+>> authors take into account.
+>>
+>> 1. There is a little confusion between number and rate in places. The
+>> authors estimate rates of Poisson distributions throughout, i.e. the
+>> number per unit time or area. The implicit factor of time or area
+>> should be noted in the definition of R_f and R_b to avoid confusion,
+>> and for dimensional correctness. They also occasionally refer to these
+>> as numbers not rates in the text, e.g. after eq 34.
+
+Whatever the units of f and \hat{f} [which depends on the space in which the corresponding rate density is measured], R_f provides the overall scaling amplitude in Eq. 9 and is therefore dimensionless (and similarly for R_b).  We have added a comment to this effect in the text.
+
+>>
+>> 2. Physical interpretations. I had difficulty identifying the key
+>> result in the paper. The conclusions state the superiority of their
+>> "framework", but if I wanted to use the framework where would I start?
+>> Equation 18 gives the full posterior for the unknown variables so
+>> perhaps that is the place. Or is it eqn 21? I suggest that the authors
+>> emphasise the key results of their work with a view to how it might be
+>> applied by the reader for his/her own particular problem.
+
+Indeed, (18) and (21) are the two key equations; which one is used depends on whether the marginalized probability distributions associated with individual events are of interest.  We have made this clear in both the introduction and the conclusion.
+
+>
+>> 3. Using $f_i$ for the flag variables seems unnecessary when
+>> $\hat{f}(x_i)$ and $\tilde{f}$ are also used. Can you choose a
+>> different symbol?
+
+We have replaced $f_i$ with $g_i$.
+
+>>
+>> 4. Before eqn 32 the start of the paragraph repeats some of the end of
+>> the previous paragraph, suggest rewording.
+>>
+>> 5. I didn't understand the comment about comparing rates for different
+>> thresholds just before eqn 35. Could you expand on this paragraph,
+>> perhaps with an example?
+>>
+>> 6. Below eqn 37, "...average of the Bayesian estimate $R_B$" should be
+>> an estimatOR. Likewise in the next sentence all threshold values will
+>> yield, on average, the same POINT estimate.
+>>
+>> 7. After eqn 59 the method of time slides is mentioned, and it is
+>> stated the background in time slides will be representative of the
+>> true background. I don't think this is true when there are real events
+>> in the unslid data which can be slid into coincidence with background
+>> triggers. This is hardly a key point of the paper but it might be
+>> worth mentioning that here.
+>>
+>> 8. The x-axis in figure 2 is very unclear, having only 1 reference
+>> point. I suggest adding another.
+>>
+>> 9. The axes for figure 9 are illegibly small.
+>>
+>> Section V.B: As this is the section of most relevance for
+>> gravitational wave analyses, it could benefit from some expansion, or
+>> perhaps a separate paper if it grows too large. I would also like the
+>> authors to clarify these questions below.
+>>
+>> 10. The authors do not mention the effect of overlapping template
+>> banks on the foreground. Won't there also be correlated foreground
+>> events as well as background?
+>>
+>> 11. It is stated that Neff is a property of the background
+>> distribution, but shouldn't it be a property of the template bank
+>> itself, or a property of the model that is being analysed?
+>>
+>> 12. It is stated that they used the same dataset as sec. V.A, with the
+>> same number of events. Doesn't this mean that there were actually no
+>> correlated events in the distributions? A more convincing example
+>> would actually simulate the new background.
+>>
+
+———————————————————————————————————
+Report of the Referee -- DB11163/Farr
+----------------------------------------------------------------------
+
+Referee report for manuscript DB11163 Farr
+==========================================
+
+The manuscript presents an application of Bayesian inference to the
+problem of estimating the number of events in observed data which
+belong to two independent populations, an example of a mixture model
+with latent variables indicating the class of each event. It
+illustrates the approach with examples from gravitational wave
+searches and from fitting parameters of a stellar cluster superimposed
+on a background. Although the authors only use simulated data in their
+examples, the method employed is interesting and makes an advance on
+the earlier methods used in the literature for approaching these
+problems, although I do not think the statistics are novel in
+themselves.
+
+The quality of writing and clarity of explanations is consistently
+very high, and I believe the article is appropriate for publication in
+PRD, but I have a few comments noted below that I recommend the
+authors take into account.
+
+1. There is a little confusion between number and rate in places. The
+authors estimate rates of Poisson distributions throughout, i.e. the
+number per unit time or area. The implicit factor of time or area
+should be noted in the definition of R_f and R_b to avoid confusion,
+and for dimensional correctness. They also occasionally refer to these
+as numbers not rates in the text, e.g. after eq 34.
+
+2. Physical interpretations. I had difficulty identifying the key
+result in the paper. The conclusions state the superiority of their
+"framework", but if I wanted to use the framework where would I start?
+Equation 18 gives the full posterior for the unknown variables so
+perhaps that is the place. Or is it eqn 21? I suggest that the authors
+emphasise the key results of their work with a view to how it might be
+applied by the reader for his/her own particular problem.
+
+3. Using $f_i$ for the flag variables seems unnecessary when
+$\hat{f}(x_i)$ and $\tilde{f}$ are also used. Can you choose a
+different symbol?
+
+4. Before eqn 32 the start of the paragraph repeats some of the end of
+the previous paragraph, suggest rewording.
+
+5. I didn't understand the comment about comparing rates for different
+thresholds just before eqn 35. Could you expand on this paragraph,
+perhaps with an example?
+
+6. Below eqn 37, "...average of the Bayesian estimate $R_B$" should be
+an estimatOR. Likewise in the next sentence all threshold values will
+yield, on average, the same POINT estimate.
+
+7. After eqn 59 the method of time slides is mentioned, and it is
+stated the background in time slides will be representative of the
+true background. I don't think this is true when there are real events
+in the unslid data which can be slid into coincidence with background
+triggers. This is hardly a key point of the paper but it might be
+worth mentioning that here.
+
+8. The x-axis in figure 2 is very unclear, having only 1 reference
+point. I suggest adding another.
+
+9. The axes for figure 9 are illegibly small.
+
+Section V.B: As this is the section of most relevance for
+gravitational wave analyses, it could benefit from some expansion, or
+perhaps a separate paper if it grows too large. I would also like the
+authors to clarify these questions below.
+
+10. The authors do not mention the effect of overlapping template
+banks on the foreground. Won't there also be correlated foreground
+events as well as background?
+
+11. It is stated that Neff is a property of the background
+distribution, but shouldn't it be a property of the template bank
+itself, or a property of the model that is being analysed?
+
+12. It is stated that they used the same dataset as sec. V.A, with the
+same number of events. Doesn't this mean that there were actually no
+correlated events in the distributions? A more convincing example
+would actually simulate the new background.
+
+
