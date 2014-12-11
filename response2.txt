@@ -1,0 +1,39 @@
+We thank referee B for the comments on our manuscript.  Responses to
+the questions raised appear below.
+
+> In equation 47 the authors define the Fisher information matrix, and
+> in the following paragraph make the link between the Fisher matrix
+> and the Cramer-Rao lower bound. As they are presented in the paper,
+> this is only true in a Frequentist sense as it requires an unbiased
+> estimator. As the authors are presenting a Bayesian framework, there
+> is a Bayesian version of the Cramer-Rao bound that does not require
+> an unbiased estimator, and furthermore requires the parameter priors
+> to be folded into the Fisher matrix definition. Will this have an
+> effect on the framework presented by the authors?
+
+The referee is entirely correct that our Bayesian analysis is not
+necessarily limited by the C-R bound.  However, we discuss the Fisher
+information matrix at this point in the manuscript because it
+illustrates the amount of information contained in each data point,
+not to place rigirous bounds on the posterior uncertainty.  We have
+added a sentence to make this distinction clear just before Eq. (48).
+
+> Some parts of the text seem to be unnecessarily bold font. This
+> seems unwarranted.
+
+This was to mark changes for referee A, and has now been removed from
+the text.
+
+> The posterior curves in figure 5 are impossible to differentiate in
+> black and white printing. I suggest the authors update the line
+> styles.
+
+Done.  Thank you for the suggestion.
+
+> The two images in figure 9 are too small. The y-axis labels on the
+> second image need to have a greater spacing.
+
+We have replaced the single figure 9 with two figures, which makes the
+plots and labels much more readable.
+
+

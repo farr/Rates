@@ -1,0 +1,47 @@
+----------------------------------------------------------------------
+Report of Referee B -- DB11163/Farr
+----------------------------------------------------------------------
+
+The paper ‘Counting and Confusion : Bayesian Rate Estimation with
+Mulitple Populations” by W.M Farr et al introduces a Bayesian
+framework for rate estimation when the data is composed of both
+foreground and background objects. They compare this new framework
+with existing methods such as the loudest-event statistic and the
+foreground-dominated statistic.
+
+This article is an important step in attempting to answer a
+statistical resolution problem for separation of foreground and
+background events. The authors have presented their framework via
+application to the problems of gravitational wave data analysis and
+the determination of the shape of globular clusters. While the
+statistical methods employed are not necessarily new, the final result
+is important and should be published in Physical Review D.
+
+As the authors have themselves stated, it will be interesting to see
+how the framework performs when dealing with realistic event rates and
+not the analysis pipeline based rates. I feel a more difficult
+question to answer will be the performance of this method when it
+becomes difficult to properly catagorize a source as being foreground
+or background, or to which family of sources a detection belongs to.
+
+I have some minor comments that the authors should consider.
+
+In equation 47 the authors define the Fisher information matrix, and
+in the following paragraph make the link between the Fisher matrix and
+the Cramer-Rao lower bound. As they are presented in the paper, this
+is only true in a Frequentist sense as it requires an unbiased
+estimator. As the authors are presenting a Bayesian framework, there
+is a Bayesian version of the Cramer-Rao bound that does not require an
+unbiased estimator, and furthermore requires the parameter priors to
+be folded into the Fisher matrix definition. Will this have an effect
+on the framework presented by the authors?
+
+Some parts of the text seem to be unnecessarily bold font. This seems
+unwarranted.
+
+The posterior curves in figure 5 are impossible to differentiate in
+black and white printing. I suggest the authors update the line
+styles.
+
+The two images in figure 9 are too small. The y-axis labels on the
+second image need to have a greater spacing.

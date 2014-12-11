@@ -146,7 +146,14 @@ present in a dataset, while Ref.~\cite{Messenger2012} deals with
 translating such counts into physical rates by properly accounting for
 the selection effects on the data set.  
 
-{\bf Our key results appear in Eq.~(\ref{eq:posterior}), which provides the joint posterior probability distribution on the foreground and background rates and shape parameters and the provenance of individual events as either foreground or background.  Eq.~(\ref{eq:rate-shape-posterior}) is a marginalized version of Eq.~(\ref{eq:posterior}), useful when the provenance of individual events is not relevant.  In practice, these posteriors are best sampled with stochastic techniques such as Markov chain Monte Carlo.}
+Our key results appear in Eq.~(\ref{eq:posterior}), which provides the
+joint posterior probability distribution on the foreground and
+background rates and shape parameters and the provenance of individual
+events as either foreground or background.
+Eq.~(\ref{eq:rate-shape-posterior}) is a marginalized version of
+Eq.~(\ref{eq:posterior}), useful when the provenance of individual
+events is not relevant.  In practice, these posteriors are best
+sampled with stochastic techniques such as Markov chain Monte Carlo.
 
 In order to demonstrate our method, we consider three different
 examples.  The first two come from the field of gravitational-wave
@@ -223,7 +230,7 @@ inhomogeneous Poisson process implies
 The foreground and background rates can in general depend on several
 parameters; the goal of our analysis is to determine the posterior
 probability distributions for these parameters that are implied by the
-data.  At the least, we will want to know the overall {\bf dimensionless} 
+data.  At the least, we will want to know the overall dimensionless
 amplitude of the foreground and background rates.  Let
 \begin{equation}
   f(x,\theta) = R_f \hat{f}(x,\theta'),
@@ -538,11 +545,11 @@ events detected above threshold and combined rates, $R_f+R_b$,
 significantly greater than the total number of observed events are
 strongly disfavored.  
 
-{\bf This problem can also be avoided
-in the context of the loudest-event framework by even very weak prior
-information on the background rate, $R_b$, of the kind present in
-nearly all experiments.  For example, we can include an upper limit
-on the rate, $R_{\rm max}$, in the prior for $R_b$.}
+This problem can also be avoided in the context of the loudest-event
+framework by even very weak prior information on the background rate,
+$R_b$, of the kind present in nearly all experiments.  For example, we
+can include an upper limit on the rate, $R_{\rm max}$, in the prior
+for $R_b$.
 \begin{widetext}
 The marginalized distribution for the foreground rate then becomes
 \begin{eqnarray}
@@ -586,8 +593,12 @@ p_{\rm FD}\left( R_f, R_b, \theta | d \right) \\ \propto \prod_{i} \left[
 Note that these are posteriors on the number of events expected \emph{above the
 threshold $x_{\rm min}$}.  The threshold choice for the foreground-dominated statistic could be different from the threshold choice applied elsewhere.  
 %If rates $R_{f,1}$ and $R_{f,2}$ are estimated for thresholds $x_{\rm min}=x_1$, $x_{\rm min}=x_2$ respectively, these rates should be compared by equating $R_{f,1} (1-\hat{F}(x_2,\theta))$ and $R_{f,2} (1-\hat{F}(x_1,\theta))$.
-{\bf If the rates are estimated accurately, then a rate estimate $R_{f,1}$ above threshold $x_{\rm min}=x_1$ can be converted into a rate estimate $R_{f,2}$ above threshold $x_{\rm min}=x_2$ via 
-$R_{f,1} (1-\hat{F}(x_2,\theta)) = R_{f,2} (1-\hat{F}(x_1,\theta))$; however, rate point estimates based on thresholding can have significant fluctuations, as discussed in the following section.}
+If the rates are estimated accurately, then a rate estimate $R_{f,1}$
+above threshold $x_{\rm min}=x_1$ can be converted into a rate
+estimate $R_{f,2}$ above threshold $x_{\rm min}=x_2$ via $R_{f,1}
+(1-\hat{F}(x_2,\theta)) = R_{f,2} (1-\hat{F}(x_1,\theta))$; however,
+rate point estimates based on thresholding can have significant
+fluctuations, as discussed in the following section.
 
 Normalization over $R_b$ gives a constant factor and the posterior on
 the foreground rate becomes
@@ -629,14 +640,14 @@ for the mean of the posterior $R_{B} = \int{ R p(R|d) dR}$.  Then it is immediat
 \begin{equation}
 \int{R_{B}(d)\, p(d)\,d(d) }= \int{ R\, p(R) \,dR},
 \end{equation}
-i.e.\ the data-weighted average of the Bayesian {\bf estimator} $R_{B}$
+i.e.\ the data-weighted average of the Bayesian estimator $R_{B}$
 equals the prior-weighted average $R$.  Therefore all threshold values
-will yield, on average, the same {\bf point} estimate of the rate.  However this
-equality of averages does {\it not} imply that all threshold values
-yield the same information. In general, as the threshold is lowered to
-include more events, the error bar on the estimate shrinks.  In this
-subsection we give quantitative illustrations of how the error bar
-shrinks when the threshold is lowered.
+will yield, on average, the same point estimate of the rate.  However
+this equality of averages does {\it not} imply that all threshold
+values yield the same information. In general, as the threshold is
+lowered to include more events, the error bar on the estimate shrinks.
+In this subsection we give quantitative illustrations of how the error
+bar shrinks when the threshold is lowered.
 
 Consider the following model problem.  Let $p(x) = b(x) + f(x) = R_b
 \hat{b}(x) + R_f \hat{f}(x)$ be the rate density of events (of both
@@ -765,9 +776,13 @@ $\theta$, $p(d | \theta)$.  The components of the Fisher information
 matrix describe the maximum amount of information about the
 corresponding parameters available in a given data set; the inverse of
 the Fisher information matrix gives the Cramer-Rao bound on the
-covariance matrix of unbiased estimators of $\theta$.  For the
+covariance matrix of unbiased estimators of $\theta$.  Though our
+Bayesian analysis is not necessarily limited by the Cramer-Rao bound
+(since estimators constructed from it need not be unbiased and can
+also be affected by the prior), the Fisher information is indicative
+of the influence of each measurement on the posterior.  For the
 likelihood that enters Eq.~\eqref{eq:rate-shape-posterior}, the Fisher
-information matrix is 
+information matrix is
 \begin{multline}
   \mathbf{F} = \left( R_f + R_b \right) \\ \times \begin{pmatrix}
     \left \langle \left(\frac{\hat{f}}{R_f \hat{f} + R_b \hat{b}}\right)^2 \right
@@ -1075,8 +1090,9 @@ over $N_{\rm eff}$ we find $\int_0^{N_{\rm max}} \hat{b}(x_N,N_{\rm
 N_{\rm eff})$ and so we are still in the foreground-dominated regime
 in which the loudest event tells us nothing about the background.
 Neither of these alternative methods can inform us about the value of
-$N_{\rm eff}$, a {\bf property of the distribution of background events identified by filtering with this template bank}.  Moreover, the choice of
-threshold value for the foreground-dominated statistic becomes
+$N_{\rm eff}$, a property of the distribution of background events
+identified by filtering with this template bank.  Moreover, the choice
+of threshold value for the foreground-dominated statistic becomes
 significantly more complicated in this case, since $p_\mathrm{thresh}$
 now depends on $N_\mathrm{eff}$.
 
@@ -1197,27 +1213,32 @@ on the rate, $1/\sqrt{R_f}$; we have verified that the priors on these
 parameters are irrelevant to our results, as would be expected from
 the measurement of $\sim 1000$ foreground stars.)
 
-Figure \ref{fig:cluster-params} shows the posteriors for the cluster
-parameters.  The center of the cluster, $\vec{x}_0$, is localized to
-within about 5\% of the cluster scale, and the cluster radius with a
-relative error of about 10\%.  In spite of the significant background,
-the cluster parameters are recovered to a relative accuracy consistent
-with the expected uncertainty from $N_\mathrm{eff} \simeq R_f = 1000$
-measurements.  Figure \ref{fig:cluster-number} shows the posteriors
-inferred on the cluster and background numbers, $R_f$ and $R_b$.
+Figures \ref{fig:cluster-loc} and \ref{fig:cluster-scale} shows the
+posteriors for the cluster location and scale parameters.  The center
+of the cluster, $\vec{x}_0$, is localized to within about 5\% of the
+cluster scale, and the cluster radius with a relative error of about
+10\%.  In spite of the significant background, the cluster parameters
+are recovered to a relative accuracy consistent with the expected
+uncertainty from $N_\mathrm{eff} \simeq R_f = 1000$ measurements.
+Figure \ref{fig:cluster-number} shows the posteriors inferred on the
+cluster and background numbers, $R_f$ and $R_b$.
 
 \begin{figure}
-  \includegraphics[width=0.475\columnwidth]{sky_location}\includegraphics[width=0.475\columnwidth]{scale}
-  \caption{\label{fig:cluster-params} Posterior density for the
-    cluster parameters for the example from \S~\ref{sec:star-cluster}.
-    (Left) Contours of the posterior probability distribution for the
-    center of the cluster, $\vec{x}_0$.  The center $(x,y) =
-    \left(x_0, y_0\right)$ is determined to within about 5\% of the
-    structural radius of the cluster, $r_0$ (see
-    Eq.~\eqref{eq:true-cluster-parameters}).  (Right) Posterior
-    density for the scale parameter for the cluster, $r_0$.  The true
-    value is indicated by the vertical line (see
-    Eq.~\ref{eq:true-cluster-parameters}).}
+  \includegraphics[width=\columnwidth]{sky_location}
+  \caption{\label{fig:cluster-loc} Contours of the posterior
+    probability distribution for the center of the cluster,
+    $\vec{x}_0$, for the example from \S~\ref{sec:star-cluster}.  The
+    center $(x,y) = \left(x_0, y_0\right)$ is determined to within
+    about 5\% of the structural radius of the cluster, $r_0$ (see
+    Eq.~\eqref{eq:true-cluster-parameters}).}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\columnwidth]{scale}
+  \caption{\label{fig:cluster-scale} Posterior density for the scale
+    parameter for the cluster, $r_0$, for the example from
+    \S~\ref{sec:star-cluster}.  The true value is indicated by the
+    vertical line (see Eq.~\ref{eq:true-cluster-parameters}).}
 \end{figure}
 
 \begin{figure}
